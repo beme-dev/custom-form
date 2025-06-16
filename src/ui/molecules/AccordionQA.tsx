@@ -1,13 +1,11 @@
 import { Accordion as AccordionD } from '#cn/components/ui/accordion';
-import { For, type Accessor, type Component } from 'solid-js';
+import { For, type Accessor, type Component, type JSX } from 'solid-js';
 
-export type AccordionData = { question: string; answer: string };
+export type AccordionData = { question: JSX.Element; answer: JSX.Element };
 
-const Item: Component<AccordionData & { index: Accessor<number> }> = ({
-  question,
-  answer,
-  index,
-}) => {
+export const Item: Component<
+  AccordionData & { index: Accessor<number> }
+> = ({ question, answer, index }) => {
   return (
     <AccordionD.Item value={`Item - ${index()}`}>
       <AccordionD.Trigger class="cursor-pointer" children={question} />
@@ -25,7 +23,7 @@ export const AccordionQA: Component<{ data: AccordionData[] }> = ({
         each={data}
         children={(data, index) => {
           const props = { ...data, index };
-          return <Item {...props} />;
+          return Item(props);
         }}
       />
     </AccordionD>
