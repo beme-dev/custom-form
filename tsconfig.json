@@ -1,0 +1,28 @@
+{
+  "include": ["**/*.ts", "**/*.tsx", "public/script*.js"],
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "ES2022",
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+      "#signals/*": ["./src/signals/*"],
+      "#ui/*": ["./src/ui/*"],
+      "#cn/*": ["./src/ui/cn/*"],
+      "#helpers/*": ["./src/helpers/*"],
+      "#seo": ["./src/ui/helpers/seo.ts"]
+    },
+    "noEmit": true
+  }
+}
