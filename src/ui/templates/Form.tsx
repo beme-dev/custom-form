@@ -109,7 +109,12 @@ export const CreateField: Component<{
         }
       </div>
       <div class="flex flex-col Space-y-2 ml-4">
-        <button onClick={remove}>Remove -</button>
+        <button
+          class="text-red-500 border-2 border-red-700 bg-red-100 shadow-sm active:scale-95 hover:bg-transparent px-2 py-1 rounded"
+          onClick={remove}
+        >
+          Remove -
+        </button>
         <button
           onClick={() => {
             update({
