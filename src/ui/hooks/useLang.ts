@@ -1,15 +1,25 @@
-import { LANG_STORE_KEY } from '../constants/strings';
+import { createSignal } from 'solid-js';
+import { LANG_STORE_KEY, LANGS } from '../constants/strings';
 import type { Lang } from '../templates/Form';
+import { createDebounce } from './createDebounce';
 
-export const useLang = () => {
-  const lang = () =>
-    (localStorage.getItem(LANG_STORE_KEY) ||
-      navigator.language.substring(0, 2) ||
-      'en') as Lang;
+const useLang = () => {
+  let __lang = (localStorage.getItem(LANG_STORE_KEY) ||
+    navigator.language.substring(0, 2)) as Lang;
 
-  const setLang = (newLang: string) => {
+  const check = !__lang || !LANGS.includes(__lang as any);
+  if (check) __lang = 'en';
+
+  const [lang, _setLang] = createSignal(__lang);
+
+  const setLang = (newLang: Lang) => {
     localStorage.setItem(LANG_STORE_KEY, newLang);
+    _setLang(newLang);
   };
 
-  return [lang, setLang] as const;
+  const debounce = createDebounce(setLang, 350);
+
+  return [lang, debounce] as const;
 };
+
+export const [lang, setLang] = useLang();

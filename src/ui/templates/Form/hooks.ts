@@ -1,6 +1,6 @@
-import { createSignal, onCleanup } from 'solid-js';
-import { useLang } from '~/ui/hooks/useLang';
-import { FIELD_TYPES2 } from './constants';
+import { createSignal } from 'solid-js';
+import { lang } from '~/ui/hooks/useLang';
+import { INTL } from './constants';
 import type { Field, FieldType } from './types';
 
 export const createField = () => {
@@ -98,52 +98,28 @@ export const createFields = (...data: Field[]) => {
   };
 };
 
-export function createDebounce<T>(
-  action: (arg: any) => void,
-  ms?: number,
-): (value: T) => void;
-export function createDebounce(
-  action: () => void,
-  ms?: number,
-): () => void;
-
-export function createDebounce<T>(
-  action: (arg: T) => void | (() => void),
-  ms = 1000,
-) {
-  let timerHandle: NodeJS.Timeout;
-  function debounce(value?: T) {
-    clearTimeout(timerHandle);
-    if (action.length === 0) {
-      timerHandle = setTimeout(() => (action as any)(), ms);
-    } else {
-      timerHandle = setTimeout(() => action(value as any), ms);
-    }
-  }
-
-  onCleanup(() => clearTimeout(timerHandle));
-  return debounce;
-}
-
 export const [toFocus, setFocus] = createSignal<string | undefined>(
   undefined,
 );
 
-export const hasOptions = (type: FieldType) => {
+export const hasOptions = (type?: FieldType) => {
   return type === 'select' || type === 'checkbox';
+};
+
+export const useIntl = () => {
+  return () => INTL[lang()];
 };
 
 export const useTypes = () => {
   type _Field = { children: string; value: FieldType };
 
-  const [lang] = useLang();
-  const _types = FIELD_TYPES2[lang()] || FIELD_TYPES2.en;
-
-  const types = () =>
-    Object.entries(_types).map(([key, children]) => ({
+  const types = () => {
+    const _types = useIntl()().types;
+    return Object.entries(_types).map(([key, children]) => ({
       value: key as FieldType,
       children,
     })) satisfies _Field[];
+  };
 
   return types;
 };

@@ -1,7 +1,8 @@
-import { For, Show, type Component } from 'solid-js';
+import { For, onCleanup, Show, type Component } from 'solid-js';
+import { createDebounce } from '~/ui/hooks/createDebounce';
 import { FieldTypes } from './FieldTypes';
 import { FocusInput } from './FocusInput';
-import { createDebounce, createField, setFocus, toFocus } from './hooks';
+import { createField, setFocus, toFocus, useIntl } from './hooks';
 import type { Field } from './types';
 
 export const CreateField: Component<{
@@ -23,7 +24,7 @@ export const CreateField: Component<{
   setType(_field.type);
   setOptions(_field.options);
 
-  const onInput = createDebounce(update, 700);
+  const onInput = createDebounce(update, 500);
 
   const submit = () => {
     update({
@@ -33,10 +34,13 @@ export const CreateField: Component<{
     });
   };
 
+  onCleanup(onInput.cancel);
+
   const len = () => options()?.length || -1;
   const safeOptions = () => options() || [];
 
   const autofocus = (value: string) => toFocus() === value;
+  const INTL = useIntl();
 
   return (
     <div class="mb-6 pb-4 flex space-x-3 outline-none">
@@ -44,7 +48,7 @@ export const CreateField: Component<{
         <FocusInput
           class="border p-2 rounded w-full mb-2 outline-none"
           type="text"
-          placeholder="Intitulé de la question"
+          placeholder={INTL().question}
           name={`${indexC}->question`}
           value={label()}
           autofocus={autofocus(`${indexC}->question`)}
@@ -83,7 +87,7 @@ export const CreateField: Component<{
                       <FocusInput
                         class="border p-1 rounded outline-none"
                         type="text"
-                        placeholder={`Option ${index() + 1}`}
+                        placeholder={`${INTL().option.placeholder} ${index() + 1}`}
                         name={`${indexC}->options->${index()}`}
                         value={option}
                         onInput={e => {
@@ -112,6 +116,16 @@ export const CreateField: Component<{
                             return updated;
                           });
                           submit();
+
+                          // #region Rinit if no options
+                          const checkEmpty = options()?.length === 0;
+
+                          if (checkEmpty) {
+                            setType('text');
+                            setFocus(`${indexC}->question`);
+                            submit();
+                          }
+                          // #endregion
                         }}
                       >
                         X
@@ -123,7 +137,10 @@ export const CreateField: Component<{
               <button
                 class="text-xs text-blue-600 mt-4 size-6 border-blue-300 border-2 rounded-md text-center content-center pb-0.5 shadow-lg active:scale-90 hover:bg-blue-100 ease-in-out duration-200 transition-colors"
                 type="button"
-                onClick={() => addOption()}
+                onClick={() => {
+                  addOption();
+                  submit();
+                }}
               >
                 +
               </button>
@@ -133,14 +150,14 @@ export const CreateField: Component<{
       </div>
       <div class="flex flex-col space-y-2">
         <button
-          class="text-red-500 border-2 border-red-700 bg-red-100 shadow-sm active:scale-95 hover:bg-transparent px-2 py-1.5 rounded"
+          class="text-red-500 border-2 border-red-700 bg-red-100 shadow-sm active:scale-95 hover:bg-transparent px-2 py-1.5 rounded min-w-max"
           onClick={remove}
         >
-          Remove -
+          {`${INTL().delete} -`}
         </button>
         <button
           onClick={submit}
-          class="bg-blue-500 text-white p-2 rounded"
+          class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 text-sm active:border-2 active:border-blue-800 transition-colors duration-200 h-10 max-h-10"
         >
           {'=>'}
         </button>

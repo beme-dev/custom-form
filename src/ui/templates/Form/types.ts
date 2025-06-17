@@ -1,4 +1,5 @@
-import type { _FIELDS_TYPES, LANGS } from './constants';
+import type { LANGS } from '~/ui/constants/strings';
+import type { _FIELDS_TYPES } from './constants';
 
 export type FieldType = (typeof _FIELDS_TYPES)[number];
 
@@ -16,3 +17,22 @@ export type Field = {
 export type Lang = (typeof LANGS)[number];
 
 export type FieldTypes = Record<Lang, Record<FieldType, string>>;
+
+type _Intl = {
+  title: string;
+  description: string;
+  addField: string;
+  field: string;
+  types: Record<FieldType, string>;
+  delete: string;
+  question: string;
+  option: {
+    placeholder: string;
+    invite: string;
+  };
+  answer: {
+    placeholder: string;
+  };
+};
+
+export type Intl = Record<Lang, _Intl>;

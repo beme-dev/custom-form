@@ -1,7 +1,6 @@
 import {
   type Accessor,
   type Component,
-  createEffect,
   ErrorBoundary,
   For,
   onMount,
@@ -18,10 +17,6 @@ export const FieldTypes: Component<{
   onMount(() => {
     const check = !hasOptions(type()) && toFocus() === name;
     if (check) ref?.focus();
-  });
-
-  createEffect(() => {
-    console.log('focus', toFocus(), name);
   });
 
   const types = useTypes();

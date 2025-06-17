@@ -1,6 +1,7 @@
 import { Accordion } from '#components/accordion';
 import { For, type Accessor, type Component } from 'solid-js';
 import { CreateField } from './CreateField';
+import { useIntl } from './hooks';
 import type { Field } from './types';
 
 export const Fields: Component<{
@@ -8,6 +9,8 @@ export const Fields: Component<{
   updateField: (index: number, field: Field) => void;
   removeField: (index: number) => void;
 }> = ({ fields, updateField, removeField }) => {
+  const INTL = useIntl();
+
   return (
     <Accordion collapsible class="">
       <For each={fields()}>
@@ -21,7 +24,7 @@ export const Fields: Component<{
                 X
               </button>
               <span>
-                {`Champ ${index() + 1} : ${field.label || '****'}`}
+                {`${INTL().field} ${index() + 1} : ${field.label || '****'}`}
               </span>
             </Accordion.Trigger>
             <Accordion.Content class="p-3">
