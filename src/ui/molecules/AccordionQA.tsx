@@ -1,4 +1,4 @@
-import { Accordion as AccordionD } from '#cn/components/ui/accordion';
+import { Accordion as AccordionD } from '#components/accordion';
 import { For, type Accessor, type Component, type JSX } from 'solid-js';
 
 export type AccordionData = { question: JSX.Element; answer: JSX.Element };

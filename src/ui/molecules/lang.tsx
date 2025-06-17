@@ -1,14 +1,14 @@
-import { onCleanup, type Component } from 'solid-js';
 import {
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
   Select as _Select,
-} from '~/ui/cn/components/ui/select';
+} from '#components/select';
+import { lang, setLang } from '#signals/lang';
+import { onCleanup, type Component } from 'solid-js';
 import type { Lang } from '~/utils/types';
 import { LANGS } from '../constants/strings';
-import { lang, setLang } from '~/signals/lang';
 
 export const LangSwitcher: Component = () => {
   onCleanup(setLang.cancel);

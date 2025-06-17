@@ -1,10 +1,10 @@
 /// <reference types="vite/client" />
 
+import HeadLinks from '#organisms/HeadLinks';
 import seo from '#seo';
 import { createRootRoute, Outlet } from '@tanstack/solid-router';
 import { TanStackRouterDevtools } from '@tanstack/solid-router-devtools';
 import appCss from '~/styles/app.css?url';
-import HeadLinks from '~/ui/organisms/HeadLinks';
 
 export const Route = createRootRoute({
   head: () => ({
