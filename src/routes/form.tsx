@@ -1,6 +1,6 @@
 import { Fields, Inputs, createFields, useIntl } from '#templates/Form';
 import { createFileRoute } from '@tanstack/solid-router';
-import { LangSwitcher } from '~/ui/molecules/LangSwitcher';
+import { LangSwitcher } from '~/ui/molecules/lang';
 
 // Définition des types pour les champs du formulaire
 

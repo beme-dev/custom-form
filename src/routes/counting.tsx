@@ -1,7 +1,7 @@
-import { counterS } from '#signals/counter';
+import { createCounter } from '#signals/counter';
 import { createFileRoute } from '@tanstack/solid-router';
 import { reduceComponent } from '~/ui/helpers/reduceComponent';
-import Counter from '~/ui/molecules/Counter';
+import { Counter } from '~/ui/molecules/count';
 
 export const Route = createFileRoute('/counting')({
   // Test data from loader
@@ -10,7 +10,7 @@ export const Route = createFileRoute('/counting')({
     const data = Route.useLoaderData();
 
     const { count, increment, decrement, incrementFn, decrementFn } =
-      counterS(data());
+      createCounter(data());
 
     const Btn = reduceComponent(Counter, { count });
 

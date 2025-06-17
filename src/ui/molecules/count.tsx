@@ -1,6 +1,6 @@
 import type { Accessor, Component } from 'solid-js';
 
-const Counter: Component<{
+export const Counter: Component<{
   onClick: () => void;
   count: Accessor<number>;
   label: string;
@@ -15,5 +15,3 @@ const Counter: Component<{
     </button>
   );
 };
-
-export default Counter;
