@@ -6,9 +6,9 @@ import {
   SelectValue,
   Select as _Select,
 } from '~/ui/cn/components/ui/select';
+import type { Lang } from '~/utils/types';
 import { LANGS } from '../constants/strings';
 import { lang, setLang } from '../hooks/useLang';
-import type { Lang } from '../templates/Form';
 
 export const LangSwitcher: Component = () => {
   onCleanup(setLang.cancel);
