@@ -1,6 +1,6 @@
 import { createSignal } from 'solid-js';
+import type { Lang } from '~/utils/types';
 import { LANG_STORE_KEY, LANGS } from '../constants/strings';
-import type { Lang } from '../templates/Form';
 import { createDebounce } from './createDebounce';
 
 const useLang = () => {
