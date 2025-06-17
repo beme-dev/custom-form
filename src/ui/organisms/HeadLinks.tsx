@@ -1,13 +1,13 @@
 import { Link as _Link } from '@tanstack/solid-router';
 import { For, type Component } from 'solid-js';
+import { createLinks } from '../../signals/links';
 import type { PropsOf } from '../helpers/types';
-import { useLinks } from '../hooks/useLinks';
 
 type LinkProps = Omit<
-  ReturnType<typeof useLinks>[number],
+  ReturnType<typeof createLinks>[number],
   'children' | 'search'
 > &
-  Partial<Pick<ReturnType<typeof useLinks>[number], 'search'>> &
+  Partial<Pick<ReturnType<typeof createLinks>[number], 'search'>> &
   PropsOf<typeof _Link, 'children'>;
 
 const Link: Component<LinkProps> = ({
@@ -31,7 +31,7 @@ const Link: Component<LinkProps> = ({
 };
 
 const HeadLinks: Component = () => {
-  const LINKS = useLinks({
+  const LINKS = createLinks({
     filter: value => value === '/projects' || !value.includes('projects'),
     formatChild: to => {
       const _children = to.charAt(1).toUpperCase() + to.slice(2);

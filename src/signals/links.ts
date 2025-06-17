@@ -9,7 +9,7 @@ type Args = {
   formatChild?: FormatFn;
 };
 
-export const useLinks = (args?: Args) => {
+export const createLinks = (args?: Args) => {
   const { flatRoutes } = useRouter();
 
   // #region Destructure maybe undefined object

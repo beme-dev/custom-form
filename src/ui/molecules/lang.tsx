@@ -8,7 +8,7 @@ import {
 } from '~/ui/cn/components/ui/select';
 import type { Lang } from '~/utils/types';
 import { LANGS } from '../constants/strings';
-import { lang, setLang } from '../hooks/useLang';
+import { lang, setLang } from '~/signals/lang';
 
 export const LangSwitcher: Component = () => {
   onCleanup(setLang.cancel);

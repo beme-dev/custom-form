@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js';
-import { lang } from '~/ui/hooks/useLang';
+import { lang } from '~/signals/lang';
 import { INTL } from './constants';
 import type { Field, FieldType } from './types';
 
