@@ -5,7 +5,7 @@ import {
   For,
   onMount,
 } from 'solid-js';
-import { hasOptions, setFocus, toFocus, useTypes } from './hooks';
+import { hasOptions, setFocus, toFocus, useTypes } from './signals';
 import type { FieldType } from './types';
 
 export const FieldTypes: Component<{

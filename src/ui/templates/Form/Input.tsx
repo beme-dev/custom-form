@@ -1,7 +1,7 @@
 import { Match, Switch, type Component } from 'solid-js';
-import { hasOptions, useIntl } from './hooks';
 import { RadioGroup } from './RadioGroup';
 import { Select } from './Select';
+import { hasOptions, useIntl } from './signals';
 import type { Field } from './types';
 
 export const Input: Component<Field> = ({ type, label, options }) => {
