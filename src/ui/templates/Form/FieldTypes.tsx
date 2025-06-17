@@ -1,5 +1,5 @@
+import { forwardFocus } from '#molecules/focus';
 import { type Accessor, For } from 'solid-js';
-import { forwardFocus } from '~/ui/molecules/focus';
 import { hasOptions, setFocus, toFocus, useTypes } from './signals';
 import type { FieldType } from './types';
 
