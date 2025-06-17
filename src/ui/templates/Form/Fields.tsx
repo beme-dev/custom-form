@@ -1,7 +1,7 @@
 import { Accordion } from '#components/accordion';
 import { For, type Accessor, type Component } from 'solid-js';
 import { CreateField } from './CreateField';
-import { useIntl } from './hooks';
+import { useIntl } from './signals';
 import type { Field } from './types';
 
 export const Fields: Component<{

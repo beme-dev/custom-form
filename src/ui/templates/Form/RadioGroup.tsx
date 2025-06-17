@@ -5,7 +5,7 @@ import {
   RadioGroupItemLabel,
   RadioGroup as _RadioGroup,
 } from '~/ui/cn/components/ui/radio-group';
-import { useIntl } from './hooks';
+import { useIntl } from './signals';
 import type { Field } from './types';
 
 export const RadioGroup: Component<{

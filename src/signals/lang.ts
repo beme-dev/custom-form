@@ -1,9 +1,11 @@
-import { createDebounce } from '#signals/debounce';
 import { createSignal } from 'solid-js';
-import type { Lang } from '~/utils/types';
-import { LANG_STORE_KEY, LANGS } from '../constants/strings';
+import { createDebounce } from './debounce';
 
-const useLang = () => {
+export const LANG_STORE_KEY = 'lang';
+export const LANGS = ['fr', 'en', 'es'] as const;
+export type Lang = (typeof LANGS)[number];
+
+const createLang = () => {
   let __lang = (localStorage.getItem(LANG_STORE_KEY) ||
     navigator.language.substring(0, 2)) as Lang;
 
@@ -22,4 +24,4 @@ const useLang = () => {
   return [lang, debounce] as const;
 };
 
-export const [lang, setLang] = useLang();
+export const [lang, setLang] = createLang();

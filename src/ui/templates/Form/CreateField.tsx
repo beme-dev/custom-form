@@ -1,8 +1,8 @@
+import { createDebounce } from '#signals/debounce';
 import { For, onCleanup, Show, type Component } from 'solid-js';
-import { createDebounce } from '~/ui/hooks/createDebounce';
 import { FieldTypes } from './FieldTypes';
 import { FocusInput } from './FocusInput';
-import { createField, setFocus, toFocus, useIntl } from './hooks';
+import { createField, setFocus, toFocus, useIntl } from './signals';
 import type { Field } from './types';
 
 export const CreateField: Component<{
@@ -138,6 +138,7 @@ export const CreateField: Component<{
                 class="text-xs text-blue-600 mt-4 size-6 border-blue-300 border-2 rounded-md text-center content-center pb-0.5 shadow-lg active:scale-90 hover:bg-blue-100 ease-in-out duration-200 transition-colors"
                 type="button"
                 onClick={() => {
+                  setFocus(`${indexC}->options->${len()}`);
                   addOption();
                   submit();
                 }}

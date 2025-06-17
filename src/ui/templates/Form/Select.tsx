@@ -6,7 +6,7 @@ import {
   SelectValue,
   Select as _Select,
 } from '~/ui/cn/components/ui/select';
-import { useIntl } from './hooks';
+import { useIntl } from './signals';
 import type { Field } from './types';
 
 const INTL = useIntl();

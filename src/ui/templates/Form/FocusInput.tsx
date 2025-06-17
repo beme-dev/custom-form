@@ -1,6 +1,6 @@
 import type { ReduceComponent } from '#helpers/types';
 import { onMount } from 'solid-js';
-import { toFocus } from './hooks';
+import { toFocus } from './signals';
 
 export const FocusInput: ReduceComponent<'input', 'ref'> = props => {
   let ref: any;
