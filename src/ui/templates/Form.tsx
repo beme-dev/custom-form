@@ -130,7 +130,7 @@ export const CreateField: Component<{
       </div>
       <div class="flex flex-col space-y-2">
         <button
-          class="text-red-500 border-2 border-red-700 bg-red-100 shadow-sm active:scale-95 hover:bg-transparent px-2 py-1 rounded"
+          class="text-red-500 border-2 border-red-700 bg-red-100 shadow-sm active:scale-95 hover:bg-transparent px-2 py-1.5 rounded"
           onClick={remove}
         >
           Remove -
@@ -143,7 +143,7 @@ export const CreateField: Component<{
               options: options(),
             });
           }}
-          class="mt-2 bg-blue-500 text-white p-2 rounded"
+          class="bg-blue-500 text-white p-2 rounded"
         >
           {'=>'}
         </button>

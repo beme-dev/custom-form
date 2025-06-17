@@ -132,6 +132,9 @@ importers:
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
+      tailwindcss-inner-border:
+        specifier: ^0.2.0
+        version: 0.2.0(tailwindcss@4.1.10)
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -3982,6 +3985,11 @@ packages:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
+
+  tailwindcss-inner-border@0.2.0:
+    resolution: {integrity: sha512-IrKWoSHMisGY1FGfwD3+5nzPu1N9gWqUopqma72rS/5wp+DGxUltXhMm84TLpUeaUJyW6NDSHUO/qWh/+puZvg==}
+    peerDependencies:
+      tailwindcss: '>=3'
 
   tailwindcss@4.1.10:
     resolution: {integrity: sha512-P3nr6WkvKV/ONsTzj6Gb57sWPMX29EPNPopo7+FcpkQaNsrNpZ1pv8QmrYI2RqEKD7mlGqLnGovlcYnBK0IqUA==}
@@ -8786,6 +8794,10 @@ snapshots:
   tailwind-merge@3.3.1: {}
 
   tailwindcss-animate@1.0.7(tailwindcss@4.1.10):
+    dependencies:
+      tailwindcss: 4.1.10
+
+  tailwindcss-inner-border@0.2.0(tailwindcss@4.1.10):
     dependencies:
       tailwindcss: 4.1.10
 

@@ -26,7 +26,15 @@ export const Route = createFileRoute('/form')({
                   value={`field-${index()}`}
                 >
                   <Accordion.Trigger class="cursor-pointer hover:no-underline">
-                    {`Champ ${index() + 1} : ${field.label || '****'}`}
+                    <button
+                      class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 text-sm active:border-2 active:border-red-800 transition-colors duration-200 box-border"
+                      onClick={() => removeField(index())}
+                    >
+                      X
+                    </button>
+                    <span>
+                      {`Champ ${index() + 1} : ${field.label || '****'}`}
+                    </span>
                   </Accordion.Trigger>
                   <Accordion.Content class="p-3">
                     <CreateField
@@ -42,7 +50,7 @@ export const Route = createFileRoute('/form')({
             </For>
           </Accordion>
           <button
-            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            class="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 text-sm active:border-2 active:border-blue-800 transition-colors duration-200 box-border"
             onClick={addField}
           >
             Ajouter un champ
