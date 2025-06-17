@@ -176,7 +176,7 @@ const Select: Component<{ options?: Field['options'] }> = ({
 const RadioG: Component<{
   options?: Field['options'];
 }> = ({ options = [] }) => (
-  <_RadioGroup class="grid gap-2">
+  <_RadioGroup class="grid gap-2 mx-auto px-7 py-3 border border-gray-100 rounded-md">
     <For each={options}>
       {option => (
         <RadioGroupItem value={option} class="flex items-center gap-2">
@@ -192,11 +192,8 @@ const RadioG: Component<{
 
 export const Input: Component<Field> = ({ type, label, options }) => {
   return (
-    <div class="mb-4 flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2">
-      <label
-        class="block mb-2 text-sm font-medium text-gray-700"
-        for="answer"
-      >
+    <div class="flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2 py-8">
+      <label class="block mb-2 font-medium text-gray-700" for="answer">
         {label}
       </label>
       <Switch>

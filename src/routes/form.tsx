@@ -56,7 +56,7 @@ export const Route = createFileRoute('/form')({
             Ajouter un champ
           </button>
         </div>
-        <div class="w-full">
+        <div class="w-full divide-y-2 divide-slate-300 flex flex-col">
           <For each={fields()} children={Input} />
         </div>
       </div>

@@ -15,6 +15,10 @@ const seo = ({ title, description, keywords, image }: Props) => {
     { name: 'og:type', content: 'website' },
     { name: 'og:title', content: title },
     { name: 'og:description', content: description },
+    {
+      rel: 'icon',
+      href: '/favicon.ico',
+    },
     ...(image
       ? [
           { name: 'twitter:image', content: image },
