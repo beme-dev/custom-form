@@ -15,7 +15,7 @@
     "rollup": "rollup -c",
     "test": "pnpm run test:coverage --no-coverage",
     "test:coverage": "vitest run",
-    "build": "vinxi build",
+    "build": "vite build",
     "config": "pnpm install",
     "config:off": "pnpm run config --offline",
     "eslint": "eslint \"{src/**/*,App}.{ts,tsx}\"",
