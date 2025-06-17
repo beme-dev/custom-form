@@ -16,8 +16,8 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       ...seo({
-        title: 'Web animations | by @chlbri',
-        description: `A beautifull library of web animations`,
+        title: 'Custom Form | by @chlbri',
+        description: `A form builder`,
       }),
     ],
   }),
