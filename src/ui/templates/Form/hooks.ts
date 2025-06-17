@@ -1,18 +1,7 @@
-import { createSignal } from 'solid-js';
-
-export type FieldType = 'text' | 'select' | 'checkbox';
-
-export type Field = {
-  label: string;
-  type?: FieldType;
-  options?: string[];
-};
-
-export const FIELD_TYPES: { label: string; value: FieldType }[] = [
-  { label: 'Texte', value: 'text' },
-  { label: 'Choix', value: 'select' },
-  { label: 'Case à cocher', value: 'checkbox' },
-];
+import { createSignal, onCleanup } from 'solid-js';
+import { useLang } from '~/ui/hooks/useLang';
+import { FIELD_TYPES2 } from './constants';
+import type { Field, FieldType } from './types';
 
 export const createField = () => {
   const [label, setLabel] = createSignal('');
@@ -68,8 +57,13 @@ export const createField = () => {
   };
 };
 
-export const createFields = () => {
-  const [fields, setFields] = createSignal<Field[]>([{ label: '' }]);
+export const createFields = (...data: Field[]) => {
+  // Initialize fields with provided data or default to an empty field
+  if (data.length < 1) {
+    data = [{ label: '' }];
+  }
+
+  const [fields, setFields] = createSignal(data);
 
   const addField = () => {
     const value: Field = {
@@ -92,7 +86,6 @@ export const createFields = () => {
     setFields(f => {
       const updated = [...f];
       updated[index] = { ...updated[index], ...value };
-      console.log('Updated field 3:', updated[index]);
       return updated;
     });
   };
@@ -103,4 +96,54 @@ export const createFields = () => {
     removeField,
     updateField,
   };
+};
+
+export function createDebounce<T>(
+  action: (arg: any) => void,
+  ms?: number,
+): (value: T) => void;
+export function createDebounce(
+  action: () => void,
+  ms?: number,
+): () => void;
+
+export function createDebounce<T>(
+  action: (arg: T) => void | (() => void),
+  ms = 1000,
+) {
+  let timerHandle: NodeJS.Timeout;
+  function debounce(value?: T) {
+    clearTimeout(timerHandle);
+    if (action.length === 0) {
+      timerHandle = setTimeout(() => (action as any)(), ms);
+    } else {
+      timerHandle = setTimeout(() => action(value as any), ms);
+    }
+  }
+
+  onCleanup(() => clearTimeout(timerHandle));
+  return debounce;
+}
+
+export const [toFocus, setFocus] = createSignal<string | undefined>(
+  undefined,
+);
+
+export const hasOptions = (type: FieldType) => {
+  return type === 'select' || type === 'checkbox';
+};
+
+export const useTypes = () => {
+  type _Field = { children: string; value: FieldType };
+
+  const [lang] = useLang();
+  const _types = FIELD_TYPES2[lang()] || FIELD_TYPES2.en;
+
+  const types = () =>
+    Object.entries(_types).map(([key, children]) => ({
+      value: key as FieldType,
+      children,
+    })) satisfies _Field[];
+
+  return types;
 };

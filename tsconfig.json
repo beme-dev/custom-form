@@ -20,7 +20,11 @@
       "#signals/*": ["./src/signals/*"],
       "#ui/*": ["./src/ui/*"],
       "#cn/*": ["./src/ui/cn/*"],
-      "#helpers/*": ["./src/helpers/*"],
+      "#templates/*": ["./src/ui/templates/*"],
+      "#organisms/*": ["./src/ui/organisms/*"],
+      "#molecules/*": ["./src/ui/molecules/*"],
+      "#components/*": ["./src/ui/cn/components/ui/*"],
+      "#helpers/*": ["./src/ui/helpers/*"],
       "#seo": ["./src/ui/helpers/seo.ts"]
     },
     "noEmit": true
