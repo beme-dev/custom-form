@@ -3,7 +3,7 @@ import type { RC } from './reducer.types';
 
 export const reduceComponent = <
   const T extends Component<any>,
-  K extends Partial<ComponentProps<T>> = never,
+  K extends Partial<ComponentProps<T>>,
   Keys extends
     keyof ComponentProps<T> = keyof K extends keyof ComponentProps<T>
     ? keyof K

@@ -1,4 +1,7 @@
 import { Match, Switch, type Component } from 'solid-js';
+import { ColorPicker } from './_inputs/color';
+import { Calendar } from './_inputs/date';
+import { NumberField } from './_inputs/number';
 import { RadioGroup } from './RadioGroup';
 import { Select } from './Select';
 import { hasOptions, useIntl } from './signals';
@@ -11,17 +14,34 @@ export const Input: Component<Field> = ({ type, label, options }) => {
 
   return (
     <div class="flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2 py-8">
-      <label class="block mb-2 font-medium text-gray-700" for="answer">
+      <label
+        class="block mb-2 font-medium text-gray-700 select-none"
+        for="answer"
+      >
         {_label()}
       </label>
       <Switch>
         <Match when={!hasOptions(type)}>
-          <input
-            type={type}
-            class="border p-2 rounded w-full outline-none"
-            placeholder={INTL().answer.placeholder}
-            name="answer"
-          />
+          <Switch
+            fallback={
+              <input
+                type={type}
+                class="border p-2 rounded w-full outline-none"
+                placeholder={INTL().answer.placeholder}
+                name="answer"
+              />
+            }
+          >
+            <Match when={type === 'color'}>
+              <ColorPicker />
+            </Match>
+            <Match when={type === 'date'}>
+              <Calendar />
+            </Match>
+            <Match when={type === 'number'}>
+              <NumberField />
+            </Match>
+          </Switch>
         </Match>
 
         <Match when={type === 'checkbox'}>
