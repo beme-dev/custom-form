@@ -14,7 +14,7 @@ export function createDebounce<T>(action: (arg: T) => void, ms = 1000) {
 
 type Options<T> = {
   ms?: number;
-  transform?: (setter: Setter<T>) => Setter<T>;
+  action?: (value: T) => void;
   end?: T;
 };
 
@@ -41,20 +41,18 @@ export function createDebounceSignal<T>(
 ];
 
 export function createDebounceSignal<T>(start: T, options?: Options<T>) {
-  const { ms = 500, transform, end } = options ?? {};
+  const { ms = 500, action, end } = options ?? {};
   const [signal, _setSignal] = createSignal(start);
 
   const setSignal = (value: T) => {
-    if (transform) {
-      transform(_setSignal)(value as any);
-    } else {
-      _setSignal(value as any);
+    if (action) {
+      action(value);
     }
+
+    _setSignal(value as any);
   };
 
-  const debounce = createDebounce<T>(value => {
-    setSignal(value);
-  }, ms);
+  const debounce = createDebounce<T>(setSignal, ms);
 
   if (end) {
     const debounce2 = () => {
@@ -74,6 +72,6 @@ export const cds = createDebounceSignal;
 export const toggleDebounceBool = (
   args?: { initial?: boolean } & Omit<Options<boolean>, 'end'>,
 ) => {
-  const { ms = 500, initial = true, transform } = args ?? {};
-  return cds(initial, { ms, end: !initial, transform });
+  const { ms = 500, initial = true, action } = args ?? {};
+  return cds(initial, { ms, end: !initial, action });
 };
