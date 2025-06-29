@@ -186,3 +186,4 @@ export const { context, select, send } = interpret(mainMachine, {
 
 //TODO : Add postpone action to @bemedev/app-ts
 //TODO : Add raise-event action to @bemedev/app-ts
+//TODO : Add sender (custom send) to @bemedev/app-ts and @bemedev/app-solid
