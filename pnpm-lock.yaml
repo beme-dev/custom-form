@@ -13,10 +13,10 @@ importers:
         version: 5.14.1(solid-js@1.9.7)
       '@bemedev/app-solid':
         specifier: ^0.0.2
-        version: 0.0.2(@bemedev/app-ts@0.2.4)(solid-js@1.9.7)
+        version: 0.0.2(@bemedev/app-ts@0.2.5)(solid-js@1.9.7)
       '@bemedev/app-ts':
-        specifier: ^0.2.4
-        version: 0.2.4
+        specifier: ^0.2.5
+        version: 0.2.5
       '@bemedev/pipe':
         specifier: ^0.0.9
         version: 0.0.9
@@ -333,12 +333,12 @@ packages:
       '@bemedev/app-ts': 0.2.1
       solid-js: ^1.9.7
 
-  '@bemedev/app-ts@0.2.4':
-    resolution: {integrity: sha512-hvFX2rAjZUWWXuZoKrcOv18fENHH4F6OXTJ36BjNb4CQbD099nfxKG1HInfrnqEDHyX6vLhjZ5Wus0kvN78Y9g==}
+  '@bemedev/app-ts@0.2.5':
+    resolution: {integrity: sha512-pGTId5nr9mFpq8LcUlEV/htH7Y+ZFJOPq9S12ClZ40TsbYuC3GS2GOEY06rt0mFKGd2J/34UP9xp+TUOHKW6WA==}
     engines: {node: '>=20'}
 
-  '@bemedev/basifun@0.3.3':
-    resolution: {integrity: sha512-AmAGrtEFNm5lMMgRKWMrVKyihppmQtYgReF6OrN4rbB+uLwv2dMOAaNjbhEyPbmHY5y6iAys2QK5KEbh57OJiw==}
+  '@bemedev/basifun@0.3.4':
+    resolution: {integrity: sha512-rTQFTrOODQX9BuoRxUrbKBkBeVcXXOs2JK5Btt5IPjuwHQVMeRCiF+accSFZ1N5iWDqpPMDYk5ym7NnTaillcA==}
     engines: {node: '>=20'}
     peerDependencies:
       '@bemedev/types': ^0.1.5
@@ -5206,14 +5206,14 @@ snapshots:
 
   '@bcoe/v8-coverage@1.0.2': {}
 
-  '@bemedev/app-solid@0.0.2(@bemedev/app-ts@0.2.4)(solid-js@1.9.7)':
+  '@bemedev/app-solid@0.0.2(@bemedev/app-ts@0.2.5)(solid-js@1.9.7)':
     dependencies:
-      '@bemedev/app-ts': 0.2.4
+      '@bemedev/app-ts': 0.2.5
       solid-js: 1.9.7
 
-  '@bemedev/app-ts@0.2.4':
+  '@bemedev/app-ts@0.2.5':
     dependencies:
-      '@bemedev/basifun': 0.3.3(@bemedev/types@0.1.5)
+      '@bemedev/basifun': 0.3.4(@bemedev/types@0.1.5)
       '@bemedev/boolean-recursive': 0.0.3
       '@bemedev/decompose': 0.8.1(@bemedev/types@0.1.5)
       '@bemedev/interval2': 0.1.1
@@ -5224,7 +5224,7 @@ snapshots:
       fast-deep-equal: 3.1.3
       nanoid: 5.1.5
 
-  '@bemedev/basifun@0.3.3(@bemedev/types@0.1.5)':
+  '@bemedev/basifun@0.3.4(@bemedev/types@0.1.5)':
     dependencies:
       '@bemedev/sleep': 0.1.2
       '@bemedev/types': 0.1.5
