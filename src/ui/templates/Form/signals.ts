@@ -1,4 +1,5 @@
-import { createSignal } from 'solid-js';
+import { typings } from '@bemedev/app-ts/lib/utils';
+import { createRoot, createSignal, type JSX } from 'solid-js';
 import type { Field, FieldType } from './types';
 
 export const createField = (field?: Field) => {
@@ -16,7 +17,6 @@ export const createField = (field?: Field) => {
     const _has = hasOptions(newType);
     if (_has) setOptions(['']);
     else setOptions(undefined);
-    console.log('Updated type:', newType);
   };
 
   const addOption = (option = '') => {
@@ -55,8 +55,38 @@ export const createField = (field?: Field) => {
   };
 };
 
-export const [toFocus, setFocus] = createSignal<string | undefined>();
+type FocusProps = {
+  name: string;
+  start?: number | null;
+  length?: number | null;
+};
+
+export const [toFocus, setFocus] = createRoot(() =>
+  createSignal(typings.undefiny(typings<FocusProps>())),
+);
 
 export const hasOptions = (type?: FieldType) => {
   return type === 'select' || type === 'checkbox';
+};
+
+export const onCaret = (name: string) => {
+  type _Fn = JSX.FocusEventHandlerUnion<
+    HTMLInputElement | HTMLTextAreaElement,
+    FocusEvent
+  >;
+
+  const out: _Fn = e => {
+    const focus = toFocus();
+    let start = focus?.start;
+
+    if (focus?.name === name && start !== undefined) {
+      const check2 = e.target.scrollHeight > e.target.clientHeight;
+      if (check2) {
+        start = 0;
+      }
+      e.target.setSelectionRange(start, start);
+    }
+  };
+
+  return out;
 };

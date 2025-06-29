@@ -25,33 +25,39 @@ export const FieldTypes = forwardFocus(
     const name = `${index()}->type`;
 
     return (
-      <select
-        class="border p-2 rounded mb-2"
-        name={name}
-        onInput={e => {
-          const type = e.target.value as FieldType;
-          setType(type);
+      <>
+        <select
+          class="border p-2 rounded mb-2"
+          name={name}
+          onInput={e => {
+            const type = e.target.value as FieldType;
+            setType(type);
 
-          if (hasOptions(type)) {
-            const value = `${name.split('->')[0]}->options->0`;
+            if (hasOptions(type)) {
+              const value = `${name.split('->')[0]}->options->0`;
 
-            setFocus(value);
-          } else setFocus(name);
-        }}
-      >
-        <For each={types()}>
-          {option => {
-            return (
-              <option {...option} selected={type() === option.value} />
-            );
+              setFocus({ name: value });
+            } else setFocus({ name });
           }}
-        </For>
-      </select>
+        >
+          <For each={types()}>
+            {option => {
+              const props = {
+                ...option,
+                selected: type() === option.value,
+              };
+              return <option {...props} />;
+            }}
+          </For>
+        </select>
+      </>
     );
   },
 
   ({ index }) => {
     const name = `${index()}->type`;
-    return !hasOptions(select('current.type')()) && toFocus() === name;
+    return (
+      !hasOptions(select('current.type')()) && toFocus()?.name === name
+    );
   },
 );

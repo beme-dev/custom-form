@@ -115,10 +115,6 @@ export const mainMachine = createMachine(
         },
       };
     },
-
-    // check: voidAction((_, context) => {
-    //   console.log('context', context);
-    // }),
   },
 }));
 

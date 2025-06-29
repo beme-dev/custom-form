@@ -26,14 +26,28 @@ export const Select: Component<{ options?: Field['options'] }> = ({
       options={options}
       placeholder={select('intl.option.invite')()}
       itemComponent={props => (
-        <SelectItem item={props.item}>
+        <SelectItem
+          item={props.item}
+          onClick={e => {
+            console.log('click', e.currentTarget.dataset.key, e.type);
+          }}
+        >
           <Item>{props.item.rawValue}</Item>
         </SelectItem>
       )}
     >
-      <SelectTrigger class="w-sm mx-auto overflow-hidden">
+      <SelectTrigger
+        class="w-sm mx-auto overflow-hidden"
+        onInput={() => {
+          console.log('input');
+        }}
+      >
         <div class="w-11/12 text-left truncate">
-          <SelectValue<string>>
+          <SelectValue<string>
+            onInput={() => {
+              console.log('input');
+            }}
+          >
             {({ selectedOption }) => selectedOption()}
           </SelectValue>
         </div>

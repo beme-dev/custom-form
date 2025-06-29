@@ -1,6 +1,6 @@
 import { forwardFocus } from '~/ui/molecules/focus';
 import { toFocus } from './signals';
 
-export const FocusInput = forwardFocus<'input'>(
+export const FocusTextArea = forwardFocus<'textarea'>(
   ({ name }) => name === toFocus()?.name,
-)(props => <input {...props} />);
+)(props => <textarea {...props} />);
