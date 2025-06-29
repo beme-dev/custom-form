@@ -29,7 +29,7 @@
   "dependencies": {
     "@ark-ui/solid": "^5.14.1",
     "@bemedev/app-solid": "^0.0.2",
-    "@bemedev/app-ts": "^0.2.5",
+    "@bemedev/app-ts": "^0.2.6",
     "@bemedev/pipe": "^0.0.9",
     "@kobalte/core": "^0.13.10",
     "@tailwindcss/vite": "^4.1.10",
