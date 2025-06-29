@@ -24,7 +24,6 @@
     "p-q": "pretty-quick",
     "start": "vinxi start",
     "test:watch": "vitest",
-    "upgrade": "pnpm upgrade --latest",
     "prepare": "husky"
   },
   "dependencies": {

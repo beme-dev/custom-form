@@ -1,4 +1,4 @@
-import { createDebounce } from '#signals/debounce';
+import { debounceFn } from '#signals/debounce';
 import { For, onCleanup, Show, type Component } from 'solid-js';
 import { FieldTypes } from './FieldTypes';
 import { FocusInput } from './FocusInput';
@@ -24,7 +24,7 @@ export const CreateField: Component<{
   setType(_field.type);
   setOptions(_field.options);
 
-  const onInput = createDebounce(update, 500);
+  const onInput = debounceFn(update, 500);
 
   const submit = () => {
     update({

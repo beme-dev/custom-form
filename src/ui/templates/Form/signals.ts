@@ -38,11 +38,11 @@ export const createField = () => {
   };
 
   // Combined field for internal use
-  const field = () => ({
-    label: label(),
-    type: type(),
-    options: options(),
-  });
+  // const field = () => ({
+  //   label: label(),
+  //   type: type(),
+  //   options: options(),
+  // });
 
   return {
     label,
@@ -53,7 +53,6 @@ export const createField = () => {
     addOption,
     updateOption,
     setOptions,
-    field,
   };
 };
 

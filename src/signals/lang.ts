@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js';
-import { createDebounce } from './debounce';
+import { debounceFn } from './debounce';
 
 export const LANG_STORE_KEY = 'lang';
 export const LANGS = ['fr', 'en', 'es'] as const;
@@ -19,7 +19,7 @@ const createLang = () => {
     _setLang(newLang);
   };
 
-  const debounce = createDebounce(setLang, 350);
+  const debounce = debounceFn(setLang, 350);
 
   return [lang, debounce] as const;
 };

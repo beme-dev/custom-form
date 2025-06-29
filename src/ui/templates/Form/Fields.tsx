@@ -4,11 +4,17 @@ import { CreateField } from './CreateField';
 import { useIntl } from './signals';
 import type { Field } from './types';
 
-export const Fields: Component<{
+type Props = {
   fields: Accessor<Field[]>;
   updateField: (index: number, field: Field) => void;
   removeField: (index: number) => void;
-}> = ({ fields, updateField, removeField }) => {
+};
+
+export const Fields: Component<Props> = ({
+  fields,
+  updateField,
+  removeField,
+}) => {
   const INTL = useIntl();
 
   return (

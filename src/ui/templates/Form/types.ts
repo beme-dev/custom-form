@@ -16,7 +16,7 @@ export type Field = {
 
 export type FieldTypes = Record<Lang, Record<FieldType, string>>;
 
-type _Intl = {
+export type _Intl = {
   title: string;
   description: string;
   addField: string;

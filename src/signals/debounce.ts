@@ -1,6 +1,6 @@
 import { createSignal, type Accessor, type Setter } from 'solid-js';
 
-export function createDebounce<T>(action: (arg: T) => void, ms = 1000) {
+export function debounceFn<T>(action: (arg: T) => void, ms = 1000) {
   let timerHandle: NodeJS.Timeout;
 
   const debounce = (value: T) => {
@@ -52,7 +52,7 @@ export function createDebounceSignal<T>(start: T, options?: Options<T>) {
     _setSignal(value as any);
   };
 
-  const debounce = createDebounce<T>(setSignal, ms);
+  const debounce = debounceFn<T>(setSignal, ms);
 
   if (end) {
     const debounce2 = () => {
