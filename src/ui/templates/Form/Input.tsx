@@ -1,16 +1,18 @@
 import { Match, Switch, type Component } from 'solid-js';
+import { select } from '~/services/main';
 import { ColorPicker } from './_inputs/color';
 import { Calendar } from './_inputs/date';
 import { NumberField } from './_inputs/number';
 import { RadioGroup } from './RadioGroup';
 import { Select } from './Select';
-import { hasOptions, useIntl } from './signals';
+import { hasOptions } from './signals';
 import type { Field } from './types';
 
 export const Input: Component<Field> = ({ type, label, options }) => {
-  const INTL = useIntl();
-  const _label = () =>
-    label.trim() === '' ? `(${INTL().question})` : label;
+  const _label = () => {
+    const question = select('intl.question')();
+    return label.trim() === '' ? `(${question})` : label;
+  };
 
   return (
     <div class="flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2 py-8">
@@ -27,7 +29,7 @@ export const Input: Component<Field> = ({ type, label, options }) => {
               <input
                 type={type}
                 class="border p-2 rounded w-full outline-none"
-                placeholder={INTL().answer.placeholder}
+                placeholder={select('intl.answer.placeholder')()}
                 name="answer"
               />
             }

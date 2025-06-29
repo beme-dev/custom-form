@@ -1,24 +1,39 @@
 import {
+  Select as _Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Select as _Select,
 } from '#components/select';
-import { lang, setLang } from '#signals/lang';
 import { onCleanup, type Component } from 'solid-js';
+import { send } from '~/services/main';
+import { debounceFn } from '~/signals/debounce';
 import type { Lang } from '~/utils/types';
-import { LANGS } from '../constants/strings';
+import { LANG_STORE_KEY, LANGS } from '../constants/strings';
+
+const defaultValue = () => {
+  let __lang = (localStorage.getItem(LANG_STORE_KEY) ||
+    navigator.language.substring(0, 2)) as Lang;
+
+  const check = !__lang || !LANGS.includes(__lang as any);
+  if (check) __lang = 'en';
+  return __lang;
+};
 
 export const LangSwitcher: Component = () => {
-  onCleanup(setLang.cancel);
+  const setLang2 = debounceFn(
+    (lang: string) => send({ type: 'CHANGE_LANG', payload: { lang } }),
+    500,
+  );
+
+  onCleanup(setLang2.cancel);
   return (
     <_Select
       options={LANGS as unknown as Lang[]}
-      defaultValue={lang()}
+      defaultValue={defaultValue()}
       placeholder="Votre choix"
       onChange={value => {
-        if (value) setLang(value);
+        if (value) setLang2(value);
       }}
       itemComponent={props => (
         <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>

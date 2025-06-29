@@ -9,16 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as Form2RouteImport } from './routes/form2'
 import { Route as FormRouteImport } from './routes/form'
 import { Route as CountingRouteImport } from './routes/counting'
 import { Route as IndexRouteImport } from './routes/index'
 
-const Form2Route = Form2RouteImport.update({
-  id: '/form2',
-  path: '/form2',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FormRoute = FormRouteImport.update({
   id: '/form',
   path: '/form',
@@ -39,45 +33,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/counting': typeof CountingRoute
   '/form': typeof FormRoute
-  '/form2': typeof Form2Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/counting': typeof CountingRoute
   '/form': typeof FormRoute
-  '/form2': typeof Form2Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/counting': typeof CountingRoute
   '/form': typeof FormRoute
-  '/form2': typeof Form2Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/counting' | '/form' | '/form2'
+  fullPaths: '/' | '/counting' | '/form'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/counting' | '/form' | '/form2'
-  id: '__root__' | '/' | '/counting' | '/form' | '/form2'
+  to: '/' | '/counting' | '/form'
+  id: '__root__' | '/' | '/counting' | '/form'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CountingRoute: typeof CountingRoute
   FormRoute: typeof FormRoute
-  Form2Route: typeof Form2Route
 }
 
 declare module '@tanstack/solid-router' {
   interface FileRoutesByPath {
-    '/form2': {
-      id: '/form2'
-      path: '/form2'
-      fullPath: '/form2'
-      preLoaderRoute: typeof Form2RouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/form': {
       id: '/form'
       path: '/form'
@@ -106,7 +89,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CountingRoute: CountingRoute,
   FormRoute: FormRoute,
-  Form2Route: Form2Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

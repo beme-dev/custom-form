@@ -1,4 +1,5 @@
 import type { Component } from 'solid-js';
+import { select } from '~/services/main';
 import {
   SelectContent,
   SelectItem,
@@ -6,13 +7,13 @@ import {
   SelectValue,
   Select as _Select,
 } from '~/ui/cn/components/ui/select';
-import { useIntl } from './signals';
 import type { Field } from './types';
 
-const INTL = useIntl();
 const Item: Component<{ children: string }> = ({ children }) => {
   const _children =
-    children.trim() === '' ? `(# -> ${INTL().option.invite})` : children;
+    children.trim() === ''
+      ? `(# -> ${select('intl.option.invite')()})`
+      : children;
 
   return <span>{_children}</span>;
 };
@@ -23,7 +24,7 @@ export const Select: Component<{ options?: Field['options'] }> = ({
   return (
     <_Select
       options={options}
-      placeholder={INTL().option.invite}
+      placeholder={select('intl.option.invite')()}
       itemComponent={props => (
         <SelectItem item={props.item}>
           <Item>{props.item.rawValue}</Item>

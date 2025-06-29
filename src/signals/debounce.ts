@@ -1,11 +1,12 @@
 import { createSignal, type Accessor, type Setter } from 'solid-js';
 
-export function debounceFn<T>(action: (arg: T) => void, ms = 1000) {
+type FnV = (...args: any) => void;
+export function debounceFn<T extends FnV>(action: T, ms = 1000) {
   let timerHandle: NodeJS.Timeout;
 
-  const debounce = (value: T) => {
+  const debounce = (...args: Parameters<T>) => {
     clearTimeout(timerHandle);
-    timerHandle = setTimeout(() => action(value), ms);
+    timerHandle = setTimeout(() => action(...args), ms);
   };
   debounce.cancel = () => clearTimeout(timerHandle);
 
@@ -52,7 +53,7 @@ export function createDebounceSignal<T>(start: T, options?: Options<T>) {
     _setSignal(value as any);
   };
 
-  const debounce = debounceFn<T>(setSignal, ms);
+  const debounce = debounceFn(setSignal, ms);
 
   if (end) {
     const debounce2 = () => {

@@ -1,47 +1,29 @@
 import { Accordion } from '#components/accordion';
-import { For, type Accessor, type Component } from 'solid-js';
+import { For, type Component } from 'solid-js';
+import { select, selectFields, send } from '~/services/main';
 import { CreateField } from './CreateField';
-import { useIntl } from './signals';
-import type { Field } from './types';
 
-type Props = {
-  fields: Accessor<Field[]>;
-  updateField: (index: number, field: Field) => void;
-  removeField: (index: number) => void;
-};
-
-export const Fields: Component<Props> = ({
-  fields,
-  updateField,
-  removeField,
-}) => {
-  const INTL = useIntl();
-
+export const Fields: Component = () => {
   return (
     <Accordion collapsible class="">
-      <For each={fields()}>
+      <For each={selectFields()}>
         {(field, index) => (
           <Accordion.Item class="border-0" value={`field-${index()}`}>
             <Accordion.Trigger class="cursor-pointer hover:no-underline">
               <button
                 class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 text-sm active:border-2 active:border-red-800 transition-colors duration-200 box-border"
-                onClick={() => removeField(index())}
+                onClick={() =>
+                  send({ type: 'REMOVE', payload: { index: index() } })
+                }
               >
                 X
               </button>
               <span>
-                {`${INTL().field} ${index() + 1} : ${field.label || '****'}`}
+                {`${select('intl.field')()} ${index() + 1} : ${field.label || '****'}`}
               </span>
             </Accordion.Trigger>
             <Accordion.Content class="p-3">
-              <CreateField
-                field={field}
-                update={field => {
-                  updateField(index(), field);
-                }}
-                index={index()}
-                remove={() => removeField(index())}
-              />
+              <CreateField field={field} index={index} />
             </Accordion.Content>
           </Accordion.Item>
         )}

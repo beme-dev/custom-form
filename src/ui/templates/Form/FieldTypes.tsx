@@ -1,40 +1,57 @@
 import { forwardFocus } from '#molecules/focus';
-import { type Accessor, For } from 'solid-js';
-import { hasOptions, setFocus, toFocus, useTypes } from './signals';
+import { For, type Accessor } from 'solid-js';
+import { context, select } from '~/services/main';
+import { hasOptions, setFocus, toFocus } from './signals';
 import type { FieldType } from './types';
 
 type Props = {
+  index: Accessor<number>;
   type: Accessor<FieldType>;
   setType: (type: FieldType) => void;
-  name: string;
 };
+
+type _Field = { children: string; value: FieldType };
+
+const types = () => {
+  const _types = context(c => c.intl!.types)();
+  return Object.entries(_types).map(([key, children]) => ({
+    value: key,
+    children,
+  })) as _Field[];
+};
+
 export const FieldTypes = forwardFocus(
-  ({ type, setType, name }: Props) => {
-    const types = useTypes();
+  ({ index, type, setType }: Props) => {
+    const name = `${index()}->type`;
 
     return (
       <select
         class="border p-2 rounded mb-2"
-        value={type()}
         name={name}
         onInput={e => {
-          const value = e.target.value as FieldType;
-          setType(value);
-          if (hasOptions(value)) {
+          const type = e.target.value as FieldType;
+          setType(type);
+
+          if (hasOptions(type)) {
             const value = `${name.split('->')[0]}->options->0`;
 
             setFocus(value);
-          }
+          } else setFocus(name);
         }}
       >
         <For each={types()}>
           {option => {
-            return <option {...option} />;
+            return (
+              <option {...option} selected={type() === option.value} />
+            );
           }}
         </For>
       </select>
     );
   },
 
-  ({ type, name }) => !hasOptions(type()) && toFocus() === name,
+  ({ index }) => {
+    const name = `${index()}->type`;
+    return !hasOptions(select('current.type')()) && toFocus() === name;
+  },
 );
