@@ -1,6 +1,6 @@
 import { interpret } from '@bemedev/app-solid';
 import { createMachine } from '@bemedev/app-ts';
-import { deepEqual, typings } from '@bemedev/app-ts/lib/utils';
+import { typings } from '@bemedev/app-ts/lib/utils';
 import { LANG_STORE_KEY, type Lang } from '~/signals/lang';
 import { LANGS } from '~/ui/constants/strings';
 import { type _Intl, type Field } from '~/ui/templates/Form';
@@ -39,7 +39,6 @@ export const mainMachine = createMachine(
       lang: typings.string(),
       intl: typings<_Intl>(),
       fields: typings.array(typings<Field>()),
-      current: typings<Field>(),
     }),
     pContext: {},
     eventsMap: {
@@ -122,5 +121,3 @@ export const { context, select, send, start } = interpret(mainMachine, {
   context: {},
   pContext: {},
 });
-
-export const selectFields = select('fields', (a, b) => deepEqual(a, b));

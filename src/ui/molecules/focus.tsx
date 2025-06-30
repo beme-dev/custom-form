@@ -19,7 +19,9 @@ function _focus<T extends Component<any>>(children: T, focus: FocusFn<T>) {
     let ref: any;
 
     onMount(() => {
-      if (focus(props)) ref?.focus();
+      if (focus(props)) {
+        ref?.focus();
+      }
     });
 
     const Compt = children;
