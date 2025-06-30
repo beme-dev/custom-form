@@ -16,7 +16,7 @@ export const createField = (field?: Field) => {
     if (!newType) return;
     setType(newType);
     const _has = hasOptions(newType);
-    if (_has) setOptions(['']);
+    if (_has) setOptions(prev => prev ?? ['']);
     else setOptions(undefined);
   };
 
