@@ -1,5 +1,6 @@
-import { typings } from '@bemedev/app-ts/lib/utils';
+import { deepEqual, typings } from '@bemedev/app-ts/lib/utils';
 import { createRoot, createSignal, type JSX } from 'solid-js';
+import { select } from '~/services/main';
 import type { Field, FieldType } from './types';
 
 export const createField = (field?: Field) => {
@@ -89,4 +90,10 @@ export const onCaret = (name: string) => {
   };
 
   return out;
+};
+
+export const selectFields = () => {
+  return select('fields', (a, b) => {
+    return deepEqual(a, b);
+  });
 };

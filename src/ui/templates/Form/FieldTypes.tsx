@@ -1,6 +1,6 @@
 import { forwardFocus } from '#molecules/focus';
 import { For, type Accessor } from 'solid-js';
-import { context, select } from '~/services/main';
+import { context } from '~/services/main';
 import { hasOptions, setFocus, toFocus } from './signals';
 import type { FieldType } from './types';
 
@@ -54,10 +54,8 @@ export const FieldTypes = forwardFocus(
     );
   },
 
-  ({ index }) => {
+  ({ index, type }) => {
     const name = `${index()}->type`;
-    return (
-      !hasOptions(select('current.type')()) && toFocus()?.name === name
-    );
+    return !hasOptions(type()) && toFocus()?.name === name;
   },
 );

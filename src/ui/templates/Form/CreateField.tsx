@@ -6,10 +6,10 @@ import {
   type Accessor,
   type Component,
 } from 'solid-js';
-import { context, select, send } from '~/services/main';
+import { select, send } from '~/services/main';
 import { FieldTypes } from './FieldTypes';
 import { FocusTextArea } from './FocusTextArea';
-import { createField, onCaret, setFocus } from './signals';
+import { createField, onCaret, setFocus, toFocus } from './signals';
 import type { Field } from './types';
 
 export const CreateField: Component<{
@@ -45,8 +45,8 @@ export const CreateField: Component<{
       },
     });
 
-  const onInput = debounceFn(_update, 700);
-  const optionD = debounceFn(updateOption, 500);
+  const onInput = debounceFn(_update, 300);
+  const optionD = debounceFn(updateOption, 100);
   onCleanup(() => {
     onInput.cancel();
     optionD.cancel();
@@ -99,8 +99,10 @@ export const CreateField: Component<{
                         // type="text"
                         placeholder={`${select('intl.option.placeholder')()} ${index() + 1}`}
                         name={name}
+                        // tabIndex={index()}
                         value={option}
                         onFocus={onCaret(name)}
+                        autofocus={toFocus()?.name === name}
                         onInput={e => {
                           const value = e.target.value;
 
@@ -110,6 +112,49 @@ export const CreateField: Component<{
                             name,
                             start: e.target.selectionStart,
                           });
+                        }}
+                        onKeyDown={e => {
+                          const checkTab = e.key === 'Tab';
+                          const checkShiftTab = e.shiftKey && checkTab;
+
+                          const hack = () => {
+                            addOption();
+                            _update();
+                            deleteOption(len() - 1);
+                            _update();
+                          };
+
+                          if (checkShiftTab) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            const prevIndex = index() - 1;
+                            if (prevIndex >= 0)
+                              setFocus({
+                                name: `${indexC()}->options->${prevIndex}`,
+                              });
+                            else setFocus({ name: nameQ });
+
+                            hack();
+                          } else if (checkTab) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            const nextIndex = index() + 1;
+                            if (nextIndex < len()) {
+                              setFocus({
+                                name: `${indexC()}->options->${nextIndex}`,
+                              });
+
+                              hack();
+                            } else {
+                              addOption();
+
+                              setFocus({
+                                name: `${indexC()}->options->${nextIndex}`,
+                              });
+
+                              _update();
+                            }
+                          }
                         }}
                       />
                       <button
@@ -121,12 +166,10 @@ export const CreateField: Component<{
                           deleteOption(index());
 
                           // #region Rinit if no options
-                          const checkEmpty = context(c => {
-                            const toCheck = c.current?.options?.length;
-                            return !toCheck || toCheck === 0;
-                          });
+                          const checkEmpty =
+                            !options() || options()?.length === 0;
 
-                          if (checkEmpty()) {
+                          if (checkEmpty) {
                             setType('text');
                             setFocus({ name: nameQ });
                             _update();
