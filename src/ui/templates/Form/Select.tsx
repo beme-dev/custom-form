@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component } from 'solid-js';
 import { select } from '~/services/main';
 import {
   SelectContent,
@@ -7,7 +7,6 @@ import {
   SelectValue,
   Select as _Select,
 } from '~/ui/cn/components/ui/select';
-import type { Field } from './types';
 
 const Item: Component<{ children: string }> = ({ children }) => {
   const _children =
@@ -18,12 +17,18 @@ const Item: Component<{ children: string }> = ({ children }) => {
   return <span>{_children}</span>;
 };
 
-export const Select: Component<{ options?: Field['options'] }> = ({
+export const Select: Component<{ options?: string[] }> = ({
   options = [],
 }) => {
+  const [value, setValue] = createSignal('');
   return (
     <_Select
       options={options}
+      value={value()}
+      onChange={e => {
+        console.log('change', e);
+        if (e) setValue(e);
+      }}
       placeholder={select('context.intl.option.invite')()}
       itemComponent={props => (
         <SelectItem

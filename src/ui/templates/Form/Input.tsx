@@ -28,7 +28,7 @@ export const Input: Component<Field> = ({ type, label, options }) => {
             fallback={
               <input
                 type={type}
-                class="border p-2 rounded w-full outline-none"
+                class="border p-2 rounded w-full outline-none max-w-10/12"
                 placeholder={select('context.intl.answer.placeholder')()}
                 name="answer"
               />

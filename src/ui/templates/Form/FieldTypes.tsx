@@ -1,6 +1,7 @@
 import { forwardFocus } from '#molecules/focus';
-import { For, type Accessor } from 'solid-js';
+import { type Accessor } from 'solid-js';
 import { context } from '~/services/main';
+import { MySelect } from './Select.my';
 import { hasOptions, setFocus, toFocus } from './signals';
 import type { FieldType } from './types';
 
@@ -24,33 +25,31 @@ export const FieldTypes = forwardFocus(
       })) as _Field[];
     };
 
+    const option0 = `${name.split('->')[0]}->options->0`;
+
     return (
-      <>
-        <select
-          class="border p-2 rounded mb-2"
-          name={name}
-          onInput={e => {
-            const type = e.target.value as FieldType;
-            setType(type);
+      <MySelect
+        name={name}
+        data={types()}
+        defaultValue={types().find(t => t.value === type())}
+        labelExtractor={item => item?.children ?? '****'}
+        onChange={({ value }) => {
+          setType(value);
 
-            if (hasOptions(type)) {
-              const value = `${name.split('->')[0]}->options->0`;
-
-              setFocus({ name: value });
-            } else setFocus({ name });
-          }}
-        >
-          <For each={types()}>
-            {option => {
-              const props = {
-                ...option,
-                selected: type() === option.value,
-              };
-              return <option {...props} />;
-            }}
-          </For>
-        </select>
-      </>
+          if (hasOptions(value)) setFocus({ name: option0 });
+          else setFocus({ name });
+        }}
+        classes={{
+          container: 'w-full max-w-md mt-3',
+          panel: 'w-full max-w-md',
+        }}
+        icon={({ selected }) =>
+          selected() && (
+            <span class='text-orange-600 text-xl'>{'  ⎷'}</span>
+          )
+        }
+        equals={(a, b) => a.value === b.value}
+      />
     );
   },
 

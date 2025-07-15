@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from '#components/select';
 import { onCleanup, type Component } from 'solid-js';
-import { send } from '~/services/main';
+import { select, send } from '~/services/main';
 import { debounceFn } from '~/signals/debounce';
 import type { Lang } from '~/utils/types';
 import { LANG_STORE_KEY, LANGS } from '../constants/strings';
@@ -31,7 +31,7 @@ export const LangSwitcher: Component = () => {
     <_Select
       options={LANGS as unknown as Lang[]}
       defaultValue={defaultValue()}
-      placeholder="Votre choix"
+      placeholder={select('context.intl.option.invite')()}
       onChange={value => {
         if (value) setLang2(value);
       }}

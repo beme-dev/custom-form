@@ -45,8 +45,8 @@ export const CreateField: Component<{
       },
     });
 
-  const onInput = debounceFn(_update, 600);
-  const optionD = debounceFn(updateOption, 400);
+  const onInput = debounceFn(_update, 400);
+  const optionD = debounceFn(updateOption, 300);
   onCleanup(() => {
     onInput.cancel();
     optionD.cancel();
@@ -56,10 +56,10 @@ export const CreateField: Component<{
   const nameQ = `${indexC()}->question`;
 
   return (
-    <div class="mb-6 pb-4 flex space-x-3 outline-none">
-      <div>
+    <div class="mb-6 pb-4 flex space-x-3 outline-none w-11/12">
+      <div class="flex-1 flex flex-col space-y-2">
         <FocusTextArea
-          class="border p-2 rounded w-full mb-2 outline-none min-h-9 h-12 max-h-48"
+          class="border p-2 rounded w-full max-w-xl mb-2 outline-none min-h-9 h-12 max-h-48"
           // type="text"
           placeholder={select('context.intl.question')()}
           name={nameQ}
