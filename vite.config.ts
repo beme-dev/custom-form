@@ -6,7 +6,7 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   server: {
-    port: 3101,
+    port: 3000,
   },
   plugins: [
     tsConfigPaths({
@@ -16,4 +16,10 @@ export default defineConfig({
     viteSolid({ ssr: true }),
     tailwindcss(),
   ],
+  build: {
+    rollupOptions: {
+      // Fix for "Cannot add property 0, object is not extensible" error
+      treeshake: false,
+    },
+  },
 });
