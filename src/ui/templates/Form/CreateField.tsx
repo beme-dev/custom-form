@@ -61,7 +61,7 @@ export const CreateField: Component<{
         <FocusTextArea
           class="border p-2 rounded w-full mb-2 outline-none min-h-9 h-12 max-h-48"
           // type="text"
-          placeholder={select('intl.question')()}
+          placeholder={select('context.intl.question')()}
           name={nameQ}
           value={label()}
           // autofocus={autofocus(nameQ)}
@@ -97,7 +97,7 @@ export const CreateField: Component<{
                       <FocusTextArea
                         class="border p-2 rounded outline-none min-h-9 h-12 max-h-48 w-full"
                         // type="text"
-                        placeholder={`${select('intl.option.placeholder')()} ${index() + 1}`}
+                        placeholder={`${select('context.intl.option.placeholder')()} ${index() + 1}`}
                         name={name}
                         // tabIndex={index()}
                         value={option}
@@ -205,7 +205,7 @@ export const CreateField: Component<{
             send({ type: 'REMOVE', payload: { index: indexC() } });
           }}
         >
-          {`${select('intl.delete')()} -`}
+          {`${select('context.intl.delete')()} -`}
         </button>
         <button
           onClick={_update}

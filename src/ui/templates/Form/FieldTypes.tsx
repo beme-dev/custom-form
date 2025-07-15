@@ -12,17 +12,17 @@ type Props = {
 
 type _Field = { children: string; value: FieldType };
 
-const types = () => {
-  const _types = context(c => c.intl!.types)();
-  return Object.entries(_types).map(([key, children]) => ({
-    value: key,
-    children,
-  })) as _Field[];
-};
-
 export const FieldTypes = forwardFocus(
   ({ index, type, setType }: Props) => {
     const name = `${index()}->type`;
+
+    const types = () => {
+      const _types = context(value => value.intl?.types ?? {});
+      return Object.entries(_types()).map(([key, children]) => ({
+        value: key,
+        children,
+      })) as _Field[];
+    };
 
     return (
       <>

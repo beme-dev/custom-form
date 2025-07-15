@@ -14,7 +14,9 @@ export const Route = createFileRoute('/form')({
     return (
       <div class="w-full">
         <div class="w-full flex items-center justify-between px-4 py-2 bg-gray-100 pl-10">
-          <h1 class="text-2xl font-bold mb-4">{select('intl.title')()}</h1>
+          <h1 class="text-2xl font-bold mb-4">
+            {select('context.intl.title')()}
+          </h1>
           <LangSwitcher />
         </div>
         <div class="flex w-full shadow rounded mt-8 divide-x-2 divide-gray-200 p-2 min-h-[80vh]">
@@ -26,7 +28,7 @@ export const Route = createFileRoute('/form')({
                 send('ADD');
               }}
             >
-              {select('intl.addField', (a, b) => a === b)()}
+              {select('context.intl.addField')()}
             </button>
           </div>
           <Inputs />

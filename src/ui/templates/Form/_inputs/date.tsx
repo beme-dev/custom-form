@@ -25,7 +25,7 @@ export const Calendar = () => {
       // onValueChange={({ valueAsString }) => {
       //   console.log(valueAsString);
       // }}
-      locale={select('lang')()}
+      locale={select('context.lang')()}
     >
       <DatePickerContent>
         <DatePickerView view="day">

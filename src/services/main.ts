@@ -1,6 +1,5 @@
 import { interpret } from '@bemedev/app-solid';
-import { createMachine } from '@bemedev/app-ts';
-import { typings } from '@bemedev/app-ts/lib/utils';
+import { createMachine, typings } from '@bemedev/app-ts';
 import { LANG_STORE_KEY, type Lang } from '~/signals/lang';
 import { LANGS } from '~/ui/constants/strings';
 import { type _Intl, type Field } from '~/ui/templates/Form';
@@ -20,50 +19,47 @@ export const mainMachine = createMachine(
           },
           REMOVE: {
             actions: ['remove'],
-            target: '/working/select',
+            // target: '/working/select',
           },
           ADD: {
             actions: ['add'],
-            target: '/working/select',
+            // target: '/working/select',
           },
           UPDATE: {
             actions: 'update',
-            target: '/working/select',
+            // target: '/working/select',
           },
         },
       },
     },
   },
-  {
+  typings({
     context: typings.partial({
-      lang: typings.string(),
-      intl: typings<_Intl>(),
-      fields: typings.array(typings<Field>()),
+      lang: typings.custom<Lang>(),
+      intl: typings.custom<_Intl>(),
+      fields: [typings.custom<Field>()],
+      current: typings.custom<Field>(),
     }),
-    pContext: {},
     eventsMap: {
-      CHANGE_LANG: { lang: typings.string() },
-      REMOVE: { index: typings.number() },
-      ADD: typings.object,
-      UPDATE: {
-        index: typings.number(),
-        value: typings<Field>(),
-      },
+      CHANGE_LANG: { lang: typings.custom<Lang>() },
+      REMOVE: { index: 'number' },
+      ADD: 'primitive',
+      UPDATE: { index: 'number', value: typings.custom<Partial<Field>>() },
     },
-    promiseesMap: {},
-  },
+    // promiseesMap: 'primitive',
+  }),
   { '/': 'idle' },
 ).provideOptions(({ assign }) => ({
   actions: {
     changeLang: assign('context.lang', {
-      CHANGE_LANG: (_, __, { lang }) => {
+      CHANGE_LANG: ({ payload: { lang } }) => {
         localStorage.setItem(LANG_STORE_KEY, lang);
         return lang;
       },
     }),
 
     changeIntl: assign('context.intl', {
-      CHANGE_LANG: (_, __, { lang }) => {
+      CHANGE_LANG: ({ payload: { lang } }) => {
         let intl = (INTL as any)[lang!] as _Intl;
         if (!intl) {
           intl = INTL['en'];
@@ -72,20 +68,22 @@ export const mainMachine = createMachine(
       },
     }),
 
-    add: assign('context.fields', (_, { fields }) => {
+    add: assign('context.fields', ({ context: { fields } }) => {
+      console.warn('fields', fields);
       fields?.push({ label: '', type: 'text' });
       return fields;
     }),
 
     remove: assign('context.fields', {
-      REMOVE: (_, { fields }, { index }) => {
+      REMOVE: ({ context: { fields }, payload: { index } }) => {
         fields?.splice(index, 1);
         return fields;
       },
     }),
 
     update: assign('context.fields', {
-      UPDATE: (_, { fields }, { index, value }) => {
+      UPDATE: ({ context: { fields }, payload: { index, value } }) => {
+        console.warn('fields', fields);
         if (!fields) return;
         fields[index] = { ...fields[index], ...value };
         return fields;
@@ -96,28 +94,26 @@ export const mainMachine = createMachine(
      * Prepare at starting point
      * @returns
      */
-    prepare: () => {
+    prepare: assign('context', () => {
       let lang = (localStorage.getItem(LANG_STORE_KEY) ||
         navigator.language.substring(0, 2)) as Lang;
 
       const check = !lang || !LANGS.includes(lang);
       if (check) lang = 'en';
 
-      const current = { label: '' };
+      const current = { label: '', type: 'text' } as Field;
+      console.warn('current', INTL[lang].types);
 
       return {
-        context: {
-          fields: [structuredClone(current)],
-          current,
-          lang,
-          intl: INTL[lang],
-        },
+        fields: [structuredClone(current)],
+        current,
+        lang,
+        intl: INTL[lang],
       };
-    },
+    }),
   },
 }));
 
 export const { context, select, send, start } = interpret(mainMachine, {
   context: {},
-  pContext: {},
 });

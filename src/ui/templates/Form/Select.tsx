@@ -12,7 +12,7 @@ import type { Field } from './types';
 const Item: Component<{ children: string }> = ({ children }) => {
   const _children =
     children.trim() === ''
-      ? `(# -> ${select('intl.option.invite')()})`
+      ? `(# -> ${select('context.intl.option.invite')()})`
       : children;
 
   return <span>{_children}</span>;
@@ -24,7 +24,7 @@ export const Select: Component<{ options?: Field['options'] }> = ({
   return (
     <_Select
       options={options}
-      placeholder={select('intl.option.invite')()}
+      placeholder={select('context.intl.option.invite')()}
       itemComponent={props => (
         <SelectItem
           item={props.item}
