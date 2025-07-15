@@ -12,7 +12,6 @@
     "rinit": "pnpm run rm && pnpm run config",
     "rinit:off": "pnpm run rm && pnpm run config:off",
     "rm": "pnpx rimraf ./node_modules ./pnpm-lock.yaml",
-    "rollup": "rollup -c",
     "test": "pnpm run test:coverage --no-coverage",
     "test:coverage": "vitest run",
     "build": "vite build",
@@ -56,7 +55,6 @@
   "devDependencies": {
     "@bemedev/build-tests": "^0.1.1",
     "@bemedev/fsf": "^0.8.0",
-    "@bemedev/rollup-config": "^0.1.1",
     "@bemedev/vitest-alias": "^0.0.3",
     "@bemedev/vitest-exclude": "^0.1.1",
     "@bemedev/vitest-extended": "^1.3.6",
