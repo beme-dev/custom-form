@@ -45,8 +45,8 @@ export const CreateField: Component<{
       },
     });
 
-  const onInput = debounceFn(_update, 300);
-  const optionD = debounceFn(updateOption, 100);
+  const onInput = debounceFn(_update, 600);
+  const optionD = debounceFn(updateOption, 400);
   onCleanup(() => {
     onInput.cancel();
     optionD.cancel();
