@@ -10,7 +10,7 @@ import type { Field } from './types';
 
 export const Input: Component<Field> = ({ type, label, options }) => {
   const _label = () => {
-    const question = select('intl.question')();
+    const question = select('context.intl.question')();
     return label.trim() === '' ? `(${question})` : label;
   };
 
@@ -29,7 +29,7 @@ export const Input: Component<Field> = ({ type, label, options }) => {
               <input
                 type={type}
                 class="border p-2 rounded w-full outline-none"
-                placeholder={select('intl.answer.placeholder')()}
+                placeholder={select('context.intl.answer.placeholder')()}
                 name="answer"
               />
             }

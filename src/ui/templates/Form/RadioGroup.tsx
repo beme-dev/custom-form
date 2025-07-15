@@ -17,7 +17,7 @@ export const RadioGroup: Component<{
         {option => {
           const _label = () =>
             option.trim() === ''
-              ? `(${select('intl.option.invite')()})`
+              ? `(${select('context.intl.option.invite')()})`
               : option;
           return (
             <RadioGroupItem value={option} class="flex items-center gap-2">

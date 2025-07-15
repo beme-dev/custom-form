@@ -20,7 +20,7 @@ export const Fields: Component = () => {
                 X
               </button>
               <span>
-                {`${select('intl.field')()} ${index() + 1} : ${field.label || '****'}`}
+                {`${select('context.intl.field')()} ${index() + 1} : ${field.label || '****'}`}
               </span>
             </Accordion.Trigger>
             <Accordion.Content class="p-3">

@@ -1,4 +1,4 @@
-import { deepEqual, typings } from '@bemedev/app-ts/lib/utils';
+import { deepEqual } from '@bemedev/app-ts/lib/utils';
 import { createRoot, createSignal, type JSX } from 'solid-js';
 import { select } from '~/services/main';
 import type { Field, FieldType } from './types';
@@ -63,7 +63,7 @@ type FocusProps = {
 };
 
 export const [toFocus, setFocus] = createRoot(() =>
-  createSignal(typings.undefiny(typings<FocusProps>())),
+  createSignal({} as FocusProps),
 );
 
 export const hasOptions = (type?: FieldType) => {
@@ -93,7 +93,7 @@ export const onCaret = (name: string) => {
 };
 
 export const selectFields = () => {
-  return select('fields', (a, b) => {
+  return select('context.fields', (a, b) => {
     return deepEqual(a, b);
   });
 };

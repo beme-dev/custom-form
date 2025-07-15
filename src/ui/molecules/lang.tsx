@@ -22,7 +22,7 @@ const defaultValue = () => {
 
 export const LangSwitcher: Component = () => {
   const setLang2 = debounceFn(
-    (lang: string) => send({ type: 'CHANGE_LANG', payload: { lang } }),
+    (lang: Lang) => send({ type: 'CHANGE_LANG', payload: { lang } }),
     500,
   );
 
