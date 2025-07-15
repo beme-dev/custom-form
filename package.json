@@ -3,6 +3,10 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chlbri/custom-form"
+  },
   "scripts": {
     "dev": "vite dev",
     "dev:host": "pnpm run dev -- --host",
