@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import { tanstackStart } from '@tanstack/solid-start/plugin/vite';
 import { defineConfig } from 'vite';
 import viteSolid from 'vite-plugin-solid';
@@ -13,6 +14,6 @@ export default defineConfig({
     }),
     tanstackStart({ customViteSolidPlugin: true, target: 'vercel' }),
     viteSolid({ ssr: true }),
-    // tailwindcss(),
+    tailwindcss(),
   ],
 });
