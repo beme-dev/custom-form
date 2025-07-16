@@ -61,6 +61,14 @@ const parseCSV = (
       .split(SEPARATOR)
       .map(value => value.trim().replace(/"/g, ''));
 
+    const checkLength = values.length === headers.length;
+
+    if (!checkLength) {
+      throw new Error(
+        `La ligne ${i + 1} ne correspond pas au nombre d'en-têtes (${headers.length} en-têtes, ${values.length} valeurs)`,
+      );
+    }
+
     const row: CSVData = {};
     headers.forEach((header, index) => {
       const value = values[index];
