@@ -18,7 +18,7 @@ import { PositionSwitcher } from './PositionSwitcher';
 
 const AddButton: Component = () => (
   <button
-    class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-sm active:border-2 active:border-blue-800 transition-colors duration-200 box-border"
+    class='bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-sm active:border-2 active:border-blue-800 transition-colors duration-200 box-border'
     onClick={() => send('ADD')}
   >
     {select('context.intl.addField')()}
@@ -77,7 +77,7 @@ const SwiperTop: Component<{
     <Show when={switcher()} fallback={<_Inputs />}>
       <_Fields />
     </Show>
-    <div class="absolute bg-transparent right-0 top-0 translate-x-1/2 z-50">
+    <div class='absolute bg-transparent right-0 top-0 translate-x-1/2 z-50'>
       <PositionSwitcher onClick={toggle} />
     </div>
   </>
@@ -86,8 +86,8 @@ const SwiperTop: Component<{
 const SwiperBottom: Component<{
   switcher: Accessor<boolean>;
 }> = ({ switcher }) => (
-  <Show when={switcher()} fallback={<_Inputs direction="right" />}>
-    <_Fields direction="right" />
+  <Show when={switcher()} fallback={<_Inputs direction='right' />}>
+    <_Fields direction='right' />
   </Show>
 );
 
@@ -102,7 +102,7 @@ export const SwitchPanels: Component = () => {
   const { switcher, rSwicher, toggle } = useSwitcher();
 
   return (
-    <Resizable class="flex w-full shadow rounded mt-8 divide-x-2 divide-gray-200 p-2 min-h-[80vh]">
+    <Resizable class='flex w-full shadow rounded mt-8 divide-x-2 divide-gray-200 p-2 min-h-[80vh]'>
       <ResizablePanel
         class={
           switcher()

@@ -15,10 +15,10 @@ export const Input: Component<Field> = ({ type, label, options }) => {
   };
 
   return (
-    <div class="flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2 py-8">
+    <div class='flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2 py-8'>
       <label
-        class="block mb-2 font-medium text-gray-700 select-none"
-        for="answer"
+        class='block mb-2 font-medium text-gray-700 select-none'
+        for='answer'
       >
         {_label()}
       </label>
@@ -28,9 +28,9 @@ export const Input: Component<Field> = ({ type, label, options }) => {
             fallback={
               <input
                 type={type}
-                class="border p-2 rounded w-full outline-none max-w-10/12"
+                class='border p-2 rounded w-full outline-none max-w-10/12'
                 placeholder={select('context.intl.answer.placeholder')()}
-                name="answer"
+                name='answer'
               />
             }
           >

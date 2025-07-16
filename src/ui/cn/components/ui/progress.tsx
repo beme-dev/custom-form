@@ -28,8 +28,8 @@ export const Progress = <T extends ValidComponent = 'div'>(
       {...rest}
     >
       {local.children}
-      <ProgressPrimitive.Track class="h-2 overflow-hidden rounded-full bg-primary/20">
-        <ProgressPrimitive.Fill class="h-full w-[--kb-progress-fill-width] bg-primary transition-all duration-500 ease-linear data-[progress=complete]:bg-primary" />
+      <ProgressPrimitive.Track class='h-2 overflow-hidden rounded-full bg-primary/20'>
+        <ProgressPrimitive.Fill class='h-full w-[--kb-progress-fill-width] bg-primary transition-all duration-500 ease-linear data-[progress=complete]:bg-primary' />
       </ProgressPrimitive.Track>
     </ProgressPrimitive>
   );

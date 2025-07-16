@@ -39,14 +39,14 @@ export const LangSwitcher: Component = () => {
         <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
       )}
     >
-      <SelectTrigger class="w-20 mx-auto overflow-hidden cursor-pointer">
-        <div class="w-11/12 text-left truncate">
+      <SelectTrigger class='w-20 mx-auto overflow-hidden cursor-pointer'>
+        <div class='w-11/12 text-left truncate'>
           <SelectValue<string>>
             {({ selectedOption }) => selectedOption()}
           </SelectValue>
         </div>
       </SelectTrigger>
-      <SelectContent class="" />
+      <SelectContent class='' />
     </_Select>
   );
 };

@@ -41,7 +41,7 @@ const HeadLinks: Component = () => {
   });
 
   return (
-    <header class="p-2 flex gap-2 text-lg justify-center w-full space-x-2">
+    <header class='p-2 flex gap-2 text-lg justify-center w-full space-x-2'>
       <For each={LINKS} children={Link} />
     </header>
   );

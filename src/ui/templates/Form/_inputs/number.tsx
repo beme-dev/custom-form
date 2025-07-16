@@ -8,11 +8,11 @@ import {
 
 export const NumberField = () => {
   return (
-    <_NumberField defaultValue={1} minValue={0} class="w-xs mx-auto">
+    <_NumberField defaultValue={1} minValue={0} class='w-xs mx-auto'>
       <NumberFieldGroup>
-        <NumberFieldDecrementTrigger aria-label="Decrement" />
+        <NumberFieldDecrementTrigger aria-label='Decrement' />
         <NumberFieldInput />
-        <NumberFieldIncrementTrigger aria-label="Increment" />
+        <NumberFieldIncrementTrigger aria-label='Increment' />
       </NumberFieldGroup>
     </_NumberField>
   );

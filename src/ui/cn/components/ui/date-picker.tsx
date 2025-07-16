@@ -84,17 +84,17 @@ export const DatePickerViewControl = (
         )}
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          viewBox="0 0 24 24"
+          xmlns='http://www.w3.org/2000/svg'
+          class='h-4 w-4'
+          viewBox='0 0 24 24'
         >
           <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m15 6l-6 6l6 6"
+            fill='none'
+            stroke='currentColor'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            stroke-width='2'
+            d='m15 6l-6 6l6 6'
           />
           <title>Previous</title>
         </svg>
@@ -109,17 +109,17 @@ export const DatePickerViewControl = (
         )}
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          viewBox="0 0 24 24"
+          xmlns='http://www.w3.org/2000/svg'
+          class='h-4 w-4'
+          viewBox='0 0 24 24'
         >
           <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m9 6l6 6l-6 6"
+            fill='none'
+            stroke='currentColor'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            stroke-width='2'
+            d='m9 6l6 6l-6 6'
           />
           <title>Next</title>
         </svg>
@@ -291,17 +291,17 @@ export const DatePickerTrigger = (props: DatePickerTriggerProps) => {
       )}
       {...rest}
     >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
         <g
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          fill='none'
+          stroke='currentColor'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          stroke-width='2'
         >
-          <path d="M8 2v4m8-4v4" />
-          <rect width="18" height="18" x="3" y="4" rx="2" />
-          <path d="M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01" />
+          <path d='M8 2v4m8-4v4' />
+          <rect width='18' height='18' x='3' y='4' rx='2' />
+          <path d='M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01' />
         </g>
         <title>Calendar</title>
       </svg>

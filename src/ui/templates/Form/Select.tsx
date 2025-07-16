@@ -42,12 +42,12 @@ export const Select: Component<{ options?: string[] }> = ({
       )}
     >
       <SelectTrigger
-        class="w-sm mx-auto overflow-hidden"
+        class='w-sm mx-auto overflow-hidden'
         onInput={() => {
           console.log('input');
         }}
       >
-        <div class="w-11/12 text-left truncate">
+        <div class='w-11/12 text-left truncate'>
           <SelectValue<string>
             onInput={() => {
               console.log('input');
@@ -57,7 +57,7 @@ export const Select: Component<{ options?: string[] }> = ({
           </SelectValue>
         </div>
       </SelectTrigger>
-      <SelectContent class="" />
+      <SelectContent class='' />
     </_Select>
   );
 };

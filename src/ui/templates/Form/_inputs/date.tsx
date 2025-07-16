@@ -21,14 +21,14 @@ export const Calendar = () => {
   return (
     <DatePicker
       open
-      class="w-sm mx-auto"
+      class='w-sm mx-auto'
       // onValueChange={({ valueAsString }) => {
       //   console.log(valueAsString);
       // }}
       locale={select('context.lang')()}
     >
       <DatePickerContent>
-        <DatePickerView view="day">
+        <DatePickerView view='day'>
           <DatePickerContext>
             {context => (
               <>
@@ -71,7 +71,7 @@ export const Calendar = () => {
             )}
           </DatePickerContext>
         </DatePickerView>
-        <DatePickerView view="month">
+        <DatePickerView view='month'>
           <DatePickerContext>
             {context => (
               <>
@@ -108,7 +108,7 @@ export const Calendar = () => {
             )}
           </DatePickerContext>
         </DatePickerView>
-        <DatePickerView view="year">
+        <DatePickerView view='year'>
           <DatePickerContext>
             {context => (
               <>
