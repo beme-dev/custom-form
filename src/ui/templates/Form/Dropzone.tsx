@@ -65,7 +65,7 @@ const parseCSV = (
 
     if (!checkLength) {
       throw new Error(
-        `La ligne ${i + 1} ne correspond pas au nombre d'en-têtes (${headers.length} en-têtes, ${values.length} valeurs)`,
+        `La ligne ${i + 1} ne correspond pas au nombre d'en-têtes : (${headers.length} en-têtes, ${values.length} valeurs)`,
       );
     }
 
