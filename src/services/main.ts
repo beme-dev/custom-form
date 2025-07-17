@@ -45,7 +45,10 @@ export const mainMachine = createMachine(
       CHANGE_LANG: { lang: typings.custom<Lang>() },
       REMOVE: { index: 'number' },
       ADD: 'primitive',
-      UPDATE: { index: 'number', value: typings.custom<Partial<Field>>() },
+      UPDATE: {
+        index: 'number',
+        value: typings.partial(typings.custom<Field>()),
+      },
     },
     // promiseesMap: 'primitive',
   }),

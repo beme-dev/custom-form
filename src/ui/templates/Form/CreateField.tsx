@@ -5,12 +5,22 @@ import {
   Show,
   type Accessor,
   type Component,
+  type ComponentProps,
 } from 'solid-js';
 import { select, send } from '~/services/main';
+import CSVDialog from './Dialog';
 import { FieldTypes } from './FieldTypes';
 import { FocusTextArea } from './FocusTextArea';
 import { createField, onCaret, setFocus, toFocus } from './signals';
 import type { Field } from './types';
+
+type Comp = ComponentProps<typeof CSVDialog>['trigger'];
+
+const Trigger: Comp = () => (
+  <span class='px-6 py-3 bg-orange-600 text-white rounded-lg transition-all font-medium shadow-lg active:inset-shadow-sm inset-shadow-orange-800 active:scale-90 active:ring-yellow-900 active:ring-4 select-none'>
+    🚀 Charger mes données CSV
+  </span>
+);
 
 export const CreateField: Component<{
   field: Field;
@@ -54,6 +64,7 @@ export const CreateField: Component<{
   const len = () => options()?.length || -1;
 
   const nameQ = `${indexC()}->question`;
+  const isConditional = () => type() === 'conditional';
 
   return (
     <div class='mb-6 pb-4 flex space-x-3 outline-none w-11/12'>
@@ -85,7 +96,6 @@ export const CreateField: Component<{
             _update();
           }}
         />
-
         <Show when={len() > 0}>
           <div class='mt-4 flex space-x-4 items-start w-full'>
             <div class='space-y-2 w-full'>
@@ -196,6 +206,23 @@ export const CreateField: Component<{
               +
             </button>
           </div>
+        </Show>
+
+        <Show when={isConditional()}>
+          <CSVDialog
+            class='mt-4'
+            trigger={Trigger}
+            title='Importation de données CSV'
+            description='Glissez-déposez votre fichier CSV ou cliquez pour le sélectionner. Les données seront automatiquement analysées et affichées.'
+            onDataLoaded={(data, fileHeaders) => {
+              console.log('Données CSV chargées:', {
+                data,
+                headers: fileHeaders,
+              });
+            }}
+            maxFileSize={10}
+            timeout={2000}
+          />
         </Show>
       </div>
       <div class='flex flex-col space-y-2'>

@@ -1,12 +1,23 @@
 import { cn } from '#cn/utils';
-import { createSignal, For, Show, type Component } from 'solid-js';
+import {
+  createSignal,
+  For,
+  mergeProps,
+  Show,
+  type Component,
+} from 'solid-js';
 import { Motion } from 'solid-motionone';
 
-type CSVData = Record<string, string | number>;
+export type CSVData = Record<string, string | number>;
 
 type DropzoneProps = {
-  onDataLoaded?: (data: CSVData[], headers: string[]) => void;
+  onDataLoaded?: (props: {
+    data: CSVData[];
+    headers: string[];
+    name: string;
+  }) => void;
   onError?: (error: string) => void;
+  onReset?: () => void;
   className?: string;
   maxFileSize?: number; // en MB
   placeholder?: string;
@@ -25,9 +36,7 @@ const DEFAULT_PROPS = {
 const SEPARATOR = ';' as const;
 
 // Fonction pour parser le CSV
-const parseCSV = (
-  text: string,
-): { data: CSVData[]; headers: string[] } => {
+const parseCSV = (text: string) => {
   const lines = text.trim().split('\n');
 
   let firstLineNumber = 0;
@@ -92,13 +101,11 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
   let fileInputRef: HTMLInputElement | undefined;
 
-  const config = {
-    ...DEFAULT_PROPS,
-    ...props,
-  };
+  const config = mergeProps(DEFAULT_PROPS, props);
 
   // Fonction pour traiter le fichier
   const processFile = async (file: File) => {
+    const name = file.name;
     setError(null);
     setIsProcessing(true);
     setFileName(file.name);
@@ -121,13 +128,13 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
       // Lecture du fichier
       const text = await file.text();
-      const { data, headers: fileHeaders } = parseCSV(text);
+      const { data, headers } = parseCSV(text);
 
-      setHeaders(fileHeaders);
+      setHeaders(headers);
       setPreviewData(data.slice(0, 3)); // Aperçu des 3 premières lignes
 
       // Callback avec toutes les données
-      props.onDataLoaded?.(data, fileHeaders);
+      props.onDataLoaded?.({ data, headers, name });
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : config.errorMessage;
@@ -175,6 +182,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
   // Reset du composant
   const reset = () => {
+    setIsProcessing(true);
     setError(null);
     setFileName(null);
     setPreviewData([]);
@@ -182,6 +190,8 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
     if (fileInputRef) {
       fileInputRef.value = '';
     }
+    props.onReset?.();
+    setIsProcessing(false);
   };
 
   return (

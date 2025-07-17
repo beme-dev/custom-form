@@ -15,6 +15,7 @@ export const _FIELDS_TYPES = [
   'image',
   'file',
   'week',
+  'conditional',
 ] as const;
 
 export const INTL: Intl = {
@@ -40,6 +41,7 @@ export const INTL: Intl = {
       image: 'Image',
       file: 'Fichier',
       week: 'Semaine',
+      conditional: 'Conditionnel',
     },
     delete: 'Supprimer',
     question: 'Intitulé de la question',
@@ -66,6 +68,7 @@ export const INTL: Intl = {
       image: 'Image',
       file: 'File',
       week: 'Week',
+      conditional: 'Conditional',
     },
     delete: 'Delete',
     question: 'Question Title',
@@ -92,6 +95,7 @@ export const INTL: Intl = {
       image: 'Imagen',
       file: 'Archivo',
       week: 'Semana',
+      conditional: 'Condicional',
     },
     delete: 'Eliminar',
     question: 'Título de la pregunta',
