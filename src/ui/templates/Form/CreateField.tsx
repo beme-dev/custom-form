@@ -7,7 +7,7 @@ import {
   type Component,
   type ComponentProps,
 } from 'solid-js';
-import { select, send } from '~/services/main';
+import { context, send } from '~/services/main';
 import CSVDialog from './Dialog';
 import { FieldTypes } from './FieldTypes';
 import { FocusTextArea } from './FocusTextArea';
@@ -36,11 +36,17 @@ export const CreateField: Component<{
     deleteOption,
     updateOption,
     setOptions,
+    setData,
+    setMerged,
+    merged,
+    data,
   } = createField();
 
   setType(field.type);
   setLabel(field.label);
   setOptions(field.options);
+  setData(field.data);
+  setMerged(field.merged);
 
   const _update = () =>
     send({
@@ -51,14 +57,18 @@ export const CreateField: Component<{
           label: label(),
           options: options(),
           type: type(),
+          data: data(),
+          merged: merged(),
         },
       },
     });
 
   const onInput = debounceFn(_update, 400);
+  const onInput2 = debounceFn(_update, 5000);
   const optionD = debounceFn(updateOption, 300);
   onCleanup(() => {
     onInput.cancel();
+    onInput2.cancel();
     optionD.cancel();
   });
   const len = () => options()?.length || -1;
@@ -72,7 +82,7 @@ export const CreateField: Component<{
         <FocusTextArea
           class='border p-2 rounded w-full max-w-xl mb-2 outline-none min-h-9 h-12 max-h-48'
           // type="text"
-          placeholder={select('context.intl.question')()}
+          placeholder={context(c => c.intl?.question)()}
           name={nameQ}
           value={label()}
           // autofocus={autofocus(nameQ)}
@@ -107,7 +117,7 @@ export const CreateField: Component<{
                       <FocusTextArea
                         class='border p-2 rounded outline-none min-h-9 h-12 max-h-48 w-full'
                         // type="text"
-                        placeholder={`${select('context.intl.option.placeholder')()} ${index() + 1}`}
+                        placeholder={`${context(c => c.intl?.option.placeholder)()} ${index() + 1}`}
                         name={name}
                         // tabIndex={index()}
                         value={option}
@@ -216,9 +226,12 @@ export const CreateField: Component<{
             description='Glissez-déposez votre fichier CSV ou cliquez pour le sélectionner. Les données seront automatiquement analysées et affichées.'
             onDataLoaded={args => {
               console.log('Données CSV chargées:', args);
+              setData(args.data);
+              setMerged(args.conditions.merged);
+              onInput2();
             }}
             maxFileSize={10}
-            timeout={2000}
+            timeout={5000}
           />
         </Show>
       </div>
@@ -229,7 +242,7 @@ export const CreateField: Component<{
             send({ type: 'REMOVE', payload: { index: indexC() } });
           }}
         >
-          {`${select('context.intl.delete')()} -`}
+          {`${context(c => c.intl?.delete)()} -`}
         </button>
         <button
           onClick={_update}

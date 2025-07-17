@@ -57,14 +57,6 @@ export const CSVDialog: Component<CSVDialogProps> = props => {
   let timer: NodeJS.Timeout;
   const timeout = props.timeout || 0;
 
-  const handleSuccess = () => {
-    // Fermer automatiquement après le chargement réussi
-    if (timeout >= 2000)
-      timer = setTimeout(() => {
-        setIsOpen(false);
-      }, timeout);
-  };
-
   const cleanupTimer = () => {
     if (timer) clearTimeout(timer);
   };
@@ -84,7 +76,7 @@ export const CSVDialog: Component<CSVDialogProps> = props => {
         <DialogTrigger class='outline-none '>
           <props.trigger />
         </DialogTrigger>
-        <DialogContent class='max-w-3xl max-h-[95vh] w-10/12 overflow-y-auto shadow-xl border-4 border-slate-300 dark:border-gray-700'>
+        <DialogContent class='max-w-3xl max-h-[95vh] w-10/12 overflow-y-hidden shadow-xl border-4 border-slate-300 dark:border-gray-700'>
           <DialogHeader>
             <DialogTitle>
               {props.title || 'Importer un fichier CSV'}
@@ -95,14 +87,28 @@ export const CSVDialog: Component<CSVDialogProps> = props => {
             </DialogDescription>
           </DialogHeader>
 
-          <div class='mt-6'>
+          <div
+            class='mt-2'
+            onMouseLeave={() => {
+              if (name())
+                if (timeout >= 2000) {
+                  timer = setTimeout(() => {
+                    setIsOpen(false);
+                  }, timeout);
+                }
+            }}
+            onMouseEnter={() => {
+              cleanupTimer();
+            }}
+          >
             <CSVDropzone
               onDataLoaded={({ data, headers, name, conditions }) => {
                 props.onDataLoaded?.({ data, headers, name, conditions });
                 setName(name);
-                handleSuccess();
               }}
-              onError={props.onError}
+              onError={data => {
+                props.onError?.(data);
+              }}
               maxFileSize={props.maxFileSize}
               className='w-full'
               placeholder={props.placeholder}

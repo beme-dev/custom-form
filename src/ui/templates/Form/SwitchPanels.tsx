@@ -11,7 +11,7 @@ import {
   type ParentComponent,
 } from 'solid-js';
 import { Motion } from 'solid-motionone';
-import { select, send } from '~/services/main';
+import { context, send } from '~/services/main';
 import { Fields } from './Fields';
 import { Inputs } from './Inputs';
 import { PositionSwitcher } from './PositionSwitcher';
@@ -21,7 +21,7 @@ const AddButton: Component = () => (
     class='bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-sm active:border-2 active:border-blue-800 transition-colors duration-200 box-border'
     onClick={() => send('ADD')}
   >
-    {select('context.intl.addField')()}
+    {context(c => c.intl?.addField)()}
   </button>
 );
 

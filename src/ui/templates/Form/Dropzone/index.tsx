@@ -1,10 +1,9 @@
 import { cn } from '#cn/utils';
 import {
-  createEffect,
+  createComputed,
   createSignal,
   For,
   mergeProps,
-  onCleanup,
   Show,
   type Component,
   type JSX,
@@ -30,7 +29,6 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
   const [headers, setHeaders] = createSignal<string[]>([]);
 
   let fileInputRef: HTMLInputElement | undefined;
-  let motionRef: HTMLInputElement | undefined;
 
   const config = mergeProps(DEFAULT_PROPS, props);
 
@@ -79,6 +77,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
   const handleDrop = (e: DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
+    softReset();
 
     const files = e.dataTransfer?.files;
     if (files && files.length > 0) {
@@ -97,17 +96,22 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
   // Clic sur la zone pour ouvrir le sélecteur
   const handleClick = () => {
+    softReset();
     fileInputRef?.click();
   };
 
-  // Reset du composant
-  const reset = () => {
-    setIsProcessing(true);
+  const softReset = () => {
     setError(null);
     setFileName(null);
     setPreviewData([]);
     setHeaders([]);
     setWarnings([]);
+  };
+
+  // Reset du composant
+  const reset = () => {
+    setIsProcessing(true);
+    softReset();
     if (fileInputRef) {
       fileInputRef.value = '';
     }
@@ -129,37 +133,37 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
     'min-width': `${COLUMN_WIDTH * MIN_COLUMN_WIDTH_FACTOR}px`,
   };
 
-  const [motionHeight, setMotionHeight] = createSignal<number | 'auto'>(
-    'auto',
-  );
+  const [motionH, setMotionH] = createSignal(0);
 
-  const observer = new ResizeObserver(entries => {
-    for (const entry of entries) {
-      const height = entry.contentRect.height;
-      setMotionHeight(height);
+  createComputed(() => {
+    const hasError = !!error();
+    const hasFilename = !!fileName() && !hasError;
+    const hasWarnings = warnings().length > 0 && !hasError;
+    const hasFileNameAndWarnings = hasFilename && hasWarnings;
+    if (hasError) {
+      setMotionH(65);
+    } else if (hasFileNameAndWarnings) {
+      setMotionH(480);
+    } else if (hasFilename) {
+      setMotionH(280);
+    } else if (hasWarnings) {
+      setMotionH(200);
+    } else {
+      setMotionH(0);
     }
-  });
-
-  createEffect(() => {
-    if (motionRef) {
-      observer.observe(motionRef);
-      return () => observer.disconnect();
-    }
-  });
-
-  onCleanup(() => {
-    if (motionRef) {
-      observer.unobserve(motionRef);
-    }
-    observer.disconnect();
   });
 
   return (
-    <div class={cn('w-full max-w-2xl mx-auto', props.className)}>
+    <div
+      class={cn(
+        'w-full max-w-2xl mx-auto overflow-hidden',
+        props.className,
+      )}
+    >
       {/* Zone de drop */}
       <Motion
         class={cn(
-          'border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all duration-200',
+          'border-2 border-dashed rounded-lg text-center cursor-pointer transition-all duration-200 m-3',
           isDragOver()
             ? 'border-blue-500 bg-blue-50'
             : 'border-gray-300 hover:border-gray-400',
@@ -171,6 +175,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
         onClick={handleClick}
         animate={{
           scale: isDragOver() ? 1.02 : 1,
+          padding: showAds() ? '1rem' : '2rem',
         }}
         transition={{
           duration: 0.2,
@@ -195,7 +200,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
               : config.placeholder}
           </div>
 
-          <div class='text-sm text-gray-500'>
+          <div class='text-xs text-gray-500'>
             {config.acceptMessage} (max: {config.maxFileSize}MB)
           </div>
         </div>
@@ -205,24 +210,25 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
         <Show when={showAds()}>
           <Motion
             exit={{
-              height: '0%',
+              height: 0,
               transition: {
-                duration: 0.7,
+                duration: 0.4,
                 easing: 'linear',
-                delay: 0.3,
+                delay: 0.4,
               },
             }}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.5, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0, height: motionH() }}
             transition={{ duration: 0.3, easing: 'ease-in-out' }}
-            class='max-h-[90vh] overflow-hidden'
-            ref={motionRef}
+            class='overflow-hidden'
+            style={{ height: `${motionH()}px` }}
           >
             {/* Message d'erreur */}
             <Presence>
               <Show when={error()}>
                 <Motion
-                  class='mt-4 p-4 bg-red-50 border border-red-200 rounded-lg'
+                  class='mt-4 px-4 py-2 bg-red-50 border border-red-200 rounded-lg overflow-x-hidden overflow-y-auto
+                  scrollbar-thin scrollbar-thumb-red-700 scrollbar-hover:scrollbar-thumb-red-900 scrollbar-track-red-100'
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{
@@ -239,11 +245,11 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
             {/* Warnings */}
             <Presence>
-              <Show when={warnings().length > 0}>
+              <Show when={!error() && warnings().length > 0}>
                 <Motion
-                  class='mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg max-h-52 overflow-y-auto'
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  class='mt-2 p-1 bg-yellow-50 border-2 border-yellow-200 rounded-lg'
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
                   exit={{
                     x: '200%',
                   }}
@@ -252,17 +258,19 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
                     easing: 'ease-in-out',
                   }}
                 >
-                  <div class='flex items-center space-x-2'>
-                    <span class='text-yellow-500'>⚠️</span>
-                    <span class='text-yellow-700 text-sm'>
-                      {warnings().length} avertissement(s) :
-                    </span>
+                  <div class='max-h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-700 scrollbar-hover:scrollbar-thumb-yellow-900 scrollbar-track-yellow-100'>
+                    <div class='flex items-center space-x-2'>
+                      <span class='text-yellow-500'>⚠️</span>
+                      <span class='text-yellow-700 text-sm'>
+                        {warnings().length} avertissement(s) :
+                      </span>
+                    </div>
+                    <ul class='mt-2 list-disc list-inside text-xs text-yellow-700 '>
+                      <For each={warnings()}>
+                        {warning => <li>{warning}</li>}
+                      </For>
+                    </ul>
                   </div>
-                  <ul class='mt-2 list-disc list-inside text-xs text-yellow-700 '>
-                    <For each={warnings()}>
-                      {warning => <li>{warning}</li>}
-                    </For>
-                  </ul>
                 </Motion>
               </Show>
             </Presence>
@@ -272,8 +280,8 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
               <Show when={fileName() && !error()}>
                 <Motion
                   class='mt-4 p-4 bg-green-50 border border-green-200 rounded-lg'
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
                   exit={{
                     x: '-200%',
                   }}

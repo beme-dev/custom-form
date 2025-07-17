@@ -12,7 +12,7 @@ const Trigger: Comp = () => (
 
 export const Route = createFileRoute('/dropzone')({
   component: () => (
-    <div class='container mx-auto p-6 max-w-4xl space-y-5'>
+    <div class='container mx-auto p-6 max-w-4xl space-y-5 '>
       <div class=''>
         <h1 class='text-3xl font-bold text-gray-900 mb-2'>Dropzone CSV</h1>
         <p class='text-gray-600'>

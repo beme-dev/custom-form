@@ -1,5 +1,5 @@
 import { createSignal, type Component } from 'solid-js';
-import { select } from '~/services/main';
+import { context } from '~/services/main';
 import {
   SelectContent,
   SelectItem,
@@ -11,15 +11,16 @@ import {
 const Item: Component<{ children: string }> = ({ children }) => {
   const _children =
     children.trim() === ''
-      ? `(# -> ${select('context.intl.option.invite')()})`
+      ? `(# -> ${context(c => c.intl?.option.invite)()})`
       : children;
 
   return <span>{_children}</span>;
 };
 
-export const Select: Component<{ options?: string[] }> = ({
-  options = [],
-}) => {
+export const Select: Component<{
+  options?: string[];
+  onChange?: (e: string | null) => void;
+}> = ({ options = [], onChange }) => {
   const [value, setValue] = createSignal('');
   return (
     <_Select
@@ -28,8 +29,9 @@ export const Select: Component<{ options?: string[] }> = ({
       onChange={e => {
         console.log('change', e);
         if (e) setValue(e);
+        onChange?.(e);
       }}
-      placeholder={select('context.intl.option.invite')()}
+      placeholder={context(c => c.intl?.option.invite)()}
       itemComponent={props => (
         <SelectItem
           item={props.item}

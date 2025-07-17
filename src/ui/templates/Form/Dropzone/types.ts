@@ -1,3 +1,5 @@
+import type { types } from '@bemedev/types';
+
 export type CSVData = Record<string, string | number>;
 
 export type DropzoneProps = {
@@ -21,7 +23,6 @@ export type Conditions = {
   warnings: string[];
 };
 
-
 export type ParsedCSV = {
   data: CSVData[];
   headers: string[];
@@ -35,5 +36,5 @@ export type CSVDataDeep =
   | CsvDataMap;
 
 interface CsvDataMap {
-  [key: string]: CSVDataDeep;
+  [key: types.Keys]: CSVDataDeep;
 }

@@ -129,3 +129,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredstrategy: 'pseudoelements';
+}

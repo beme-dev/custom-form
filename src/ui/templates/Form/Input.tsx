@@ -1,6 +1,7 @@
 import { Match, Switch, type Component } from 'solid-js';
-import { select } from '~/services/main';
+import { context } from '~/services/main';
 import { ColorPicker } from './_inputs/color';
+import { ConditionalField } from './_inputs/conditional';
 import { Calendar } from './_inputs/date';
 import { NumberField } from './_inputs/number';
 import { RadioGroup } from './RadioGroup';
@@ -8,9 +9,14 @@ import { Select } from './Select';
 import { hasOptions } from './signals';
 import type { Field } from './types';
 
-export const Input: Component<Field> = ({ type, label, options }) => {
+export const Input: Component<Field> = ({
+  type,
+  label,
+  options,
+  merged,
+}) => {
   const _label = () => {
-    const question = select('context.intl.question')();
+    const question = context(c => c.intl?.question)();
     return label.trim() === '' ? `(${question})` : label;
   };
 
@@ -29,7 +35,7 @@ export const Input: Component<Field> = ({ type, label, options }) => {
               <input
                 type={type}
                 class='border p-2 rounded w-full outline-none max-w-10/12'
-                placeholder={select('context.intl.answer.placeholder')()}
+                placeholder={context(c => c.intl?.answer?.placeholder)()}
                 name='answer'
               />
             }
@@ -42,6 +48,9 @@ export const Input: Component<Field> = ({ type, label, options }) => {
             </Match>
             <Match when={type === 'number'}>
               <NumberField />
+            </Match>
+            <Match when={type === 'conditional'}>
+              <ConditionalField merged={merged} />
             </Match>
           </Switch>
         </Match>

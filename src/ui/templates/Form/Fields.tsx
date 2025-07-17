@@ -1,12 +1,12 @@
 import { Accordion } from '#components/accordion';
 import { For, type Component } from 'solid-js';
-import { select, send } from '~/services/main';
+import { context, send } from '~/services/main';
 import { CreateField } from './CreateField';
 
 export const Fields: Component = () => {
   return (
     <Accordion collapsible class=''>
-      <For each={select('context.fields')()}>
+      <For each={context(c => c.fields)()}>
         {(field, index) => (
           <Accordion.Item class='border-0' value={`field-${index()}`}>
             <Accordion.Trigger class='cursor-pointer hover:no-underline'>
@@ -19,7 +19,7 @@ export const Fields: Component = () => {
                 X
               </button>
               <span>
-                {`${select('context.intl.field')()} ${index() + 1} : ${field.label || '****'}`}
+                {`${context(c => c.intl?.field)()} ${index() + 1} : ${field.label || '****'}`}
               </span>
             </Accordion.Trigger>
             <Accordion.Content class='pt-3'>

@@ -1,6 +1,6 @@
 import type { Lang } from '~/utils/types';
 import type { _FIELDS_TYPES } from './constants';
-import type { CSVData } from './Dropzone/types';
+import type { CSVData, CSVDataDeep } from './Dropzone/types';
 
 export type FieldType = (typeof _FIELDS_TYPES)[number];
 
@@ -9,11 +9,12 @@ export type Option = {
   value: string;
 };
 
-export type Field<T extends CSVData = CSVData> = {
+export type Field = {
   label: string;
   type?: FieldType;
   options?: string[];
-  data?: T[];
+  data?: CSVData[];
+  merged?: CSVDataDeep;
 };
 
 export type FieldTypes = Record<Lang, Record<FieldType, string>>;
