@@ -35,6 +35,9 @@ const DEFAULT_PROPS = {
 
 const SEPARATOR = ';' as const;
 
+//TODO: Calculate depth
+//TODO: Merge conditions
+//TODO: Create the conditonal Input
 // Fonction pour parser le CSV
 const parseCSV = (text: string) => {
   const lines = text.trim().split('\n');
