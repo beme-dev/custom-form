@@ -7,7 +7,6 @@ import {
   DialogTrigger,
 } from '#cn/components/ui/dialog';
 import {
-  createComputed,
   createSignal,
   onCleanup,
   Show,
@@ -15,7 +14,8 @@ import {
   type Component,
 } from 'solid-js';
 import { cn } from '~/ui/cn/utils';
-import { CSVDropzone, type CSVData } from './Dropzone';
+import { CSVDropzone } from './Dropzone';
+import type { DropzoneProps } from './Dropzone/types';
 
 type CSVDialogProps = {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -23,15 +23,14 @@ type CSVDialogProps = {
   // Propriétés optionnelles pour personnaliser le dialog
   title?: string;
   description?: string;
-  onDataLoaded?: (data: CSVData[], headers: string[]) => void;
-  onError?: (error: string) => void;
+
   maxFileSize?: number;
   placeholder?: string;
   acceptMessage?: string;
   errorMessage?: string;
   class?: string;
   timeout?: number; // Durée avant la fermeture automatique en ms
-};
+} & Pick<DropzoneProps, 'onDataLoaded' | 'onError'>;
 
 const Name: Component<{
   name: Accessor<string | undefined>;
@@ -40,10 +39,6 @@ const Name: Component<{
     const _name = name();
     return _name !== undefined && _name !== '';
   };
-
-  createComputed(() => {
-    console.log('Name computed:', name());
-  });
 
   return (
     <Show when={hasName()}>
@@ -57,8 +52,6 @@ const Name: Component<{
 
 export const CSVDialog: Component<CSVDialogProps> = props => {
   const [isOpen, setIsOpen] = createSignal(false);
-  const [data, setData] = createSignal<CSVData[]>([]);
-  const [headers, setHeaders] = createSignal<string[]>([]);
   const [name, setName] = createSignal<string | undefined>(undefined);
 
   let timer: NodeJS.Timeout;
@@ -91,7 +84,7 @@ export const CSVDialog: Component<CSVDialogProps> = props => {
         <DialogTrigger class='outline-none '>
           <props.trigger />
         </DialogTrigger>
-        <DialogContent class='max-w-3xl max-h-[80vh] w-10/12 overflow-y-auto shadow-xl border-4 border-slate-300 dark:border-gray-700'>
+        <DialogContent class='max-w-3xl max-h-[95vh] w-10/12 overflow-y-auto shadow-xl border-4 border-slate-300 dark:border-gray-700'>
           <DialogHeader>
             <DialogTitle>
               {props.title || 'Importer un fichier CSV'}
@@ -104,10 +97,8 @@ export const CSVDialog: Component<CSVDialogProps> = props => {
 
           <div class='mt-6'>
             <CSVDropzone
-              onDataLoaded={({ data, headers, name }) => {
-                setData(data);
-                setHeaders(headers);
-                props.onDataLoaded?.(data, headers);
+              onDataLoaded={({ data, headers, name, conditions }) => {
+                props.onDataLoaded?.({ data, headers, name, conditions });
                 setName(name);
                 handleSuccess();
               }}
@@ -122,20 +113,6 @@ export const CSVDialog: Component<CSVDialogProps> = props => {
               }}
             />
           </div>
-
-          {/* Informations sur les données chargées */}
-          {data().length > 0 && (
-            <div class='mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg'>
-              <h4 class='font-semibold text-blue-800 mb-2'>
-                Données importées :
-              </h4>
-              <div class='text-sm text-blue-700 space-y-1'>
-                <p>Nombre de lignes : {data().length}</p>
-                <p>Nombre de colonnes : {headers().length}</p>
-                <p>Colonnes : {headers().join(', ')}</p>
-              </div>
-            </div>
-          )}
         </DialogContent>
       </Dialog>
       <Name name={name} />

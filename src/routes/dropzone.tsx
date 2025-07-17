@@ -24,14 +24,10 @@ export const Route = createFileRoute('/dropzone')({
         trigger={Trigger}
         title='Importation de données CSV'
         description='Glissez-déposez votre fichier CSV ou cliquez pour le sélectionner. Les données seront automatiquement analysées et affichées.'
-        onDataLoaded={(data, fileHeaders) => {
-          console.log('Données CSV chargées:', {
-            data,
-            headers: fileHeaders,
-          });
+        onDataLoaded={args => {
+          console.log('Données CSV chargées:', args);
         }}
         maxFileSize={10}
-        timeout={2000}
       />
     </div>
   ),
