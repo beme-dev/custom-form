@@ -23,7 +23,7 @@ export const ConditionalField: Component<{
       <div class='flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2 py-3'>
         <div class='text-lg font-semibold'>
           Conditionnel à {headers?.length ?? 1} niveau
-          {!headers || headers.length === 1 ? '' : 'x'}
+          {headers && headers.length > 1 && 'x'}
         </div>
         <Switch
           fallback={

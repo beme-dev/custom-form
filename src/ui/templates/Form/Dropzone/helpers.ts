@@ -1,5 +1,6 @@
-//TODO: Merge conditions
-//TODO: Create the conditonal Input
+//TODO: Register form infos
+//TODO: add authentication
+//TODO: add databases
 
 import type { types } from '@bemedev/types';
 import { EXTENSIONS, LINE_BREAK, SEPARATOR } from './constants';
