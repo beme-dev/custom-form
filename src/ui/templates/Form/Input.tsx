@@ -21,7 +21,7 @@ export const Input: Component<Field> = ({
   };
 
   return (
-    <div class='flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2 py-8'>
+    <div class='flex flex-col space-y-2 min-w-lg w-11/12 mx-auto px-2 py-8'>
       <label
         class='block mb-2 font-medium text-gray-700 select-none'
         for='answer'

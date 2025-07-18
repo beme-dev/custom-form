@@ -6,6 +6,7 @@ import {
   Switch,
   type Component,
 } from 'solid-js';
+import { logIndex } from '../Dropzone/helpers';
 import { Select } from '../Select';
 
 export const ConditionalField: Component<{
@@ -14,6 +15,8 @@ export const ConditionalField: Component<{
 }> = ({ merged, headers }) => {
   const isArray = () =>
     merged && Array.isArray(merged) && merged.length > 0;
+  const title = headers?.[0] ?? 'Sélection';
+  const length = headers?.length ?? 1;
 
   return (
     <Show when={merged}>
@@ -24,11 +27,21 @@ export const ConditionalField: Component<{
         </div>
         <Switch
           fallback={
-            <RecursiveConditional merged={merged} headers={headers} />
+            <RecursiveConditional
+              merged={merged}
+              headers={headers}
+              index={0}
+              length={length}
+            />
           }
         >
           <Match when={isArray()}>
-            <Select options={merged} />
+            <Selector
+              title={title}
+              options={merged}
+              index={0}
+              length={length}
+            />
           </Match>
         </Switch>
       </div>
@@ -36,7 +49,12 @@ export const ConditionalField: Component<{
   );
 };
 
-const createRecursive = (merged?: any, headers?: string[]) => {
+const createRecursive = (
+  index: number,
+  length: number,
+  merged?: any,
+  headers?: string[],
+) => {
   // Si merged est un objet, on affiche un Select pour les clés
   const options = Object.keys(merged ?? {});
   const [next, setNext] = createSignal<any>(undefined);
@@ -44,7 +62,15 @@ const createRecursive = (merged?: any, headers?: string[]) => {
 
   const fallback = (
     <For each={headers?.slice(1)}>
-      {title => <Selector title={title} disabled />}
+      {(title, index2) => {
+        const args = {
+          title,
+          index: index + index2() + 1,
+          disabled: true,
+          length,
+        };
+        return <Selector {...args} />;
+      }}
     </For>
   );
 
@@ -60,6 +86,9 @@ const createRecursive = (merged?: any, headers?: string[]) => {
   const selectProps = {
     options,
     onChange,
+    title,
+    index,
+    length,
   };
 
   return {
@@ -67,48 +96,59 @@ const createRecursive = (merged?: any, headers?: string[]) => {
     fallback,
     selectProps,
     hasOptions,
-    title,
   };
+};
+
+const Selector: Component<{
+  title: string;
+  index: number;
+  length: number;
+  options?: string[];
+  onChange?: (value: string | null) => void;
+  disabled?: boolean;
+}> = ({ title, options, onChange, disabled, index }) => {
+  console.log('index', index, 'length', length);
+  const _title = `#${logIndex(index + 1, length)} - ${title}`;
+  return (
+    <div class='flex flex-col space-y-2 px-3'>
+      <div class='font-semibold'>{_title}</div>
+      <Select options={options} onChange={onChange} disabled={disabled} />
+    </div>
+  );
 };
 
 const RecursiveConditional: Component<{
   merged?: any;
-  headers?: string[]; // Optional headers prop for future use
-}> = ({ merged, headers }) => {
+  headers?: string[];
+  index: number; // Optional index prop for future use
+  length: number;
+  // Optional headers prop for future use
+}> = ({ merged, headers, index, length }) => {
   // Si merged est un tableau, on affiche le Select final
   if (Array.isArray(merged)) {
     const title = headers?.[0] ?? 'Sélection';
-    return <Selector title={title} options={merged} />;
+    const args = { index, title, options: merged, length };
+    return <Selector {...args} />;
   }
 
-  const { next, fallback, selectProps, hasOptions, title } =
-    createRecursive(merged, headers);
+  const { next, fallback, selectProps, hasOptions } = createRecursive(
+    index,
+    length,
+    merged,
+    headers,
+  );
 
   return (
     <Show when={hasOptions}>
-      <Selector
-        title={title}
-        options={selectProps.options}
-        onChange={selectProps.onChange}
-      />
+      <Selector {...selectProps} />
       <Show when={!!next()} fallback={fallback}>
         <RecursiveConditional
           merged={next()}
           headers={headers?.slice(1)}
+          index={index + 1} // Increment index for recursion
+          length={length}
         />
       </Show>
     </Show>
   );
 };
-
-const Selector: Component<{
-  title: string;
-  options?: string[];
-  onChange?: (value: string | null) => void;
-  disabled?: boolean;
-}> = ({ title, options, onChange, disabled }) => (
-  <div class='flex flex-col space-y-2 p-2'>
-    <div class='font-semibold'>{title}</div>
-    <Select options={options} onChange={onChange} disabled={disabled} />
-  </div>
-);

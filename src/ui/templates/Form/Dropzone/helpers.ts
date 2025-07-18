@@ -147,7 +147,7 @@ type MergeConditions_F = (
   headers: string[],
 ) => Conditions;
 
-const logIndex = (index: number, length: number) => {
+export const logIndex = (index: number, length: number) => {
   const logLen = Math.floor(Math.log10(length));
   const logIndex = Math.floor(Math.log10(index));
 
