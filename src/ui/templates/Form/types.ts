@@ -13,8 +13,11 @@ export type Field = {
   label: string;
   type?: FieldType;
   options?: string[];
-  data?: CSVData[];
-  merged?: CSVDataDeep;
+  data?: {
+    data: CSVData[];
+    headers: string[];
+    merged: CSVDataDeep;
+  };
 };
 
 export type FieldTypes = Record<Lang, Record<FieldType, string>>;

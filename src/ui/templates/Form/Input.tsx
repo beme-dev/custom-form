@@ -13,7 +13,7 @@ export const Input: Component<Field> = ({
   type,
   label,
   options,
-  merged,
+  data,
 }) => {
   const _label = () => {
     const question = context(c => c.intl?.question)();
@@ -50,7 +50,10 @@ export const Input: Component<Field> = ({
               <NumberField />
             </Match>
             <Match when={type === 'conditional'}>
-              <ConditionalField merged={merged} />
+              <ConditionalField
+                merged={data?.merged}
+                headers={data?.headers}
+              />
             </Match>
           </Switch>
         </Match>

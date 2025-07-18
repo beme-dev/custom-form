@@ -8,7 +8,6 @@ export const createField = (field?: Field) => {
   const [type, setType] = createSignal(field?.type || 'text');
   const [options, setOptions] = createSignal(field?.options);
   const [data, setData] = createSignal(field?.data);
-  const [merged, setMerged] = createSignal(field?.merged);
 
   const updateLabel = (newLabel: string) => {
     setLabel(newLabel);
@@ -51,8 +50,7 @@ export const createField = (field?: Field) => {
     type,
     data,
     setType: updateType,
-    merged,
-    setMerged,
+
     options,
     addOption,
     updateOption,

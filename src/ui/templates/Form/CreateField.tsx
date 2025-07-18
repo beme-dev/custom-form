@@ -37,8 +37,6 @@ export const CreateField: Component<{
     updateOption,
     setOptions,
     setData,
-    setMerged,
-    merged,
     data,
   } = createField();
 
@@ -46,7 +44,6 @@ export const CreateField: Component<{
   setLabel(field.label);
   setOptions(field.options);
   setData(field.data);
-  setMerged(field.merged);
 
   const _update = () =>
     send({
@@ -58,7 +55,6 @@ export const CreateField: Component<{
           options: options(),
           type: type(),
           data: data(),
-          merged: merged(),
         },
       },
     });
@@ -226,8 +222,11 @@ export const CreateField: Component<{
             description='Glissez-déposez votre fichier CSV ou cliquez pour le sélectionner. Les données seront automatiquement analysées et affichées.'
             onDataLoaded={args => {
               console.log('Données CSV chargées:', args);
-              setData(args.data);
-              setMerged(args.conditions.merged);
+              setData({
+                data: args.data,
+                headers: args.headers,
+                merged: args.conditions.merged,
+              });
               onInput2();
             }}
             maxFileSize={10}

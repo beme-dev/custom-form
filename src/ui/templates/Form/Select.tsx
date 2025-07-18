@@ -20,8 +20,10 @@ const Item: Component<{ children: string }> = ({ children }) => {
 export const Select: Component<{
   options?: string[];
   onChange?: (e: string | null) => void;
-}> = ({ options = [], onChange }) => {
+  disabled?: boolean;
+}> = ({ options = [], onChange, disabled }) => {
   const [value, setValue] = createSignal('');
+
   return (
     <_Select
       options={options}
@@ -42,9 +44,10 @@ export const Select: Component<{
           <Item>{props.item.rawValue}</Item>
         </SelectItem>
       )}
+      disabled={disabled}
     >
       <SelectTrigger
-        class='w-sm mx-auto overflow-hidden'
+        class='w-sm mx-auto overflow-hidden cursor-pointer'
         onInput={() => {
           console.log('input');
         }}
