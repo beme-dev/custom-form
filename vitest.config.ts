@@ -9,8 +9,12 @@ export default defineConfig({
   plugins: [
     aliasTs(tsconfig as any),
     exclude({
-      ignoreCoverageFiles: ['**/index.ts', '**/types.ts'],
-      ignoreTestFiles: [],
+      ignoreCoverageFiles: [
+        '**/index.ts',
+        '**/types.ts',
+        './src/__tests__/**',
+      ],
+      ignoreTestFiles: ['./src/__tests__/**'],
     }),
     solid(),
   ],

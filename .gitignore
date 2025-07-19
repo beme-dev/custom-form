@@ -155,3 +155,4 @@ tsconfig.vitest-temp.json
 
 #playwright
 playwright-report
+test=results

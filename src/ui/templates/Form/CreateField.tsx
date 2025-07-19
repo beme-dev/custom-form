@@ -245,6 +245,7 @@ export const CreateField: Component<{
         <button
           onClick={_update}
           class='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 text-sm active:border-2 active:border-blue-800 transition-colors duration-200 h-10 max-h-10'
+          name='update-field'
         >
           {'=>'}
         </button>
