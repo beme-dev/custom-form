@@ -13,7 +13,7 @@ export default defineConfig({
       projects: ['./tsconfig.json'],
     }),
     tanstackStart({ customViteSolidPlugin: true, target: 'vercel' }),
-    viteSolid({ ssr: true }),
+    viteSolid({}),
     tailwindcss(),
   ],
 });
