@@ -102,21 +102,22 @@ export const SwitchPanels: Component = () => {
   const { switcher, rSwicher, toggle } = useSwitcher();
 
   return (
-    <Resizable class='flex w-full shadow rounded mt-8 divide-x-2 divide-gray-200 p-2 min-h-[80vh]'>
+    <Resizable class='flex w-full shadow rounded mt-8  p-2 min-h-[80vh]'>
       <ResizablePanel
         class={
           switcher()
-            ? 'min-w-lg mx-auto px-6 py-2 bg-white relative'
+            ? 'min-w-lg px-6 py-2 bg-white relative'
             : 'w-1/3 relative'
         }
       >
         <SwiperTop switcher={switcher} toggle={toggle} />
       </ResizablePanel>
-      <ResizableHandle />
+      <ResizableHandle
+        as='div'
+        class='cursor-col-resize w-1 bg-slate-400 hover:bg-orange-700'
+      />
       <ResizablePanel
-        class={
-          !switcher() ? 'min-w-lg mx-auto px-6 py-2 bg-white' : 'w-1/3'
-        }
+        class={!switcher() ? 'min-w-lg px-6 py-2 bg-white' : 'w-1/3'}
       >
         <SwiperBottom switcher={rSwicher} />
       </ResizablePanel>

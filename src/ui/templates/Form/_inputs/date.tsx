@@ -15,7 +15,7 @@ import {
   DatePickerViewTrigger,
 } from '#components/date-picker';
 import { For } from 'solid-js';
-import { select } from '~/services/main';
+import { context } from '~/services/main';
 
 export const Calendar = () => {
   return (
@@ -25,7 +25,7 @@ export const Calendar = () => {
       // onValueChange={({ valueAsString }) => {
       //   console.log(valueAsString);
       // }}
-      locale={select('context.lang')()}
+      locale={context(c => c.lang)()}
     >
       <DatePickerContent>
         <DatePickerView view='day'>

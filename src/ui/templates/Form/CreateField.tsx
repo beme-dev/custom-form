@@ -60,11 +60,9 @@ export const CreateField: Component<{
     });
 
   const onInput = debounceFn(_update, 400);
-  const onInput2 = debounceFn(_update, 5000);
   const optionD = debounceFn(updateOption, 300);
   onCleanup(() => {
     onInput.cancel();
-    onInput2.cancel();
     optionD.cancel();
   });
   const len = () => options()?.length || -1;
@@ -227,7 +225,6 @@ export const CreateField: Component<{
                 headers: args.headers,
                 merged: args.conditions.merged,
               });
-              onInput2();
             }}
             maxFileSize={10}
             timeout={5000}

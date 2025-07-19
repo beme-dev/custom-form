@@ -1,3 +1,4 @@
+import type { types } from '@bemedev/types';
 import {
   createSignal,
   For,
@@ -7,10 +8,11 @@ import {
   type Component,
 } from 'solid-js';
 import { logIndex } from '../Dropzone/helpers';
+import type { CSVData, Merged } from '../Dropzone/types';
 import { Select } from '../Select';
 
 export const ConditionalField: Component<{
-  merged?: any;
+  merged?: Merged;
   headers?: string[]; // Optional depth prop for future use
 }> = ({ merged, headers }) => {
   const isArray = () =>
@@ -38,7 +40,7 @@ export const ConditionalField: Component<{
           <Match when={isArray()}>
             <Selector
               title={title}
-              options={merged}
+              options={merged as any[]}
               index={0}
               length={length}
             />
@@ -103,22 +105,27 @@ const Selector: Component<{
   title: string;
   index: number;
   length: number;
-  options?: string[];
+  options?: types.ValuesOf<CSVData>[];
   onChange?: (value: string | null) => void;
   disabled?: boolean;
 }> = ({ title, options, onChange, disabled, index }) => {
   console.log('index', index, 'length', length);
   const _title = `#${logIndex(index + 1, length)} - ${title}`;
+  const selectProps = {
+    options: options?.map(String),
+    onChange,
+    disabled,
+  };
   return (
     <div class='flex flex-col space-y-2 px-3'>
       <div class='font-semibold'>{_title}</div>
-      <Select options={options} onChange={onChange} disabled={disabled} />
+      <Select {...selectProps} />
     </div>
   );
 };
 
 const RecursiveConditional: Component<{
-  merged?: any;
+  merged?: Merged;
   headers?: string[];
   index: number; // Optional index prop for future use
   length: number;

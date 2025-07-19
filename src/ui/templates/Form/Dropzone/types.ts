@@ -1,4 +1,5 @@
 import type { types } from '@bemedev/types';
+import type { SingleOrArray } from '@bemedev/types/lib/types/commons.types';
 
 export type CSVData = Record<string, string | number>;
 
@@ -37,4 +38,10 @@ export type CSVDataDeep =
 
 interface CsvDataMap {
   [key: types.Keys]: CSVDataDeep;
+}
+
+export type Merged = SingleOrArray<string> | MergedMap;
+
+interface MergedMap {
+  [key: types.Keys]: Merged;
 }

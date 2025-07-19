@@ -20,15 +20,12 @@ export const mainMachine = createMachine(
           },
           REMOVE: {
             actions: ['remove'],
-            // target: '/working/select',
           },
           ADD: {
             actions: ['add'],
-            // target: '/working/select',
           },
           UPDATE: {
             actions: 'update',
-            // target: '/working/select',
           },
         },
       },
@@ -115,4 +112,4 @@ export const mainMachine = createMachine(
   },
 }));
 
-export const { context, select, send, start } = interpret(mainMachine);
+export const { context, send, start } = interpret(mainMachine);

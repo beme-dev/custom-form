@@ -11,7 +11,7 @@ export const Fields: Component = () => {
           <Accordion.Item class='border-0' value={`field-${index()}`}>
             <Accordion.Trigger class='cursor-pointer hover:no-underline'>
               <button
-                class='bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 text-sm active:border-2 active:border-red-800 transition-colors duration-200 box-border'
+                class='bg-orange-700 text-white size-7 content-center rounded hover:bg-red-700 text-sm active:border-2 active:border-red-800 transition-colors duration-200 box-border'
                 onClick={() =>
                   send({ type: 'REMOVE', payload: { index: index() } })
                 }
