@@ -1,12 +1,13 @@
 import { createFileRoute } from '@tanstack/solid-router';
-import { onMount } from 'solid-js';
-import { context, start } from '~/services/main';
+import { onCleanup, onMount } from 'solid-js';
+import { context, dispose, start } from '~/services/main';
 import { LangSwitcher } from '~/ui/molecules/lang';
 import { SwitchPanels } from '~/ui/templates/Form/SwitchPanels';
 
 export const Route = createFileRoute('/form')({
   component: () => {
     onMount(start);
+    onCleanup(dispose);
 
     return (
       <div class='w-full'>

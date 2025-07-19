@@ -111,4 +111,4 @@ export const mainMachine = createMachine(
   },
 }));
 
-export const { context, send, start } = interpret(mainMachine);
+export const { context, send, start, dispose } = interpret(mainMachine);
