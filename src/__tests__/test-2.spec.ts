@@ -44,4 +44,6 @@ test('01 => Process for extract data from CSV', async ({ page }) => {
   // Vérifier que le champ conditionnel est visible
   await expect(pagee).toBeAttached({ timeout: 1000 });
   await expect(pagee).toBeVisible({ timeout: 0 });
+
+  console.log('Test completed successfully!');
 });
