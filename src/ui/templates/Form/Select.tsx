@@ -34,22 +34,15 @@ export const Select: Component<{
       }}
       placeholder={context(c => c.intl?.option.invite)()}
       itemComponent={props => (
-        <SelectItem
-          item={props.item}
-        >
+        <SelectItem item={props.item}>
           <Item>{props.item.rawValue}</Item>
         </SelectItem>
       )}
       disabled={disabled}
     >
-      <SelectTrigger
-        class='w-sm mx-auto overflow-hidden cursor-pointer'
-        
-      >
+      <SelectTrigger class='w-sm mx-auto overflow-hidden cursor-pointer'>
         <div class='w-11/12 text-left truncate'>
-          <SelectValue<string>
-           
-          >
+          <SelectValue<string>>
             {({ selectedOption }) => selectedOption()}
           </SelectValue>
         </div>

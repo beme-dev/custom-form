@@ -219,7 +219,12 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
               },
             }}
             initial={{ opacity: 0, scale: 0.5, y: -10 }}
-            animate={{ opacity: 1, scale: 1, y: 0, height: motionH() }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              height: `${motionH()}px`,
+            }}
             transition={{ duration: 0.3, easing: 'ease-in-out' }}
             class='overflow-hidden'
             style={{ height: `${motionH()}px` }}

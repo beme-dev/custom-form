@@ -23,6 +23,7 @@
       "#templates/*": ["./src/ui/templates/*"],
       "#organisms/*": ["./src/ui/organisms/*"],
       "#molecules/*": ["./src/ui/molecules/*"],
+      "#atoms/*": ["./src/ui/atoms/*"],
       "#components/*": ["./src/ui/cn/components/ui/*"],
       "#helpers/*": ["./src/ui/helpers/*"],
       "#seo": ["./src/ui/helpers/seo.ts"]
