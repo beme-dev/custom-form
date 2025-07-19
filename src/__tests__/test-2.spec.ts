@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { resolve } from 'path';
 
 test('01 => Process for extract data from CSV', async ({ page }) => {
   await page.goto('/form');
@@ -24,9 +25,14 @@ test('01 => Process for extract data from CSV', async ({ page }) => {
     .nth(2)
     .click();
   // await expect(page.getByText(/Conditionnel/)).toBeVisible();
-  await page.setInputFiles('input[type="file"]', [
-    'X:/github/WORKS/Nouveau dossier/custom-form/src/__tests__/fixtures/countries_cities_districts.csv',
-  ]);
+
+  // Solution alternative sans __dirname
+  const _path = resolve(
+    process.cwd(),
+    'src/__tests__/fixtures/countries_cities_districts.csv',
+  );
+
+  await page.setInputFiles('input[type="file"]', [_path]);
 
   await page.getByLabel('Dismiss').click();
 
