@@ -124,6 +124,10 @@ export const CSVDialog: Component<CSVDialogProps> = ({
                 cleanupTimer();
                 props.onReset?.();
               }}
+              update={args => {
+                setIsOpen(false);
+                return props.update?.(args);
+              }}
             />
           </div>
         </DialogContent>

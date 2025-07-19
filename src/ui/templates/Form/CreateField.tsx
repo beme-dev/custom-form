@@ -230,6 +230,7 @@ export const CreateField: Component<{
             maxFileSize={10}
             timeout={3000}
             data={data()}
+            update={_update}
           />
         </Show>
       </div>
