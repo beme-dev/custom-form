@@ -18,6 +18,12 @@ export type DropzoneProps = {
   }) => void;
   onError?: (error: string) => void;
   onReset?: () => void;
+  update?: (props: {
+    data: CSVData[];
+    headers: string[];
+    name: string;
+    conditions: Conditions;
+  }) => void;
   class?: string;
   maxFileSize?: number; // en MB
   placeholder?: string;

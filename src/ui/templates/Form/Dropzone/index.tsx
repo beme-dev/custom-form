@@ -9,6 +9,7 @@ import {
   type JSX,
 } from 'solid-js';
 import { Motion, Presence } from 'solid-motionone';
+import { context } from '~/services/main';
 import {
   COLUMN_WIDTH,
   DEFAULT_PROPS,
@@ -300,12 +301,30 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
                         {fileName()}
                       </span>
                     </div>
-                    <button
-                      onClick={reset}
-                      class='text-red-600 hover:text-red-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out'
-                    >
-                      ❌ Supprimer
-                    </button>
+                    <div class='flex flex-col space-y-2'>
+                      <button
+                        onClick={reset}
+                        class='text-red-600 hover:text-red-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out'
+                      >
+                        ❌ {context(c => c.intl?.delete)()}
+                      </button>
+                      <button
+                        onClick={() => {
+                          props.update?.({
+                            data: previewData(),
+                            headers: headers(),
+                            name: fileName()!,
+                            conditions: {
+                              merged: {},
+                              warnings: [],
+                            },
+                          });
+                        }}
+                        class='text-green-600 hover:text-green-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out'
+                      >
+                        ✅ {'=>'}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Aperçu des données */}
