@@ -18,13 +18,13 @@ export const Route = createFileRoute('/counting')({
     const decrementBySeven = decrementFn(7);
 
     return (
-      <div class="flex flex-col mt-5 space-y-10">
-        <h1 class="text-3xl text-blue-500">Hello Counters !</h1>
-        <div class="space-x-5">
-          <Btn label="Increment : " onClick={increment} />
-          <Btn label="Increment (+5) : " onClick={incrementByFive} />
-          <Btn label="Decrement : " onClick={decrement} />
-          <Btn label="Decrement by (-7) : " onClick={decrementBySeven} />
+      <div class='flex flex-col mt-5 space-y-10'>
+        <h1 class='text-3xl text-blue-500'>Hello Counters !</h1>
+        <div class='space-x-5'>
+          <Btn label='Increment : ' onClick={increment} />
+          <Btn label='Increment (+5) : ' onClick={incrementByFive} />
+          <Btn label='Decrement : ' onClick={decrement} />
+          <Btn label='Decrement by (-7) : ' onClick={decrementBySeven} />
         </div>
       </div>
     );

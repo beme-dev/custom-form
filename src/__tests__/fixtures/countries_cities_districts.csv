@@ -1,0 +1,126 @@
+Country;City;District
+France;Paris;Montmartre
+France;Paris;Le Marais
+France;Paris;Latin Quarter
+France;Paris;Belleville
+France;Paris;Bercy
+France;Lyon;Presqu'île
+France;Lyon;La Croix-Rousse
+France;Lyon;Confluence
+France;Lyon;Vieux Lyon
+France;Lyon;Part-Dieu
+France;Marseille;Le Panier
+France;Marseille;La Joliette
+France;Marseille;Noailles
+France;Marseille;La Plaine
+France;Marseille;Endoume
+France;Bordeaux;Chartrons
+France;Bordeaux;Saint-Michel
+France;Bordeaux;La Bastide
+France;Bordeaux;Caudéran
+France;Bordeaux;Nansouty
+France;Nice;Vieux Nice
+France;Nice;Cimiez
+France;Nice;Libération
+France;Nice;Riquier
+France;Nice;Fabron
+USA;New York;Manhattan
+USA;New York;Brooklyn
+USA;New York;Queens
+USA;New York;Bronx
+USA;New York;Staten Island
+USA;Los Angeles;Hollywood
+USA;Los Angeles;Venice
+USA;Los Angeles;Downtown
+USA;Los Angeles;Bel Air
+USA;Los Angeles;Echo Park
+USA;Chicago;The Loop
+USA;Chicago;Hyde Park
+USA;Chicago;Lincoln Park
+USA;Chicago;Wicker Park
+USA;Chicago;Chinatown
+USA;Miami;Downtown
+USA;Miami;Wynwood
+USA;Miami;Little Havana
+USA;Miami;Coconut Grove
+USA;Miami;Brickell
+USA;San Francisco;Chinatown
+USA;San Francisco;Mission District
+USA;San Francisco;Nob Hill
+USA;San Francisco;Castro
+USA;San Francisco;SoMa
+Japan;Tokyo;Shibuya
+Japan;Tokyo;Shinjuku
+Japan;Tokyo;Ginza
+Japan;Tokyo;Asakusa
+Japan;Tokyo;Akihabara
+Japan;Osaka;Namba
+Japan;Osaka;Umeda
+Japan;Osaka;Shinsekai
+Japan;Osaka;Tennoji
+Japan;Osaka;Abeno
+Japan;Kyoto;Gion
+Japan;Kyoto;Arashiyama
+Japan;Kyoto;Fushimi
+Japan;Kyoto;Higashiyama
+Japan;Kyoto;Sakyo
+Japan;Nagoya;Sakae
+Japan;Nagoya;Atsuta
+Japan;Nagoya;Naka
+Japan;Nagoya;Nishi
+Japan;Nagoya;Chikusa
+Japan;Sapporo;Susukino
+Japan;Sapporo;Odori
+Japan;Sapporo;Maruyama
+Japan;Sapporo;Teine
+Japan;Sapporo;Shiroishi
+Brazil;São Paulo;Jardins
+Brazil;São Paulo;Moema
+Brazil;São Paulo;Pinheiros
+Brazil;São Paulo;Vila Madalena
+Brazil;São Paulo;Itaim Bibi
+Brazil;Rio de Janeiro;Copacabana
+Brazil;Rio de Janeiro;Ipanema
+Brazil;Rio de Janeiro;Leblon
+Brazil;Rio de Janeiro;Barra da Tijuca
+Brazil;Rio de Janeiro;Botafogo
+Brazil;Brasília;Asa Sul
+Brazil;Brasília;Asa Norte
+Brazil;Brasília;Lago Sul
+Brazil;Brasília;Lago Norte
+Brazil;Brasília;Sudoeste
+Brazil;Salvador;Pelourinho
+Brazil;Salvador;Barra
+Brazil;Salvador;Itapuã
+Brazil;Salvador;Rio Vermelho
+Brazil;Salvador;Pituba
+Brazil;Fortaleza;Meireles
+Brazil;Fortaleza;Aldeota
+Brazil;Fortaleza;Praia de Iracema
+Brazil;Fortaleza;Mucuripe
+Brazil;Fortaleza;Cocó
+South Africa;Johannesburg;Sandton
+South Africa;Johannesburg;Soweto
+South Africa;Johannesburg;Rosebank
+South Africa;Johannesburg;Melville
+South Africa;Johannesburg;Braamfontein
+South Africa;Cape Town;City Bowl
+South Africa;Cape Town;Sea Point
+South Africa;Cape Town;Green Point
+South Africa;Cape Town;Clifton
+South Africa;Cape Town;Camps Bay
+South Africa;Durban;Umhlanga
+South Africa;Durban;Morningside
+South Africa;Durban;Berea
+South Africa;Durban;Glenwood
+South Africa;Durban;Musgrave
+South Africa;Pretoria;Arcadia
+South Africa;Pretoria;Hatfield
+South Africa;Pretoria;Brooklyn
+South Africa;Pretoria;Sunnyside
+South Africa;Pretoria;Waterkloof
+South Africa;Port Elizabeth;Summerstrand
+South Africa;Port Elizabeth;Walmer
+South Africa;Port Elizabeth;Humewood
+South Africa;Port Elizabeth;Newton Park
+South Africa;Port Elizabeth;Central

@@ -15,20 +15,13 @@ import {
   DatePickerViewTrigger,
 } from '#components/date-picker';
 import { For } from 'solid-js';
-import { select } from '~/services/main';
+import { context } from '~/services/main';
 
 export const Calendar = () => {
   return (
-    <DatePicker
-      open
-      class="w-sm mx-auto"
-      // onValueChange={({ valueAsString }) => {
-      //   console.log(valueAsString);
-      // }}
-      locale={select('context.lang')()}
-    >
+    <DatePicker open class='w-sm mx-auto' locale={context(c => c.lang)()}>
       <DatePickerContent>
-        <DatePickerView view="day">
+        <DatePickerView view='day'>
           <DatePickerContext>
             {context => (
               <>
@@ -71,7 +64,7 @@ export const Calendar = () => {
             )}
           </DatePickerContext>
         </DatePickerView>
-        <DatePickerView view="month">
+        <DatePickerView view='month'>
           <DatePickerContext>
             {context => (
               <>
@@ -108,7 +101,7 @@ export const Calendar = () => {
             )}
           </DatePickerContext>
         </DatePickerView>
-        <DatePickerView view="year">
+        <DatePickerView view='year'>
           <DatePickerContext>
             {context => (
               <>

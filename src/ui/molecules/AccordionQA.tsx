@@ -8,8 +8,8 @@ export const Item: Component<
 > = ({ question, answer, index }) => {
   return (
     <AccordionD.Item value={`Item - ${index()}`}>
-      <AccordionD.Trigger class="cursor-pointer" children={question} />
-      <AccordionD.Content class="cursor-pointer" children={answer} />
+      <AccordionD.Trigger class='cursor-pointer' children={question} />
+      <AccordionD.Content class='cursor-pointer' children={answer} />
     </AccordionD.Item>
   );
 };
@@ -18,7 +18,7 @@ export const AccordionQA: Component<{ data: AccordionData[] }> = ({
   data,
 }) => {
   return (
-    <AccordionD collapsible class="mx-auto min-w-md">
+    <AccordionD collapsible class='mx-auto min-w-md'>
       <For
         each={data}
         children={(data, index) => {

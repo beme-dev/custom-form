@@ -4,9 +4,9 @@ import AccordionQA from '~/ui/molecules/AccordionQA';
 export const Route = createFileRoute('/')({
   component: () => {
     return (
-      <div class="w-full flex flex-col space-y-3 mt-5">
-        <h2 class="text-lg font-semibold">About Me</h2>
-        <div class="flex w-full text-left">
+      <div class='w-full flex flex-col space-y-3 mt-5'>
+        <h2 class='text-lg font-semibold'>About Me</h2>
+        <div class='flex w-full text-left'>
           <AccordionQA
             data={[
               {

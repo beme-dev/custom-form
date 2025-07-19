@@ -1,9 +1,11 @@
 import { interpret } from '@bemedev/app-solid';
 import { createMachine, typings } from '@bemedev/app-ts';
-import { LANG_STORE_KEY, type Lang } from '~/signals/lang';
-import { LANGS } from '~/ui/constants/strings';
+import type { SingleOrArrayL } from '@bemedev/app-ts/lib/types';
+import { LANG_STORE_KEY, LANGS } from '~/ui/constants/strings';
 import { type _Intl, type Field } from '~/ui/templates/Form';
 import { INTL } from '~/ui/templates/Form/constants';
+
+export type Lang = (typeof LANGS)[number];
 
 export const mainMachine = createMachine(
   {
@@ -19,15 +21,12 @@ export const mainMachine = createMachine(
           },
           REMOVE: {
             actions: ['remove'],
-            // target: '/working/select',
           },
           ADD: {
             actions: ['add'],
-            // target: '/working/select',
           },
           UPDATE: {
             actions: 'update',
-            // target: '/working/select',
           },
         },
       },
@@ -38,13 +37,16 @@ export const mainMachine = createMachine(
       lang: typings.custom<Lang>(),
       intl: typings.custom<_Intl>(),
       fields: [typings.custom<Field>()],
-      current: typings.custom<Field>(),
+      responses: [typings.custom<SingleOrArrayL<string>>()],
     }),
     eventsMap: {
       CHANGE_LANG: { lang: typings.custom<Lang>() },
       REMOVE: { index: 'number' },
       ADD: 'primitive',
-      UPDATE: { index: 'number', value: typings.custom<Partial<Field>>() },
+      UPDATE: {
+        index: 'number',
+        value: typings.partial(typings.custom<Field>()),
+      },
     },
     // promiseesMap: 'primitive',
   }),
@@ -69,7 +71,6 @@ export const mainMachine = createMachine(
     }),
 
     add: assign('context.fields', ({ context: { fields } }) => {
-      console.warn('fields', fields);
       fields?.push({ label: '', type: 'text' });
       return fields;
     }),
@@ -83,7 +84,6 @@ export const mainMachine = createMachine(
 
     update: assign('context.fields', {
       UPDATE: ({ context: { fields }, payload: { index, value } }) => {
-        console.warn('fields', fields);
         if (!fields) return;
         fields[index] = { ...fields[index], ...value };
         return fields;
@@ -102,11 +102,9 @@ export const mainMachine = createMachine(
       if (check) lang = 'en';
 
       const current = { label: '', type: 'text' } as Field;
-      console.warn('current', INTL[lang].types);
 
       return {
         fields: [structuredClone(current)],
-        current,
         lang,
         intl: INTL[lang],
       };
@@ -114,6 +112,5 @@ export const mainMachine = createMachine(
   },
 }));
 
-export const { context, select, send, start } = interpret(mainMachine, {
-  context: {},
-});
+export const { context, send, start, dispose, value } =
+  interpret(mainMachine);

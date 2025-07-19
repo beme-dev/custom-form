@@ -1,39 +1,45 @@
+import { context, dispose, start, value } from '#main';
+import { LangSwitcher } from '#molecules/lang';
+import { SwitchPanels } from '#templates/Form/SwitchPanels';
 import { createFileRoute } from '@tanstack/solid-router';
-import { onMount } from 'solid-js';
-import { select, send, start } from '~/services/main';
-import { LangSwitcher } from '~/ui/molecules/lang';
-import { Fields } from '~/ui/templates/Form/Fields';
-import { Inputs } from '~/ui/templates/Form/Inputs';
-
-// Définition des types pour les champs du formulaire
+import {
+  createComputed,
+  createSignal,
+  onCleanup,
+  onMount,
+  Show,
+  untrack,
+} from 'solid-js';
+import FullPageSpinner from '~/ui/atoms/FullPageSpinner';
 
 export const Route = createFileRoute('/form')({
+  pendingComponent: FullPageSpinner,
   component: () => {
     onMount(start);
+    onCleanup(dispose);
+
+    const [canStart, _start] = createSignal(false);
+
+    createComputed(() => {
+      const val = value();
+      if (val === 'working') {
+        _start(true);
+        untrack(value);
+      }
+    });
 
     return (
-      <div class="w-full">
-        <div class="w-full flex items-center justify-between px-4 py-2 bg-gray-100 pl-10">
-          <h1 class="text-2xl font-bold mb-4">
-            {select('context.intl.title')()}
-          </h1>
-          <LangSwitcher />
-        </div>
-        <div class="flex w-full shadow rounded mt-8 divide-x-2 divide-gray-200 p-2 min-h-[80vh]">
-          <div class="min-w-lg mx-auto px-6 py-2 bg-white">
-            <Fields />
-            <button
-              class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-sm active:border-2 active:border-blue-800 transition-colors duration-200 box-border"
-              onClick={() => {
-                send('ADD');
-              }}
-            >
-              {select('context.intl.addField')()}
-            </button>
+      <Show when={canStart()} fallback={<FullPageSpinner />}>
+        <div class='w-full'>
+          <div class='w-full flex items-center justify-between px-4 py-2 bg-gray-100 pl-10'>
+            <h1 class='text-2xl font-bold mb-4'>
+              {context(c => c.intl?.title)()}
+            </h1>
+            <LangSwitcher />
           </div>
-          <Inputs />
+          <SwitchPanels />
         </div>
-      </div>
+      </Show>
     );
   },
 });

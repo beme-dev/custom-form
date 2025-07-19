@@ -14,6 +14,7 @@ export const Route = createRootRoute({
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1',
+        lang: 'en',
       },
       ...seo({
         title: 'Custom Form | by @chlbri',
@@ -25,10 +26,10 @@ export const Route = createRootRoute({
     return (
       <>
         <HeadLinks />
-        <main class="p-2 w-full min-h-full text-center">
+        <main class='p-2 w-full min-h-full text-center '>
           <Outlet />
         </main>
-        <TanStackRouterDevtools position="bottom-left" />
+        <TanStackRouterDevtools position='bottom-left' />
       </>
     );
   },

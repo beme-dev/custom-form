@@ -1,12 +1,13 @@
 import { deepEqual } from '@bemedev/app-ts/lib/utils';
 import { createRoot, createSignal, type JSX } from 'solid-js';
-import { select } from '~/services/main';
+import { context } from '~/services/main';
 import type { Field, FieldType } from './types';
 
 export const createField = (field?: Field) => {
   const [label, setLabel] = createSignal(field?.label || '');
   const [type, setType] = createSignal(field?.type || 'text');
   const [options, setOptions] = createSignal(field?.options);
+  const [data, setData] = createSignal(field?.data);
 
   const updateLabel = (newLabel: string) => {
     setLabel(newLabel);
@@ -47,11 +48,14 @@ export const createField = (field?: Field) => {
     label,
     setLabel: updateLabel,
     type,
+    data,
     setType: updateType,
+
     options,
     addOption,
     updateOption,
     setOptions,
+    setData,
     deleteOption,
   };
 };
@@ -93,7 +97,10 @@ export const onCaret = (name: string) => {
 };
 
 export const selectFields = () => {
-  return select('context.fields', (a, b) => {
-    return deepEqual(a, b);
-  });
+  return context(
+    c => c.fields,
+    (a, b) => {
+      return deepEqual(a, b);
+    },
+  );
 };

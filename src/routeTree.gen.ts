@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as FormRouteImport } from './routes/form'
+import { Route as DropzoneRouteImport } from './routes/dropzone'
 import { Route as CountingRouteImport } from './routes/counting'
 import { Route as IndexRouteImport } from './routes/index'
 
 const FormRoute = FormRouteImport.update({
   id: '/form',
   path: '/form',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DropzoneRoute = DropzoneRouteImport.update({
+  id: '/dropzone',
+  path: '/dropzone',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CountingRoute = CountingRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/counting': typeof CountingRoute
+  '/dropzone': typeof DropzoneRoute
   '/form': typeof FormRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/counting': typeof CountingRoute
+  '/dropzone': typeof DropzoneRoute
   '/form': typeof FormRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/counting': typeof CountingRoute
+  '/dropzone': typeof DropzoneRoute
   '/form': typeof FormRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/counting' | '/form'
+  fullPaths: '/' | '/counting' | '/dropzone' | '/form'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/counting' | '/form'
-  id: '__root__' | '/' | '/counting' | '/form'
+  to: '/' | '/counting' | '/dropzone' | '/form'
+  id: '__root__' | '/' | '/counting' | '/dropzone' | '/form'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CountingRoute: typeof CountingRoute
+  DropzoneRoute: typeof DropzoneRoute
   FormRoute: typeof FormRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/solid-router' {
       path: '/form'
       fullPath: '/form'
       preLoaderRoute: typeof FormRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dropzone': {
+      id: '/dropzone'
+      path: '/dropzone'
+      fullPath: '/dropzone'
+      preLoaderRoute: typeof DropzoneRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/counting': {
@@ -88,6 +105,7 @@ declare module '@tanstack/solid-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CountingRoute: CountingRoute,
+  DropzoneRoute: DropzoneRoute,
   FormRoute: FormRoute,
 }
 export const routeTree = rootRouteImport

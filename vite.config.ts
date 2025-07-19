@@ -16,10 +16,4 @@ export default defineConfig({
     viteSolid({ ssr: true }),
     tailwindcss(),
   ],
-  build: {
-    rollupOptions: {
-      // Fix for "Cannot add property 0, object is not extensible" error
-      treeshake: false,
-    },
-  },
 });
