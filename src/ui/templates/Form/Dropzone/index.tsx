@@ -304,7 +304,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
                     <div class='flex flex-col space-y-2'>
                       <button
                         onClick={reset}
-                        class='text-red-600 hover:text-red-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out'
+                        class='text-red-600 hover:text-red-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out cursor-pointer'
                       >
                         ❌ {context(c => c.intl?.delete)()}
                       </button>
@@ -320,7 +320,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
                             },
                           });
                         }}
-                        class='text-green-600 hover:text-green-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out'
+                        class='text-green-600 hover:text-green-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out cursor-pointer'
                       >
                         ✅ {'=>'}
                       </button>
