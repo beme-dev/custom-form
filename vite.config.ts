@@ -12,8 +12,8 @@ export default defineConfig({
     tsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
-    tanstackStart({ customViteSolidPlugin: true, target: 'vercel' }),
     viteSolid({}),
+    tanstackStart({ customViteSolidPlugin: true, target: 'vercel' }),
     tailwindcss(),
   ],
 });
