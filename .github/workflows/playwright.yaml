@@ -22,7 +22,7 @@ jobs:
         run: pnpm run lint
 
       - name: Install Playwright browsers
-        run: pnpx playwright install --with-deps
+        run: pnpx playwright install --with-deps chromium
 
       - name: Run Playwright tests
         run: pnpm run test:e2e

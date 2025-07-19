@@ -20,8 +20,8 @@ export default defineConfig({
   // Configure projects for major browsers
   projects: [
     {
-      name: 'edge',
-      use: { ...devices['Desktop Edge'] },
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
     },
   ],
   webServer: {
