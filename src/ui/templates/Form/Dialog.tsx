@@ -23,14 +23,8 @@ type CSVDialogProps = {
   // Propriétés optionnelles pour personnaliser le dialog
   title?: string;
   description?: string;
-
-  maxFileSize?: number;
-  placeholder?: string;
-  acceptMessage?: string;
-  errorMessage?: string;
-  class?: string;
   timeout?: number; // Durée avant la fermeture automatique en ms
-} & Pick<DropzoneProps, 'onDataLoaded' | 'onError'>;
+} & DropzoneProps;
 
 const Name: Component<{
   name: Accessor<string | undefined>;
@@ -50,9 +44,24 @@ const Name: Component<{
   );
 };
 
-export const CSVDialog: Component<CSVDialogProps> = props => {
+export const CSVDialog: Component<CSVDialogProps> = ({
+  maxFileSize,
+  placeholder,
+  acceptMessage,
+  errorMessage,
+  data,
+  ...props
+}) => {
+  const remainProps = {
+    maxFileSize,
+    placeholder,
+    acceptMessage,
+    errorMessage,
+    data,
+  };
+
   const [isOpen, setIsOpen] = createSignal(false);
-  const [name, setName] = createSignal<string | undefined>(undefined);
+  const [name, setName] = createSignal(data?.name);
 
   let timer: NodeJS.Timeout;
   const timeout = props.timeout || 0;
@@ -102,6 +111,8 @@ export const CSVDialog: Component<CSVDialogProps> = props => {
             }}
           >
             <CSVDropzone
+              class='w-full'
+              {...remainProps}
               onDataLoaded={({ data, headers, name, conditions }) => {
                 props.onDataLoaded?.({ data, headers, name, conditions });
                 setName(name);
@@ -109,13 +120,9 @@ export const CSVDialog: Component<CSVDialogProps> = props => {
               onError={data => {
                 props.onError?.(data);
               }}
-              maxFileSize={props.maxFileSize}
-              className='w-full'
-              placeholder={props.placeholder}
-              acceptMessage={props.acceptMessage}
-              errorMessage={props.errorMessage}
               onReset={() => {
                 cleanupTimer();
+                props.onReset?.();
               }}
             />
           </div>

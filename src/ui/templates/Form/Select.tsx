@@ -29,7 +29,6 @@ export const Select: Component<{
       options={options}
       value={value()}
       onChange={e => {
-        console.log('change', e);
         if (e) setValue(e);
         onChange?.(e);
       }}
@@ -37,9 +36,6 @@ export const Select: Component<{
       itemComponent={props => (
         <SelectItem
           item={props.item}
-          onClick={e => {
-            console.log('click', e.currentTarget.dataset.key, e.type);
-          }}
         >
           <Item>{props.item.rawValue}</Item>
         </SelectItem>
@@ -48,15 +44,11 @@ export const Select: Component<{
     >
       <SelectTrigger
         class='w-sm mx-auto overflow-hidden cursor-pointer'
-        onInput={() => {
-          console.log('input');
-        }}
+        
       >
         <div class='w-11/12 text-left truncate'>
           <SelectValue<string>
-            onInput={() => {
-              console.log('input');
-            }}
+           
           >
             {({ selectedOption }) => selectedOption()}
           </SelectValue>

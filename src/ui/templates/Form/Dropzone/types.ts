@@ -1,9 +1,15 @@
 import type { types } from '@bemedev/types';
 import type { SingleOrArray } from '@bemedev/types/lib/types/commons.types';
+import type { Field } from '../types';
 
 export type CSVData = Record<string, string | number>;
+export type SimpleData = types.NOmit<
+  types.NotUndefined<Field['data']>,
+  'merged'
+>;
 
 export type DropzoneProps = {
+  data?: SimpleData;
   onDataLoaded?: (props: {
     data: CSVData[];
     headers: string[];
@@ -12,7 +18,7 @@ export type DropzoneProps = {
   }) => void;
   onError?: (error: string) => void;
   onReset?: () => void;
-  className?: string;
+  class?: string;
   maxFileSize?: number; // en MB
   placeholder?: string;
   acceptMessage?: string;

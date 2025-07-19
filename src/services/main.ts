@@ -101,7 +101,6 @@ export const mainMachine = createMachine(
       if (check) lang = 'en';
 
       const current = { label: '', type: 'text' } as Field;
-      console.warn('current', INTL[lang].types);
 
       return {
         fields: [structuredClone(current)],

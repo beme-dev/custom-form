@@ -219,15 +219,17 @@ export const CreateField: Component<{
             title='Importation de données CSV'
             description='Glissez-déposez votre fichier CSV ou cliquez pour le sélectionner. Les données seront automatiquement analysées et affichées.'
             onDataLoaded={args => {
-              console.log('Données CSV chargées:', args);
               setData({
                 data: args.data,
                 headers: args.headers,
                 merged: args.conditions.merged,
+                name: args.name,
               });
+              // onInput();
             }}
             maxFileSize={10}
-            timeout={5000}
+            timeout={3000}
+            data={data()}
           />
         </Show>
       </div>

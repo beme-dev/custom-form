@@ -17,16 +17,20 @@ import {
   MIN_COLUMN_WIDTH_FACTOR,
 } from './constants';
 import { mergeConditions, parseCSV, verifyFile } from './helpers';
-import type { CSVData, DropzoneProps } from './types';
+import type { DropzoneProps } from './types';
 
 export const CSVDropzone: Component<DropzoneProps> = props => {
   const [isDragOver, setIsDragOver] = createSignal(false);
   const [isProcessing, setIsProcessing] = createSignal(false);
   const [error, setError] = createSignal<string | null>(null);
   const [warnings, setWarnings] = createSignal<string[]>([]);
-  const [fileName, setFileName] = createSignal<string | null>(null);
-  const [previewData, setPreviewData] = createSignal<CSVData[]>([]);
-  const [headers, setHeaders] = createSignal<string[]>([]);
+  const [fileName, setFileName] = createSignal(props.data?.name);
+
+  const defaultPreviewData = props.data?.data || [];
+  const [previewData, setPreviewData] = createSignal(defaultPreviewData);
+
+  const defaultHeaders = props.data?.headers || [];
+  const [headers, setHeaders] = createSignal<string[]>(defaultHeaders);
 
   let fileInputRef: HTMLInputElement | undefined;
 
@@ -102,7 +106,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
   const softReset = () => {
     setError(null);
-    setFileName(null);
+    setFileName();
     setPreviewData([]);
     setHeaders([]);
     setWarnings([]);
@@ -155,10 +159,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
   return (
     <div
-      class={cn(
-        'w-full max-w-2xl mx-auto overflow-hidden',
-        props.className,
-      )}
+      class={cn('w-full max-w-2xl mx-auto overflow-hidden', props.class)}
     >
       {/* Zone de drop */}
       <Motion

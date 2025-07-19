@@ -19,14 +19,7 @@ import { context } from '~/services/main';
 
 export const Calendar = () => {
   return (
-    <DatePicker
-      open
-      class='w-sm mx-auto'
-      // onValueChange={({ valueAsString }) => {
-      //   console.log(valueAsString);
-      // }}
-      locale={context(c => c.lang)()}
-    >
+    <DatePicker open class='w-sm mx-auto' locale={context(c => c.lang)()}>
       <DatePickerContent>
         <DatePickerView view='day'>
           <DatePickerContext>

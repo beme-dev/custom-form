@@ -17,6 +17,7 @@ export type Field = {
     data: CSVData[];
     headers: string[];
     merged: CSVDataDeep;
+    name: string;
   };
 };
 

@@ -109,7 +109,6 @@ const Selector: Component<{
   onChange?: (value: string | null) => void;
   disabled?: boolean;
 }> = ({ title, options, onChange, disabled, index }) => {
-  console.log('index', index, 'length', length);
   const _title = `#${logIndex(index + 1, length)} - ${title}`;
   const selectProps = {
     options: options?.map(String),
