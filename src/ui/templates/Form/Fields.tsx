@@ -9,7 +9,10 @@ export const Fields: Component = () => {
       <For each={context(c => c.fields)()}>
         {(field, index) => (
           <Accordion.Item class='border-0' value={`field-${index()}`}>
-            <Accordion.Trigger class='cursor-pointer hover:no-underline'>
+            <Accordion.Trigger
+              class='cursor-pointer hover:no-underline'
+              data-testid={`field-${index() + 1}`}
+            >
               <button
                 class='bg-orange-700 text-white size-7 content-center rounded hover:bg-red-700 text-sm active:border-2 active:border-red-800 transition-colors duration-200 box-border'
                 onClick={() =>

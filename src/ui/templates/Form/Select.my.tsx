@@ -107,7 +107,7 @@ export function MySelect<T extends Record<string, unknown>>({
           }
         }}
       >
-        <span>{labelExtractor(current())}</span>
+        {labelExtractor(current())}
         <span class='ml-2'>{opened() ? '▲' : '▼'}</span>
       </button>
       <Presence>
@@ -177,7 +177,7 @@ export function MySelect<T extends Record<string, unknown>>({
                         }
                       }}
                     >
-                      <span children={labelExtractor(option)} />
+                      {labelExtractor(option)}
                       <Icon selected={selected} />
                     </li>
                   );

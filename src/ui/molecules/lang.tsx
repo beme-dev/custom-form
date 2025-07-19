@@ -9,16 +9,7 @@ import { onCleanup, type Component } from 'solid-js';
 import { context, send } from '~/services/main';
 import { debounceFn } from '~/signals/debounce';
 import type { Lang } from '~/utils/types';
-import { LANG_STORE_KEY, LANGS } from '../constants/strings';
-
-const defaultValue = () => {
-  let __lang = (localStorage.getItem(LANG_STORE_KEY) ||
-    navigator.language.substring(0, 2)) as Lang;
-
-  const check = !__lang || !LANGS.includes(__lang as any);
-  if (check) __lang = 'en';
-  return __lang;
-};
+import { LANGS } from '../constants/strings';
 
 export const LangSwitcher: Component = () => {
   const setLang2 = debounceFn(
@@ -30,7 +21,7 @@ export const LangSwitcher: Component = () => {
   return (
     <_Select
       options={LANGS as unknown as Lang[]}
-      defaultValue={defaultValue()}
+      defaultValue={'en' as Lang}
       placeholder={context(c => c.intl?.option.invite)()}
       onChange={value => {
         if (value) setLang2(value);

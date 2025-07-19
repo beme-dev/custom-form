@@ -20,6 +20,7 @@
       "#signals/*": ["./src/signals/*"],
       "#ui/*": ["./src/ui/*"],
       "#cn/*": ["./src/ui/cn/*"],
+      "#main": ["./src/services/main.ts"],
       "#templates/*": ["./src/ui/templates/*"],
       "#organisms/*": ["./src/ui/organisms/*"],
       "#molecules/*": ["./src/ui/molecules/*"],
