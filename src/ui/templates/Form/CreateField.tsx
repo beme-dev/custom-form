@@ -231,6 +231,10 @@ export const CreateField: Component<{
             timeout={3000}
             data={data()}
             update={_update}
+            onReset={() => {
+              setData();
+              _update();
+            }}
           />
         </Show>
       </div>
