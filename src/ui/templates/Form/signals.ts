@@ -1,4 +1,4 @@
-import { deepEqual } from '@bemedev/app-ts/lib/utils';
+import { deepEqual } from '@bemedev/app-ts/lib/utils/index.js';
 import { createRoot, createSignal, type JSX } from 'solid-js';
 import { context } from '~/services/main';
 import type { Field, FieldType } from './types';
