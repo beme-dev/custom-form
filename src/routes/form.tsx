@@ -14,6 +14,8 @@ import FullPageSpinner from '~/ui/atoms/FullPageSpinner';
 
 export const Route = createFileRoute('/form')({
   pendingComponent: FullPageSpinner,
+  wrapInSuspense: true,
+  preload: true,
   component: () => {
     onMount(start);
     onCleanup(dispose);
