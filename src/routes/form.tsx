@@ -13,7 +13,6 @@ import {
 import FullPageSpinner from '~/ui/atoms/FullPageSpinner';
 
 export const Route = createFileRoute('/form')({
-  wrapInSuspense: true,
   errorComponent: () => {
     return (
       <div class='fixed inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center z-50'>
