@@ -13,7 +13,6 @@ import {
 import FullPageSpinner from '~/ui/atoms/FullPageSpinner';
 
 export const Route = createFileRoute('/form')({
-  pendingComponent: FullPageSpinner,
   wrapInSuspense: true,
   errorComponent: () => {
     return (
