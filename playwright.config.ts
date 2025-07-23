@@ -16,6 +16,7 @@ export default defineConfig({
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
   },
+
   globalTimeout: 10 * 60 * 1000, // 10 minutes
   expect: {
     timeout: 10 * 1000, // 10 seconds
