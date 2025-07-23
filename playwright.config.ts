@@ -3,7 +3,6 @@ import { defineConfig, devices } from '@playwright/test';
 const PORT = 5172;
 
 export default defineConfig({
-  // fullyParallel: true,
   testDir: './src/routes',
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
@@ -53,6 +52,7 @@ export default defineConfig({
       name: 'iPad',
     },
   ],
+
   webServer: {
     command: `pnpm run dev --port ${PORT}`,
     port: PORT,
