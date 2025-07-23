@@ -3,9 +3,18 @@ name: Playwright Tests
 on:
   push:
     paths:
-      - 'src/__tests__/**'
+      - 'src/routes/**'
+      - 'src/ui/**'
       - 'playwright.config.ts'
       - 'package.json'
+      - '.github/workflows/playwright.yaml'
+
+  workflow_call:
+    inputs:
+      branch:
+        description: 'Branch to test'
+        required: false
+        type: string
 
 jobs:
   test:
