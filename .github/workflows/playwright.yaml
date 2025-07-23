@@ -9,14 +9,13 @@ on:
       - 'package.json'
       - '.github/workflows/playwright.yaml'
 
-  workflow_call:
+  workflow_dispatch:
     inputs:
       branch:
         description: 'Branch to test'
         required: false
         type: string
-
-  workflow_dispatch:
+        default: 'main' # Default branch to test if not specified
 
 jobs:
   test:
@@ -29,8 +28,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.branch }}
 
       - name: 'Install node'
         uses: actions/setup-node@v4
