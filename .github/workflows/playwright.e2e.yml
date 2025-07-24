@@ -18,23 +18,13 @@ on:
         default: 'main' # Default branch to test if not specified
 
 jobs:
-  cache:
-    runs-on: ubuntu-latest
-    outputs:
-      cache-hit: ${{ steps.cache.outputs.cache-hit }}
-    steps:
-      - name: Cache Docker images.
-        id: cache
-        uses: ScribeMD/docker-cache@0.5.0
-        with:
-          key:
-            docker-${{ runner.os }}-${{ hashFiles('docker-compose.yaml') }}
-
   test:
     runs-on: ubuntu-latest
+
     container:
       image: 'mcr.microsoft.com/playwright:v1.50.0-noble'
       options: '--user root' # run as root to avoid permission issues
+
     env:
       CI: true # signal CI mode to Playwright (often not strictly needed, but good practice)
     steps:
