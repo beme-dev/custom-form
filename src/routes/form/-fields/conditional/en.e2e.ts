@@ -1,3 +1,4 @@
+import { translate } from '~/services/lang';
 import { expect, test } from '../fixtures';
 
 test('#01 => Conditionnal - "en"', async ({
@@ -6,7 +7,6 @@ test('#01 => Conditionnal - "en"', async ({
   FILES,
   locSelect: select,
   selectOption,
-  expand,
 }, { project }) => {
   const locSelect = select('Text');
 
@@ -16,7 +16,6 @@ test('#01 => Conditionnal - "en"', async ({
 
   const inputsTitle = page.getByText(/Conditionnel à 3 niveaux/);
 
-  await test.step('#01.00 => Expand Accordion', () => expand());
 
   await test.step('#01.00 => Click on th select', async () => {
     await expect(locSelect).toBeVisible();
@@ -28,7 +27,7 @@ test('#01 => Conditionnal - "en"', async ({
 
   await test.step('#01.03 => Click on "Charger mes données CSV"', async () => {
     await page
-      .getByRole('button', { name: '🚀 Charger mes données CSV' })
+      .getByRole('button', { name: translate('pages.form.dropzones.csv.buttons.load')('en') })
       .click();
   });
 

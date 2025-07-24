@@ -1,11 +1,3 @@
-export const DEFAULT_PROPS = {
-  maxFileSize: 10, // 10MB par défaut
-  placeholder:
-    'Glissez-déposez votre fichier CSV ici ou cliquez pour sélectionner',
-  acceptMessage: 'Seuls les fichiers CSV sont acceptés',
-  errorMessage: 'Erreur lors du traitement du fichier',
-};
-
 export const SEPARATOR = ';' as const;
 
 export const LINE_BREAK = '\n' as const;

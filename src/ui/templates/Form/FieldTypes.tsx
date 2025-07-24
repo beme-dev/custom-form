@@ -18,6 +18,7 @@ export const FieldTypes = forwardFocus(
     const name = `${index()}->type`;
 
     const types = () => {
+      // Add options to trnslates multiples at same time
       const _types = context(value => value.intl?.types ?? {});
       return Object.entries(_types()).map(([key, children]) => ({
         value: key,

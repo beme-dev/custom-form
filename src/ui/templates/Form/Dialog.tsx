@@ -13,6 +13,8 @@ import {
   type Accessor,
   type Component,
 } from 'solid-js';
+import { translate } from '~/services/lang';
+import { lang } from '~/services/main';
 import { cn } from '~/ui/cn/utils';
 import { CSVDropzone } from './Dropzone';
 import type { DropzoneProps } from './Dropzone/types';
@@ -20,9 +22,7 @@ import type { DropzoneProps } from './Dropzone/types';
 type CSVDialogProps = {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   trigger: Component<{}>;
-  // Propriétés optionnelles pour personnaliser le dialog
-  title?: string;
-  description?: string;
+
   timeout?: number; // Durée avant la fermeture automatique en ms
 } & DropzoneProps;
 
@@ -37,7 +37,9 @@ const Name: Component<{
   return (
     <Show when={hasName()}>
       <div class='p-2 bg-green-50 border border-green-200 rounded-lg w-full text-sm mt-5'>
-        <h4 class='font-semibold text-green-800'>Fichier importé :</h4>
+        <h4 class='font-semibold text-green-800'>
+          {translate('pages.form.dropzones.csv.labels.imported')(lang())}
+        </h4>
         <p class='text-xs text-green-700'>{name()}</p>
       </div>
     </Show>
@@ -46,17 +48,12 @@ const Name: Component<{
 
 export const CSVDialog: Component<CSVDialogProps> = ({
   maxFileSize,
-  placeholder,
-  acceptMessage,
-  errorMessage,
+
   data,
   ...props
 }) => {
   const remainProps = {
     maxFileSize,
-    placeholder,
-    acceptMessage,
-    errorMessage,
     data,
   };
 
@@ -88,11 +85,12 @@ export const CSVDialog: Component<CSVDialogProps> = ({
         <DialogContent class='max-w-3xl max-h-[95vh] w-10/12 overflow-y-hidden shadow-xl border-4 border-slate-300 dark:border-gray-700'>
           <DialogHeader>
             <DialogTitle>
-              {props.title || 'Importer un fichier CSV'}
+              {translate('pages.form.dropzones.csv.labels.title')(lang())}
             </DialogTitle>
             <DialogDescription>
-              {props.description ||
-                "Sélectionnez ou glissez-déposez votre fichier CSV pour l'importer."}
+              {translate('pages.form.dropzones.csv.labels.description')(
+                lang(),
+              )}
             </DialogDescription>
           </DialogHeader>
 

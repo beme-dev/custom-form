@@ -7,7 +7,6 @@ test('Conditionnal - "fr"', async ({
   locSelect: select,
   selectLang,
   selectOption,
-  expand,
 }, { project }) => {
   const locSelect = select('Texte');
 
@@ -17,7 +16,6 @@ test('Conditionnal - "fr"', async ({
 
   const inputsTitle = page.getByText(/Conditionnel à 3 niveaux/);
 
-  await test.step('#00 => Expand Accordion', () => expand());
 
   await test.step('#01 => Select french', () => selectLang('fr'));
 

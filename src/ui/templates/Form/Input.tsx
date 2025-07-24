@@ -1,5 +1,6 @@
 import { Match, Switch, type Component } from 'solid-js';
-import { context } from '~/services/main';
+import { translate } from '~/services/lang';
+import { lang } from '~/services/main';
 import { ColorPicker } from './_inputs/color';
 import { ConditionalField } from './_inputs/conditional';
 import { Calendar } from './_inputs/date';
@@ -16,7 +17,7 @@ export const Input: Component<Field> = ({
   data,
 }) => {
   const _label = () => {
-    const question = context(c => c.intl?.question)();
+    const question = translate('pages.form.labels.question')(lang());
     return label.trim() === '' ? `(${question})` : label;
   };
 
@@ -35,7 +36,9 @@ export const Input: Component<Field> = ({
               <input
                 type={type}
                 class='border p-2 rounded w-full outline-none max-w-10/12'
-                placeholder={context(c => c.intl?.answer?.placeholder)()}
+                placeholder={translate(
+                  'pages.form.inputs.answer.placeholder',
+                )(lang())}
                 name='answer'
               />
             }
@@ -51,7 +54,7 @@ export const Input: Component<Field> = ({
             </Match>
             <Match when={type === 'conditional'}>
               <ConditionalField
-                merged={data?.merged}
+                merged={data?.merged as any}
                 headers={data?.headers}
               />
             </Match>

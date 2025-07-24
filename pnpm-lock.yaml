@@ -17,6 +17,9 @@ importers:
       '@bemedev/app-ts':
         specifier: ^0.8.1
         version: 0.8.1
+      '@bemedev/i18n':
+        specifier: ^0.0.2
+        version: 0.0.2
       '@bemedev/pipe':
         specifier: ^0.0.9
         version: 0.0.9
@@ -395,6 +398,10 @@ packages:
 
   '@bemedev/fsf@0.8.0':
     resolution: {integrity: sha512-9/QvQvO/C6kerBzJocwTQxq3KYiwRLJqg+eGb6DK40O7VxNqSOZJAF6f4lJiZ4dPz893OJRh/4bNEMtqwMGJ+g==}
+
+  '@bemedev/i18n@0.0.2':
+    resolution: {integrity: sha512-NJu2V+lLBuIODYDJIAyCxPO0+ovGJDW0qT2GkeTDraHiuI6Z7AeRL9gRX6ZWihsK64Q/9MKpelECMtPmYlj4DQ==}
+    engines: {node: '>=20'}
 
   '@bemedev/interval2@0.1.3':
     resolution: {integrity: sha512-RWbferVoFH0CkpeNZ7DW2MFdl04clqp4Q9WaiQAqlW8kgsizQltXhy780QDtWkQi+cRLWZ9j/ItYcVJ1nr+vDQ==}
@@ -5467,6 +5474,8 @@ snapshots:
     dependencies:
       '@bemedev/x-guard': 0.2.0
       deepmerge: 4.3.1
+
+  '@bemedev/i18n@0.0.2': {}
 
   '@bemedev/interval2@0.1.3':
     dependencies:

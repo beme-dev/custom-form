@@ -1,6 +1,7 @@
 import { interpret } from '@bemedev/app-solid';
 import { createMachine, typings } from '@bemedev/app-ts';
 import type { SingleOrArrayL } from '@bemedev/app-ts/lib/types/index.js';
+import { createMemo, createRoot } from 'solid-js';
 import { LANG_STORE_KEY, LANGS } from '~/ui/constants/strings';
 import { type _Intl, type Field } from '~/ui/templates/Form';
 import { INTL } from '~/ui/templates/Form/constants';
@@ -114,3 +115,5 @@ export const mainMachine = createMachine(
 
 export const { context, send, start, dispose, value } =
   interpret(mainMachine);
+
+export const lang = createRoot(() => createMemo(context(c => c.lang)));

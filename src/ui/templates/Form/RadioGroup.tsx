@@ -1,5 +1,6 @@
 import { For, type Component } from 'solid-js';
-import { context } from '~/services/main';
+import { translate } from '~/services/lang';
+import { lang } from '~/services/main';
 import {
   RadioGroupItem,
   RadioGroupItemControl,
@@ -17,7 +18,7 @@ export const RadioGroup: Component<{
         {option => {
           const _label = () =>
             option.trim() === ''
-              ? `(${context(c => c.intl?.option.invite)()})`
+              ? `(${translate('pages.form.selects.inputs.invite')(lang())})`
               : option;
           return (
             <RadioGroupItem value={option} class='flex items-center gap-2'>

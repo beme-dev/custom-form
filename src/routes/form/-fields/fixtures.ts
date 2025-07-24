@@ -3,7 +3,6 @@ import { test as baseTest, expect } from '../-fixtures';
 
 const test = baseTest.extend<{
   locSelect: (name: string) => Locator;
-  expand: () => Promise<void>;
   selectOption: (name: string) => Promise<void>;
 }>({
   locSelect: ({ page }, use) => {
@@ -14,6 +13,7 @@ const test = baseTest.extend<{
 
     return use(func);
   },
+
   selectOption: async ({ page, locSelect }, use) => {
     const func = async (name: string) => {
       const locOption = page.getByRole('option', { name });
@@ -27,15 +27,13 @@ const test = baseTest.extend<{
     return use(func);
   },
 
-  expand: async ({ page }, use) => {
-    const func = async () => {
-      const locExpand = page.getByTestId(expandId(1));
-      await locExpand.click({
-        timeout: 10_000,
-      });
-    };
+  page: async ({ page }, use) => {
+    const locExpand = page.getByTestId(expandId(1));
 
-    return use(func);
+    await test.step('#00 => Expand Accordion', () =>
+      locExpand.click({ timeout: 10_000 }));
+
+    return use(page);
   },
 });
 

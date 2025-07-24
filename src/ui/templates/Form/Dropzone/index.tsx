@@ -9,10 +9,9 @@ import {
   type JSX,
 } from 'solid-js';
 import { Motion, Presence } from 'solid-motionone';
-import { context } from '~/services/main';
+import { context, lang } from '~/services/main';
 import {
   COLUMN_WIDTH,
-  DEFAULT_PROPS,
   EXTENSIONS,
   MAX_COLUMN_WIDTH_FACTOR,
   MIN_COLUMN_WIDTH_FACTOR,
@@ -35,7 +34,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
   let fileInputRef: HTMLInputElement | undefined;
 
-  const config = mergeProps(DEFAULT_PROPS, props);
+  const config = mergeProps(props);
 
   // Fonction pour traiter le fichier
   const processFile = async (file: File) => {
@@ -49,13 +48,13 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
       // Lecture du fichier
       const text = await file.text();
-      const { data, headers } = parseCSV(text);
+      const { data, headers } = parseCSV(text, lang());
 
       setHeaders(headers);
       setPreviewData(data.slice(0, 3)); // Aperçu des 3 premières lignes
 
       // Callback avec toutes les données
-      const conditions = mergeConditions(data, headers);
+      const conditions = mergeConditions(data, headers, lang());
       setWarnings(conditions.warnings);
       props.onDataLoaded?.({ data, headers, name, conditions });
     } catch (err) {
@@ -331,7 +330,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
                   <Show when={previewData().length > 0}>
                     <div class='mt-3'>
                       <h4 class='text-sm font-medium text-gray-700 mb-2'>
-                        Aperçu des données ({previewData().length}{' '}
+                        Aperçu des données, ({previewData().length}{' '}
                         premières lignes) :
                       </h4>
                       <div class='overflow-x-auto no-scrollbar rounded-md border-2 border-gray-200 bg-white'>
