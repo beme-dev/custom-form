@@ -26,11 +26,17 @@ jobs:
     env:
       CI: true # signal CI mode to Playwright (often not strictly needed, but good practice)
     steps:
+      - name: Cache Docker images.
+        uses: ScribeMD/docker-cache@0.5.0
+        with:
+          key:
+            docker-${{ runner.os }}-${{ hashFiles('docker-compose.yaml') }}
+
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: 'Install node'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4@
         with:
           node-version: 20
 
