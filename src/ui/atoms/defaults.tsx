@@ -5,7 +5,7 @@ import type {
 } from '@tanstack/solid-router';
 
 export const DefaultError: ErrorRouteComponent = ({ error, info }) => {
-  console.log('Error:', error.stack);
+  console.warn('Error:', error.stack);
   return (
     <div class='w-full h-full flex flex-col space-y-4 p-4 bg-red-100 rounded-xl border-2 border-red-600'>
       <h2 class='text-red-700 text-md font-semibold'>Error :</h2>

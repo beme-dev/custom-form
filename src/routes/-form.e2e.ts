@@ -3,10 +3,9 @@ import { FILES } from '../fixtures/constants';
 
 const void0 = () => void 0; // Placeholder for unused variables
 
-test.beforeEach('#00 => Navigate first to /form', async ({ page }) => {
-  await page.goto('/form');
-  console.log('env', '=>', process.env);
-});
+test.beforeEach('#00 => Navigate first to /form', async ({ page }) =>
+  page.goto('/form'),
+);
 
 const emptyStep = (name: string) => test.step(name, void0);
 
