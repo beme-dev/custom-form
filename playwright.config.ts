@@ -14,6 +14,10 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
+
+    launchOptions: {
+      slowMo: process.env.PLAYWRIGHT_SLOMO === 'true' ? 2500 : 0, // Slow down operations for debugging
+    },
   },
 
   globalTimeout: 10 * 60 * 1000, // 10 minutes

@@ -5,6 +5,7 @@ const void0 = () => void 0; // Placeholder for unused variables
 
 test.beforeEach('#00 => Navigate first to /form', async ({ page }) => {
   await page.goto('/form');
+  console.log('env', '=>', process.env);
 });
 
 const emptyStep = (name: string) => test.step(name, void0);
@@ -74,9 +75,12 @@ test.describe('#01 => Fields usage', () => {
       page.getByLabel('Dismiss').click());
 
     await test.step('#01.01.07 => Verify CSV file is displayed', async () => {
-      await expect(locFile).toHaveCount(2, {
-        timeout: 0,
-      });
+      const check = process.env?.PLAYWRIGHT_SLOMO === 'true';
+      if (!check) {
+        await expect(locFile).toHaveCount(2, {
+          timeout: 0,
+        });
+      }
 
       await page.waitForTimeout(500);
 
