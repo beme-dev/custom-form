@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
+      # Last image, so you don't need to update deps for playwrightso often
       image: 'mcr.microsoft.com/playwright:v1.54.1-noble'
       options: '--user root' # run as root to avoid permission issues
 
