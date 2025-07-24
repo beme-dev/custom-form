@@ -103,7 +103,7 @@ test.describe('#01 => Fields usage', () => {
     });
 
     emptyStep(
-      `#01.11 => Test : Process for extract data from CSV with the device ${project.name} => All tests are completed successfully!`,
+      `#01.11 => Test : Process for extract data from CSV with the device ${project.name} => All tests are completed successfully !`,
     );
   });
 });
