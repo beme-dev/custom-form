@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: 'mcr.microsoft.com/playwright:v1.50.0-noble'
+      image: 'mcr.microsoft.com/playwright:v1.54.1-noble'
       options: '--user root' # run as root to avoid permission issues
 
     env:
@@ -42,16 +42,6 @@ jobs:
         with:
           version: 10
           run_install: true
-
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key:
-            ${{ runner.os }}-playwright-${{
-            hashFiles('**/pnpm-lock.yaml')}}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
 
       - name: lint
         run: pnpm run lint
