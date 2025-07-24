@@ -20,9 +20,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     container:
-      image: 'mcr.microsoft.com/playwright:v1.50.0-noble'
+      # Last image, so you don't need to update deps for playwrightso often
+      image: 'mcr.microsoft.com/playwright:v1.54.1-noble'
       options: '--user root' # run as root to avoid permission issues
+
     env:
       CI: true # signal CI mode to Playwright (often not strictly needed, but good practice)
     steps:
