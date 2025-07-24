@@ -27,7 +27,8 @@
       "#atoms/*": ["./src/ui/atoms/*"],
       "#components/*": ["./src/ui/cn/components/ui/*"],
       "#helpers/*": ["./src/ui/helpers/*"],
-      "#seo": ["./src/ui/helpers/seo.ts"]
+      "#seo": ["./src/ui/helpers/seo.ts"],
+      "#e2e_fixtures": ["src/fixtures/e2e/index.ts"]
     },
     "noEmit": true
   }
