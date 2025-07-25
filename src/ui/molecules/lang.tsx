@@ -8,13 +8,13 @@ import {
 import { createSignal, onCleanup, type Component } from 'solid-js';
 import { TEST_IDS } from '~/constants/test';
 import { translate } from '~/services/lang';
-import { send } from '~/services/main';
+import { lang as defaultLang, send } from '~/services/main';
 import { debounceFn } from '~/signals/debounce';
 import type { Lang } from '~/utils/types';
 import { LANGS } from '../constants/strings';
 
 export const LangSwitcher: Component = () => {
-  const [lang, setLang] = createSignal<Lang>('en');
+  const [lang, setLang] = createSignal<Lang>(defaultLang());
 
   const setLang2 = debounceFn(
     (lang: Lang) => send({ type: 'CHANGE_LANG', payload: { lang } }),
@@ -30,7 +30,6 @@ export const LangSwitcher: Component = () => {
   return (
     <_Select
       options={LANGS as unknown as Lang[]}
-      defaultValue={'en' as Lang}
       value={lang()}
       placeholder={placeholder}
       onChange={value => {

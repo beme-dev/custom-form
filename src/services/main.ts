@@ -103,4 +103,6 @@ export const mainMachine = createMachine(
 export const { context, send, start, dispose, value } =
   interpret(mainMachine);
 
-export const lang = createRoot(() => createMemo(context(c => c.lang)));
+export const lang = createRoot(() =>
+  createMemo(context(c => c.lang ?? 'en')),
+);
