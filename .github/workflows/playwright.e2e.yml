@@ -19,7 +19,7 @@ on:
 
 jobs:
   test:
-    runs-on: playwright-64
+    runs-on: ubuntu-latest
 
     container:
       # Last image, so you don't need to update deps for playwrightso often
