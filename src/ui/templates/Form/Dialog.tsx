@@ -6,6 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '#cn/components/ui/dialog';
+import { lang, translate } from '#service';
 import {
   createSignal,
   onCleanup,
@@ -13,8 +14,6 @@ import {
   type Accessor,
   type Component,
 } from 'solid-js';
-import { translate } from '~/services/lang';
-import { lang } from '~/services/main';
 import { cn } from '~/ui/cn/utils';
 import { CSVDropzone } from './Dropzone';
 import type { DropzoneProps } from './Dropzone/types';

@@ -3,6 +3,7 @@ import {
   ResizableHandle,
   ResizablePanel,
 } from '#cn/components/ui/resizable';
+import { lang, send, translate } from '#service';
 import {
   createSignal,
   Show,
@@ -11,8 +12,6 @@ import {
   type ParentComponent,
 } from 'solid-js';
 import { Motion } from 'solid-motionone';
-import { translate } from '~/services/lang';
-import { lang, send } from '~/services/main';
 import { Fields } from './Fields';
 import { Inputs } from './Inputs';
 import { PositionSwitcher } from './PositionSwitcher';

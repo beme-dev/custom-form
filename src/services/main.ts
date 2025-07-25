@@ -2,10 +2,17 @@ import { interpret } from '@bemedev/app-solid';
 import { createMachine, typings } from '@bemedev/app-ts';
 import type { SingleOrArrayL } from '@bemedev/app-ts/lib/types/index.js';
 import { createMemo, createRoot } from 'solid-js';
-import { LANG_STORE_KEY, LANGS } from '~/ui/constants/strings';
+
 import { type Field } from '~/ui/templates/Form';
 
-export type Lang = (typeof LANGS)[number];
+import { type Lang, LANGS, LANG_STORE_KEY } from './lang';
+export {
+  LANGS,
+  LANG_STORE_KEY,
+  translate,
+  type FieldType,
+  type Lang,
+} from './lang';
 
 export const mainMachine = createMachine(
   {

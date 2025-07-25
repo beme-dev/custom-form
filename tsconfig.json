@@ -26,6 +26,7 @@
       "#molecules/*": ["./src/ui/molecules/*"],
       "#atoms/*": ["./src/ui/atoms/*"],
       "#components/*": ["./src/ui/cn/components/ui/*"],
+      "#service": ["./src/services/main.ts"],
       "#helpers/*": ["./src/ui/helpers/*"],
       "#seo": ["./src/ui/helpers/seo.ts"],
       "#e2e_fixtures": ["src/fixtures/e2e/index.ts"]

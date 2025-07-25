@@ -1,3 +1,4 @@
+import { lang, translate } from '#service';
 import type { types } from '@bemedev/types';
 import {
   createSignal,
@@ -7,8 +8,6 @@ import {
   Switch,
   type Component,
 } from 'solid-js';
-import { translate } from '~/services/lang';
-import { lang } from '~/services/main';
 import { logIndex } from '../Dropzone/helpers';
 import type { CSVData, Merged } from '../Dropzone/types';
 import { Select } from '../Select';

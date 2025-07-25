@@ -14,6 +14,8 @@ export const LANGS = Object.keys(TRANSLATIONS) as Array<
   keyof typeof TRANSLATIONS
 >;
 
+export const LANG_STORE_KEY = 'lang';
+
 export type Lang = keyof typeof TRANSLATIONS;
 
 export type FieldType =

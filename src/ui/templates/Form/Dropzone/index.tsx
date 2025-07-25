@@ -1,4 +1,5 @@
 import { cn } from '#cn/utils';
+import { lang, translate } from '#service';
 import {
   createComputed,
   createSignal,
@@ -9,8 +10,6 @@ import {
   type JSX,
 } from 'solid-js';
 import { Motion, Presence } from 'solid-motionone';
-import { translate } from '~/services/lang';
-import { lang } from '~/services/main';
 import {
   COLUMN_WIDTH,
   DEFAULT_PROPS,

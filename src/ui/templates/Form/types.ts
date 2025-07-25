@@ -1,4 +1,4 @@
-import type { FieldType } from '~/services/lang';
+import type { FieldType } from '#service';
 import type { Lang } from '~/utils/types';
 import type { CSVData, CSVDataDeep } from './Dropzone/types';
 

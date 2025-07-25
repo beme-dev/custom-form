@@ -1,4 +1,5 @@
 import { LangSwitcher } from '#molecules/lang';
+import { dispose, lang, start, translate, value } from '#service';
 import { SwitchPanels } from '#templates/Form/SwitchPanels';
 import { createFileRoute } from '@tanstack/solid-router';
 import {
@@ -9,8 +10,6 @@ import {
   Show,
   untrack,
 } from 'solid-js';
-import { translate } from '~/services/lang';
-import { dispose, lang, start, value } from '~/services/main';
 import FullPageSpinner from '~/ui/atoms/FullPageSpinner';
 
 export const Route = createFileRoute('/form')({

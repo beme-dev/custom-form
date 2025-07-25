@@ -2,9 +2,9 @@
 //TODO: add authentication
 //TODO: add databases
 
+import type { Lang } from '#service';
+import { translate } from '#service';
 import type { types } from '@bemedev/types';
-import { translate } from '~/services/lang';
-import type { Lang } from '~/services/main';
 import { EXTENSIONS, LINE_BREAK, SEPARATOR } from './constants';
 import type { Conditions, CSVData, ParsedCSV } from './types';
 
