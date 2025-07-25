@@ -1,6 +1,4 @@
-import { translate } from '~/services/lang';
-import type { Lang } from '~/services/main';
-import { LANGS } from '~/ui/constants/strings';
+import { LANGS, translate, type Lang } from '#service';
 import { expect, test } from '../../fixtures';
 
 const fixture = (lang: Lang) => {

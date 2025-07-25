@@ -1,6 +1,5 @@
+import { lang, translate } from '#service';
 import { createSignal, type Component } from 'solid-js';
-import { translate } from '~/services/lang';
-import { lang } from '~/services/main';
 import {
   SelectContent,
   SelectItem,

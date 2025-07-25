@@ -5,13 +5,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#components/select';
+import { lang as defaultLang, LANGS, send, translate } from '#service';
 import { createSignal, onCleanup, type Component } from 'solid-js';
 import { TEST_IDS } from '~/constants/test';
-import { translate } from '~/services/lang';
-import { lang as defaultLang, send } from '~/services/main';
 import { debounceFn } from '~/signals/debounce';
 import type { Lang } from '~/utils/types';
-import { LANGS } from '../constants/strings';
 
 export const LangSwitcher: Component = () => {
   const [lang, setLang] = createSignal<Lang>(defaultLang());
@@ -29,7 +27,7 @@ export const LangSwitcher: Component = () => {
 
   return (
     <_Select
-      options={LANGS as unknown as Lang[]}
+      options={LANGS}
       value={lang()}
       placeholder={placeholder}
       onChange={value => {

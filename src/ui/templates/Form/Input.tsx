@@ -1,6 +1,5 @@
+import { lang, translate } from '#service';
 import { Match, Switch, type Component } from 'solid-js';
-import { translate } from '~/services/lang';
-import { lang } from '~/services/main';
 import { ColorPicker } from './_inputs/color';
 import { ConditionalField } from './_inputs/conditional';
 import { Calendar } from './_inputs/date';

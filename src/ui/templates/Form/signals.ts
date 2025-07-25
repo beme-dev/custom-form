@@ -1,7 +1,6 @@
+import { context, type FieldType } from '#service';
 import { deepEqual } from '@bemedev/app-ts/lib/utils/index.js';
 import { createRoot, createSignal, type JSX } from 'solid-js';
-import { type FieldType } from '~/services/lang';
-import { context } from '~/services/main';
 import type { Field } from './types';
 
 export const createField = (field?: Field) => {

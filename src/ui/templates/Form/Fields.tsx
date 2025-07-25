@@ -1,7 +1,6 @@
 import { Accordion } from '#components/accordion';
+import { context, lang, send, translate } from '#service';
 import { For, type Component } from 'solid-js';
-import { translate } from '~/services/lang';
-import { context, lang, send } from '~/services/main';
 import { CreateField } from './CreateField';
 
 export const Fields: Component = () => {

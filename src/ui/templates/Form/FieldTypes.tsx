@@ -1,8 +1,7 @@
 import { forwardFocus } from '#molecules/focus';
+import type { FieldType } from '#service';
+import { lang, translate } from '#service';
 import { type Accessor } from 'solid-js';
-import type { FieldType } from '~/services/lang';
-import { fieldTypes } from '~/services/lang';
-import { lang } from '~/services/main';
 import { MySelect } from './Select.my';
 import { hasOptions, setFocus, toFocus } from './signals';
 
@@ -20,7 +19,9 @@ export const FieldTypes = forwardFocus(
 
     const types = () => {
       // Add options to trnslates multiples at same time
-      const _types = fieldTypes(lang());
+      const _types = translate('pages.form.selects.inputs.options')(
+        lang(),
+      );
       return Object.entries(_types).map(([key, children]) => ({
         value: key,
         children,

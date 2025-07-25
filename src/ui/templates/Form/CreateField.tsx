@@ -1,3 +1,4 @@
+import { lang, send, translate } from '#service';
 import { debounceFn } from '#signals/debounce';
 import {
   For,
@@ -7,8 +8,6 @@ import {
   type Component,
   type ComponentProps,
 } from 'solid-js';
-import { translate } from '~/services/lang';
-import { lang, send } from '~/services/main';
 import CSVDialog from './Dialog';
 import { FieldTypes } from './FieldTypes';
 import { FocusTextArea } from './FocusTextArea';

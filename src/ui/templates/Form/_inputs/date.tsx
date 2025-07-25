@@ -14,8 +14,8 @@ import {
   DatePickerViewControl,
   DatePickerViewTrigger,
 } from '#components/date-picker';
+import { context } from '#service';
 import { For } from 'solid-js';
-import { context } from '~/services/main';
 
 export const Calendar = () => {
   return (

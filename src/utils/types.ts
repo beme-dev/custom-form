@@ -1,4 +1,4 @@
-import type { LANGS } from '~/ui/constants/strings';
+import type { LANGS } from '#service';
 
 export type Lang = (typeof LANGS)[number];
 

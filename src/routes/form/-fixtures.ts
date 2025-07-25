@@ -1,8 +1,8 @@
 /* eslint-disable no-empty-pattern */
 
 import { test as baseTest, expect, type Locator } from '#e2e_fixtures';
+import type { Lang } from '#service';
 import { TEST_IDS } from '~/constants/test';
-import type { Lang } from '~/services/main';
 import { FILES } from '../../fixtures/e2e/constants';
 
 const test = baseTest.extend<{
