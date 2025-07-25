@@ -1,6 +1,7 @@
 {
   "github-actions.workflows.pinned.workflows": [
-    ".github/workflows/ci.yml"
+    ".github/workflows/ci.yml",
+    ".github/workflows/playwright.e2e.yml"
   ],
   "githubPullRequests.ignoredPullRequestBranches": ["dev"]
 }

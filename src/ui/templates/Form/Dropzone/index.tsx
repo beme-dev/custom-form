@@ -9,9 +9,11 @@ import {
   type JSX,
 } from 'solid-js';
 import { Motion, Presence } from 'solid-motionone';
-import { context, lang } from '~/services/main';
+import { translate } from '~/services/lang';
+import { lang } from '~/services/main';
 import {
   COLUMN_WIDTH,
+  DEFAULT_PROPS,
   EXTENSIONS,
   MAX_COLUMN_WIDTH_FACTOR,
   MIN_COLUMN_WIDTH_FACTOR,
@@ -34,7 +36,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
   let fileInputRef: HTMLInputElement | undefined;
 
-  const config = mergeProps(props);
+  const config = mergeProps(DEFAULT_PROPS, props);
 
   // Fonction pour traiter le fichier
   const processFile = async (file: File) => {
@@ -59,7 +61,11 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
       props.onDataLoaded?.({ data, headers, name, conditions });
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : config.errorMessage;
+        err instanceof Error
+          ? err.message
+          : translate('pages.form.dropzones.csv.messages.error.default')(
+              lang(),
+            );
       setError(errorMessage);
       props.onError?.(errorMessage);
     } finally {
@@ -157,6 +163,10 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
     }
   });
 
+  const processMessage = isProcessing()
+    ? translate('pages.form.dropzones.csv.labels.processing')(lang())
+    : translate('pages.form.dropzones.csv.labels.description')(lang());
+
   return (
     <div
       class={cn('w-full max-w-2xl mx-auto overflow-hidden', props.class)}
@@ -196,13 +206,13 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
           </div>
 
           <div class='text-lg font-medium text-gray-700'>
-            {isProcessing()
-              ? 'Traitement en cours...'
-              : config.placeholder}
+            {processMessage}
           </div>
 
           <div class='text-xs text-gray-500'>
-            {config.acceptMessage} (max: {config.maxFileSize}MB)
+            {translate('pages.form.dropzones.csv.labels.accept', {
+              MAX: config.maxFileSize,
+            })(lang())}
           </div>
         </div>
       </Motion>
@@ -305,7 +315,8 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
                         onClick={reset}
                         class='text-red-600 hover:text-red-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out cursor-pointer'
                       >
-                        ❌ {context(c => c.intl?.delete)()}
+                        ❌{' '}
+                        {translate('pages.form.buttons.addField')(lang())}
                       </button>
                       <button
                         onClick={() => {

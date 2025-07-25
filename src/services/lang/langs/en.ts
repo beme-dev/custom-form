@@ -11,6 +11,11 @@ export const EN = createRootTanslations(dt => ({
       labels: {
         question: 'Question Title',
         field: 'Field',
+        conditional: dt('Conditional with {LEVEL:plural}', {
+          plural: {
+            LEVEL: { other: '{?} levels', one: '1 level' },
+          },
+        }),
       },
 
       inputs: {
@@ -24,7 +29,7 @@ export const EN = createRootTanslations(dt => ({
 
       buttons: {
         addField: 'Add Field',
-        delete: 'Delete',
+        deleteField: 'Delete',
       },
 
       selects: {
@@ -55,7 +60,6 @@ export const EN = createRootTanslations(dt => ({
       dropzones: {
         csv: {
           messages: {
-            success: { default: 'Only CSV files are accepted' },
             error: {
               default: 'An error occurred while uploading the file',
               size: dt(
@@ -90,15 +94,22 @@ export const EN = createRootTanslations(dt => ({
               {},
             ),
 
+            processing: 'Processing CSV file...',
+
             title: 'Import a CSV file',
             imported: 'Imported file :',
 
             description:
               'Select or drag & drop your CSV file here to upload',
+
+            accept: dt(
+              'Only CSV files are accepted (max: {MAX:number} MB)',
+              {},
+            ),
           },
 
           buttons: {
-            load: 'Load CSV file',
+            load: '🚀 Load CSV file',
           },
         },
       },

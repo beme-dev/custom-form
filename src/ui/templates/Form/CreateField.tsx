@@ -8,7 +8,7 @@ import {
   type ComponentProps,
 } from 'solid-js';
 import { translate } from '~/services/lang';
-import { context, lang, send } from '~/services/main';
+import { lang, send } from '~/services/main';
 import CSVDialog from './Dialog';
 import { FieldTypes } from './FieldTypes';
 import { FocusTextArea } from './FocusTextArea';
@@ -109,12 +109,15 @@ export const CreateField: Component<{
               <For each={options()}>
                 {(option, index) => {
                   const name = `${indexC()}->options->${index()}`;
+                  const placeholder = translate(
+                    'pages.form.selects.inputs.placeholder',
+                  )(lang());
                   return (
                     <div class='flex items-center space-x-2'>
                       <FocusTextArea
                         class='border p-2 rounded outline-none min-h-9 h-12 max-h-48 w-full'
                         // type="text"
-                        placeholder={`${context(c => c.intl?.option.placeholder)()} ${index() + 1}`}
+                        placeholder={`${placeholder} ${index() + 1}`}
                         name={name}
                         // tabIndex={index()}
                         value={option}
@@ -246,7 +249,7 @@ export const CreateField: Component<{
             send({ type: 'REMOVE', payload: { index: indexC() } });
           }}
         >
-          {`${translate('pages.form.buttons.delete')(lang())} -`}
+          {`${translate('pages.form.buttons.deleteField')(lang())} -`}
         </button>
         <button
           onClick={_update}

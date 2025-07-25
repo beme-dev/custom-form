@@ -12,6 +12,11 @@ export const ES = createTranslations(dt => ({
       labels: {
         question: 'Título de la Pregunta',
         field: 'Campo',
+        conditional: dt('Condicional con {LEVEL:plural}', {
+          plural: {
+            LEVEL: { other: '{?} niveles', one: '1 nivel' },
+          },
+        }),
       },
 
       inputs: {
@@ -25,7 +30,7 @@ export const ES = createTranslations(dt => ({
 
       buttons: {
         addField: 'Añadir Campo',
-        delete: 'Eliminar',
+        deleteField: 'Eliminar',
       },
 
       selects: {
@@ -56,7 +61,6 @@ export const ES = createTranslations(dt => ({
       dropzones: {
         csv: {
           messages: {
-            success: { default: 'Solo se aceptan archivos CSV' },
             error: {
               default: 'Ocurrió un error al subir el archivo',
               size: dt(
@@ -98,15 +102,22 @@ export const ES = createTranslations(dt => ({
               {},
             ),
 
+            processing: 'Procesando archivo CSV...',
+
             title: 'Importar un archivo CSV',
             imported: 'Archivo importado:',
 
             description:
               'Selecciona o arrastra y suelta tu archivo CSV aquí para subirlo',
+
+            accept: dt(
+              'Solo se aceptan archivos CSV (máx: {MAX:number} MB)',
+              {},
+            ),
           },
 
           buttons: {
-            load: 'Cargar archivo CSV',
+            load: '🚀 Cargar archivo CSV',
           },
         },
       },

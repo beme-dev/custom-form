@@ -5,27 +5,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#components/select';
-import { onCleanup, type Component } from 'solid-js';
+import { createSignal, onCleanup, type Component } from 'solid-js';
 import { TEST_IDS } from '~/constants/test';
-import { context, send } from '~/services/main';
+import { translate } from '~/services/lang';
+import { send } from '~/services/main';
 import { debounceFn } from '~/signals/debounce';
 import type { Lang } from '~/utils/types';
 import { LANGS } from '../constants/strings';
 
 export const LangSwitcher: Component = () => {
+  const [lang, setLang] = createSignal<Lang>('en');
+
   const setLang2 = debounceFn(
     (lang: Lang) => send({ type: 'CHANGE_LANG', payload: { lang } }),
     500,
   );
 
+  const placeholder = translate('pages.form.selects.inputs.invite')(
+    lang(),
+  );
+
   onCleanup(setLang2.cancel);
+
   return (
     <_Select
       options={LANGS as unknown as Lang[]}
       defaultValue={'en' as Lang}
-      placeholder={context(c => c.intl?.option.invite)()}
+      value={lang()}
+      placeholder={placeholder}
       onChange={value => {
-        if (value) setLang2(value);
+        if (value) {
+          setLang(value);
+          setLang2(value);
+        }
       }}
       itemComponent={props => (
         <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>

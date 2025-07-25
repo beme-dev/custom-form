@@ -1,8 +1,6 @@
+import type { FieldType } from '~/services/lang';
 import type { Lang } from '~/utils/types';
-import type { _FIELDS_TYPES } from './constants';
 import type { CSVData, CSVDataDeep } from './Dropzone/types';
-
-export type FieldType = (typeof _FIELDS_TYPES)[number];
 
 export type Option = {
   name: string;

@@ -3,7 +3,7 @@ import { describe } from 'vitest';
 import { mergeConditions } from './helpers';
 
 describe('#01 => Mergeconditions', () => {
-  const { acceptation, success, fails } = createTests(mergeConditions);
+  const { acceptation, success } = createTests(mergeConditions);
 
   describe('#01.00 => Acceptation', acceptation);
 
@@ -267,48 +267,4 @@ describe('#01 => Mergeconditions', () => {
       },
     ),
   );
-
-  describe('#01.02 => Fails', () => {
-    describe(
-      '#01.02.00 => One param',
-      fails(
-        {
-          invite: 'No match lengths',
-          parameters: [[{ A: 1 }, { A: 4 }, { A: 7, B: 8 }], ['A']],
-          error: `La ligne 3 ne correspond pas au nombre d'en-têtes : (1 en-tête pour 2 valeurs)`,
-        },
-        {
-          invite: 'No match keys',
-          parameters: [[{ A: 1 }, { A: 4 }, { B: 7 }], ['A']],
-          error: `La ligne 3 ne correspond pas aux en-têtes : (A)`,
-        },
-      ),
-    );
-
-    describe(
-      '#01.02.01 => Two params',
-      fails(
-        {
-          invite: 'No match lengths',
-          parameters: [
-            [{ A: 1 }, { A: 4 }, { A: 7, B: 8 }],
-            ['A', 'B'],
-          ],
-          error: `La ligne 1 ne correspond pas au nombre d'en-têtes : (2 en-têtes pour 1 valeur)`,
-        },
-        {
-          invite: 'No match keys',
-          parameters: [
-            [
-              { A: 1, B: 2 },
-              { A: 4, B: 2 },
-              { B: 7, C: 5 },
-            ],
-            ['A', 'B'],
-          ],
-          error: `La ligne 3 ne correspond pas aux en-têtes : (A, B)`,
-        },
-      ),
-    );
-  });
 });

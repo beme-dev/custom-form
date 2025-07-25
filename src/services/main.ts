@@ -3,8 +3,7 @@ import { createMachine, typings } from '@bemedev/app-ts';
 import type { SingleOrArrayL } from '@bemedev/app-ts/lib/types/index.js';
 import { createMemo, createRoot } from 'solid-js';
 import { LANG_STORE_KEY, LANGS } from '~/ui/constants/strings';
-import { type _Intl, type Field } from '~/ui/templates/Form';
-import { INTL } from '~/ui/templates/Form/constants';
+import { type Field } from '~/ui/templates/Form';
 
 export type Lang = (typeof LANGS)[number];
 
@@ -18,7 +17,7 @@ export const mainMachine = createMachine(
       working: {
         on: {
           CHANGE_LANG: {
-            actions: ['changeLang', 'changeIntl'],
+            actions: ['changeLang'],
           },
           REMOVE: {
             actions: ['remove'],
@@ -36,7 +35,6 @@ export const mainMachine = createMachine(
   typings({
     context: typings.partial({
       lang: typings.custom<Lang>(),
-      intl: typings.custom<_Intl>(),
       fields: [typings.custom<Field>()],
       responses: [typings.custom<SingleOrArrayL<string>>()],
     }),
@@ -58,16 +56,6 @@ export const mainMachine = createMachine(
       CHANGE_LANG: ({ payload: { lang } }) => {
         localStorage.setItem(LANG_STORE_KEY, lang);
         return lang;
-      },
-    }),
-
-    changeIntl: assign('context.intl', {
-      CHANGE_LANG: ({ payload: { lang } }) => {
-        let intl = (INTL as any)[lang!] as _Intl;
-        if (!intl) {
-          intl = INTL['en'];
-        }
-        return intl;
       },
     }),
 
@@ -107,7 +95,6 @@ export const mainMachine = createMachine(
       return {
         fields: [structuredClone(current)],
         lang,
-        intl: INTL[lang],
       };
     }),
   },
