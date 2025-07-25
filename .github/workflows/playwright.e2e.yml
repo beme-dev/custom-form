@@ -47,6 +47,11 @@ jobs:
       - name: lint
         run: pnpm run lint
 
+      - name: Grant Permissions
+        run: |
+          sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+          sudo chmod g+rwx "/home/$USER/.docker" -R
+
       - name: Run Playwright tests
         run: pnpm run test:e2e
         env:
