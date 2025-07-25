@@ -19,7 +19,7 @@ on:
 
 jobs:
   test:
-    runs-on: playwright-64arm
+    runs-on: playwright-arm-64
 
     container:
       # Last image, so you don't need to update deps for playwrightso often
