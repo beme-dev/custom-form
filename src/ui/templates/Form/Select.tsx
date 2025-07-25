@@ -1,5 +1,6 @@
 import { createSignal, type Component } from 'solid-js';
-import { context } from '~/services/main';
+import { translate } from '~/services/lang';
+import { lang } from '~/services/main';
 import {
   SelectContent,
   SelectItem,
@@ -11,7 +12,7 @@ import {
 const Item: Component<{ children: string }> = ({ children }) => {
   const _children =
     children.trim() === ''
-      ? `(# -> ${context(c => c.intl?.option.invite)()})`
+      ? `(# -> ${translate('pages.form.selects.inputs.invite')(lang())})`
       : children;
 
   return <span>{_children}</span>;
@@ -32,7 +33,7 @@ export const Select: Component<{
         if (e) setValue(e);
         onChange?.(e);
       }}
-      placeholder={context(c => c.intl?.option.invite)()}
+      placeholder={translate('pages.form.selects.inputs.invite')(lang())}
       itemComponent={props => (
         <SelectItem item={props.item}>
           <Item>{props.item.rawValue}</Item>

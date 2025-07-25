@@ -1,9 +1,10 @@
 import { forwardFocus } from '#molecules/focus';
 import { type Accessor } from 'solid-js';
-import { context } from '~/services/main';
+import type { FieldType } from '~/services/lang';
+import { fieldTypes } from '~/services/lang';
+import { lang } from '~/services/main';
 import { MySelect } from './Select.my';
 import { hasOptions, setFocus, toFocus } from './signals';
-import type { FieldType } from './types';
 
 type Props = {
   index: Accessor<number>;
@@ -18,8 +19,9 @@ export const FieldTypes = forwardFocus(
     const name = `${index()}->type`;
 
     const types = () => {
-      const _types = context(value => value.intl?.types ?? {});
-      return Object.entries(_types()).map(([key, children]) => ({
+      // Add options to trnslates multiples at same time
+      const _types = fieldTypes(lang());
+      return Object.entries(_types).map(([key, children]) => ({
         value: key,
         children,
       })) as _Field[];

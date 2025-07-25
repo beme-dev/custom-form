@@ -1,12 +1,14 @@
 import { createFileRoute } from '@tanstack/solid-router';
 import type { ComponentProps } from 'solid-js';
+import { translate } from '~/services/lang';
+import { lang } from '~/services/main';
 import { CSVDialog } from '~/ui/templates/Form/Dialog';
 
 type Comp = ComponentProps<typeof CSVDialog>['trigger'];
 
 const Trigger: Comp = () => (
   <span class='px-6 py-3 bg-orange-600 text-white rounded-lg transition-all font-medium shadow-lg active:inset-shadow-sm inset-shadow-orange-800 active:scale-90 active:ring-yellow-900 active:ring-4 select-none'>
-    🚀 Charger mes données CSV
+    {translate('pages.form.dropzones.csv.buttons.load')(lang())}
   </span>
 );
 
@@ -20,12 +22,7 @@ export const Route = createFileRoute('/dropzone')({
         </p>
       </div>
 
-      <CSVDialog
-        trigger={Trigger}
-        title='Importation de données CSV'
-        description='Glissez-déposez votre fichier CSV ou cliquez pour le sélectionner. Les données seront automatiquement analysées et affichées.'
-        maxFileSize={10}
-      />
+      <CSVDialog trigger={Trigger} maxFileSize={10} />
     </div>
   ),
 });

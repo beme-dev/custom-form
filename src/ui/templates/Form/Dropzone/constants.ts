@@ -1,10 +1,4 @@
-export const DEFAULT_PROPS = {
-  maxFileSize: 10, // 10MB par défaut
-  placeholder:
-    'Glissez-déposez votre fichier CSV ici ou cliquez pour sélectionner',
-  acceptMessage: 'Seuls les fichiers CSV sont acceptés',
-  errorMessage: 'Erreur lors du traitement du fichier',
-};
+import type { DropzoneProps } from './types';
 
 export const SEPARATOR = ';' as const;
 
@@ -14,6 +8,10 @@ export const EXTENSIONS = {
   csv: '.csv',
   type: 'text/csv',
 };
+
+export const DEFAULT_PROPS = {
+  maxFileSize: 5, // en MB
+} satisfies DropzoneProps;
 
 export const COLUMN_WIDTH = 90; // Largeur maximale d'une colonne en pixels
 

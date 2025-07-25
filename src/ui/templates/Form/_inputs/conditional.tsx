@@ -7,6 +7,8 @@ import {
   Switch,
   type Component,
 } from 'solid-js';
+import { translate } from '~/services/lang';
+import { lang } from '~/services/main';
 import { logIndex } from '../Dropzone/helpers';
 import type { CSVData, Merged } from '../Dropzone/types';
 import { Select } from '../Select';
@@ -24,8 +26,9 @@ export const ConditionalField: Component<{
     <Show when={merged}>
       <div class='flex flex-col space-y-3 min-w-lg w-11/12 mx-auto px-2 py-3'>
         <div class='text-lg font-semibold'>
-          Conditionnel à {headers?.length ?? 1} niveau
-          {headers && headers.length > 1 && 'x'}
+          {translate('pages.form.labels.conditional', {
+            LEVEL: length,
+          })(lang())}
         </div>
         <Switch
           fallback={

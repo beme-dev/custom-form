@@ -1,4 +1,3 @@
-import { context, dispose, start, value } from '#main';
 import { LangSwitcher } from '#molecules/lang';
 import { SwitchPanels } from '#templates/Form/SwitchPanels';
 import { createFileRoute } from '@tanstack/solid-router';
@@ -10,6 +9,8 @@ import {
   Show,
   untrack,
 } from 'solid-js';
+import { translate } from '~/services/lang';
+import { dispose, lang, start, value } from '~/services/main';
 import FullPageSpinner from '~/ui/atoms/FullPageSpinner';
 
 export const Route = createFileRoute('/form')({
@@ -32,7 +33,7 @@ export const Route = createFileRoute('/form')({
         <div class='w-full'>
           <div class='w-full flex items-center justify-between px-4 py-2 bg-gray-100 pl-10'>
             <h1 class='text-2xl font-bold mb-4'>
-              {context(c => c.intl?.title)()}
+              {translate('pages.form.title')(lang())}
             </h1>
             <LangSwitcher />
           </div>

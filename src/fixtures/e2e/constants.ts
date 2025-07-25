@@ -6,4 +6,4 @@ export const FILES = {
       'src/fixtures/csv/countries_cities_districts.csv',
     ),
   },
-};
+} as const;

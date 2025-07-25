@@ -5,32 +5,47 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#components/select';
-import { onCleanup, type Component } from 'solid-js';
-import { context, send } from '~/services/main';
+import { createSignal, onCleanup, type Component } from 'solid-js';
+import { TEST_IDS } from '~/constants/test';
+import { translate } from '~/services/lang';
+import { lang as defaultLang, send } from '~/services/main';
 import { debounceFn } from '~/signals/debounce';
 import type { Lang } from '~/utils/types';
 import { LANGS } from '../constants/strings';
 
 export const LangSwitcher: Component = () => {
+  const [lang, setLang] = createSignal<Lang>(defaultLang());
+
   const setLang2 = debounceFn(
     (lang: Lang) => send({ type: 'CHANGE_LANG', payload: { lang } }),
     500,
   );
 
+  const placeholder = translate('pages.form.selects.inputs.invite')(
+    lang(),
+  );
+
   onCleanup(setLang2.cancel);
+
   return (
     <_Select
       options={LANGS as unknown as Lang[]}
-      defaultValue={'en' as Lang}
-      placeholder={context(c => c.intl?.option.invite)()}
+      value={lang()}
+      placeholder={placeholder}
       onChange={value => {
-        if (value) setLang2(value);
+        if (value) {
+          setLang(value);
+          setLang2(value);
+        }
       }}
       itemComponent={props => (
         <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
       )}
     >
-      <SelectTrigger class='w-20 mx-auto overflow-hidden cursor-pointer'>
+      <SelectTrigger
+        class='w-20 mx-auto overflow-hidden cursor-pointer'
+        data-testid={TEST_IDS.lang}
+      >
         <div class='w-11/12 text-left truncate'>
           <SelectValue<string>>
             {({ selectedOption }) => selectedOption()}

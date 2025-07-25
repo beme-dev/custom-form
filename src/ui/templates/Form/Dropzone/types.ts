@@ -26,9 +26,6 @@ export type DropzoneProps = {
   }) => void;
   class?: string;
   maxFileSize?: number; // en MB
-  placeholder?: string;
-  acceptMessage?: string;
-  errorMessage?: string;
 };
 
 export type Conditions = {

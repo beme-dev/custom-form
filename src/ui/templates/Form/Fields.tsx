@@ -1,6 +1,7 @@
 import { Accordion } from '#components/accordion';
 import { For, type Component } from 'solid-js';
-import { context, send } from '~/services/main';
+import { translate } from '~/services/lang';
+import { context, lang, send } from '~/services/main';
 import { CreateField } from './CreateField';
 
 export const Fields: Component = () => {
@@ -22,7 +23,7 @@ export const Fields: Component = () => {
                 X
               </button>
               <span>
-                {`${context(c => c.intl?.field)()} ${index() + 1} : ${field.label || '****'}`}
+                {`${translate('pages.form.labels.field')(lang())} ${index() + 1} : ${field.label || '****'}`}
               </span>
             </Accordion.Trigger>
             <Accordion.Content class='pt-3'>

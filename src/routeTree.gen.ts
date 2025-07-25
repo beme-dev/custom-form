@@ -9,50 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as FormRouteImport } from './routes/form'
-import { Route as DropzoneRouteImport } from './routes/dropzone'
-import { Route as CountingRouteImport } from './routes/counting'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as FormRouteRouteImport } from './routes/form/route'
+import { Route as DropzoneRouteRouteImport } from './routes/dropzone/route'
+import { Route as CountingRouteRouteImport } from './routes/counting/route'
+import { Route as IndexRouteRouteImport } from './routes/index/route'
 
-const FormRoute = FormRouteImport.update({
+const FormRouteRoute = FormRouteRouteImport.update({
   id: '/form',
   path: '/form',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DropzoneRoute = DropzoneRouteImport.update({
+const DropzoneRouteRoute = DropzoneRouteRouteImport.update({
   id: '/dropzone',
   path: '/dropzone',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CountingRoute = CountingRouteImport.update({
+const CountingRouteRoute = CountingRouteRouteImport.update({
   id: '/counting',
   path: '/counting',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const IndexRouteRoute = IndexRouteRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/counting': typeof CountingRoute
-  '/dropzone': typeof DropzoneRoute
-  '/form': typeof FormRoute
+  '/': typeof IndexRouteRoute
+  '/counting': typeof CountingRouteRoute
+  '/dropzone': typeof DropzoneRouteRoute
+  '/form': typeof FormRouteRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/counting': typeof CountingRoute
-  '/dropzone': typeof DropzoneRoute
-  '/form': typeof FormRoute
+  '/': typeof IndexRouteRoute
+  '/counting': typeof CountingRouteRoute
+  '/dropzone': typeof DropzoneRouteRoute
+  '/form': typeof FormRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/counting': typeof CountingRoute
-  '/dropzone': typeof DropzoneRoute
-  '/form': typeof FormRoute
+  '/': typeof IndexRouteRoute
+  '/counting': typeof CountingRouteRoute
+  '/dropzone': typeof DropzoneRouteRoute
+  '/form': typeof FormRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -63,10 +63,10 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  CountingRoute: typeof CountingRoute
-  DropzoneRoute: typeof DropzoneRoute
-  FormRoute: typeof FormRoute
+  IndexRouteRoute: typeof IndexRouteRoute
+  CountingRouteRoute: typeof CountingRouteRoute
+  DropzoneRouteRoute: typeof DropzoneRouteRoute
+  FormRouteRoute: typeof FormRouteRoute
 }
 
 declare module '@tanstack/solid-router' {
@@ -75,38 +75,38 @@ declare module '@tanstack/solid-router' {
       id: '/form'
       path: '/form'
       fullPath: '/form'
-      preLoaderRoute: typeof FormRouteImport
+      preLoaderRoute: typeof FormRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dropzone': {
       id: '/dropzone'
       path: '/dropzone'
       fullPath: '/dropzone'
-      preLoaderRoute: typeof DropzoneRouteImport
+      preLoaderRoute: typeof DropzoneRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/counting': {
       id: '/counting'
       path: '/counting'
       fullPath: '/counting'
-      preLoaderRoute: typeof CountingRouteImport
+      preLoaderRoute: typeof CountingRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof IndexRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  CountingRoute: CountingRoute,
-  DropzoneRoute: DropzoneRoute,
-  FormRoute: FormRoute,
+  IndexRouteRoute: IndexRouteRoute,
+  CountingRouteRoute: CountingRouteRoute,
+  DropzoneRouteRoute: DropzoneRouteRoute,
+  FormRouteRoute: FormRouteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -6,14 +6,18 @@ export default defineConfig({
   testDir: './src/routes',
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  workers: process.env.CI ? 2 : 4,
   reporter: 'html',
   testMatch: '**/*.@(e2e).?(c|m)[jt]s?(x)',
   maxFailures: process.env.CI ? 1 : 3,
 
   use: {
     baseURL: `http://localhost:${PORT}`,
-    trace: 'on-first-retry',
+    trace: 'off',
+
+    launchOptions: {
+      slowMo: process.env.PLAYWRIGHT_SLOMO === 'true' ? 2500 : 0, // Slow down operations for debugging
+    },
   },
 
   globalTimeout: 10 * 60 * 1000, // 10 minutes

@@ -3,52 +3,59 @@
 //TODO: add databases
 
 import type { types } from '@bemedev/types';
+import { translate } from '~/services/lang';
+import type { Lang } from '~/services/main';
 import { EXTENSIONS, LINE_BREAK, SEPARATOR } from './constants';
 import type { Conditions, CSVData, ParsedCSV } from './types';
 
-type ParseCSV_F = (text: string) => ParsedCSV;
+type ParseCSV_F = (text: string, lang?: Lang) => ParsedCSV;
 
-const verifySize = (file: File, MAX: number) => {
+const verifySize = (file: File, MAX: number, lang?: Lang) => {
   const sizeInMB = file.size / (1024 * 1024); // Convertir la taille en Mo
   if (sizeInMB > MAX) {
-    throw new Error(
-      `Le fichier dépasse la taille maximale autorisée de ${MAX} Mo. Taille actuelle du fichier : ${sizeInMB.toFixed(
-        2,
-      )} Mo.`,
-    );
+    const error = translate(
+      'pages.form.dropzones.csv.messages.error.size',
+      {
+        MAX: MAX,
+        SIZE: sizeInMB,
+      },
+    ).to(lang);
+    throw new Error(error);
   }
 };
 
-const verifyExtensions = (file: File) => {
+const verifyExtensions = (file: File, lang?: Lang) => {
   const extension = !file.name.toLowerCase().endsWith(EXTENSIONS.csv);
   const type = file.type !== EXTENSIONS.type;
   const check = extension && type;
 
   if (check) {
-    const line1 = 'Le fichier doit être au format CSV',
-      line2 = `(avoir l'extension "${EXTENSIONS.csv}" ou de type "${EXTENSIONS.type}")`;
-
-    const error = [line1, line2].join(' ');
+    const error = translate(
+      'pages.form.dropzones.csv.messages.error.extension',
+    ).to(lang);
     throw new Error(error);
   }
 };
 
-export const verifyFile = (file: File, MAX: number) => {
-  verifySize(file, MAX);
-  verifyExtensions(file);
+export const verifyFile = (file: File, MAX: number, lang?: Lang) => {
+  verifySize(file, MAX, lang);
+  verifyExtensions(file, lang);
 
   return true;
 };
 
 // Fonction pour parser le CSV
-export const parseCSV: ParseCSV_F = text => {
+export const parseCSV: ParseCSV_F = (text, lang) => {
   const lines = text.trim().split(LINE_BREAK);
 
   let firstLineNumber = 0;
   let firstLine = lines[firstLineNumber].split(SEPARATOR);
 
   if (lines.length === 0) {
-    throw new Error('Le fichier CSV est vide');
+    const error = translate(
+      'pages.form.dropzones.csv.messages.error.noHeaders',
+    ).to(lang);
+    throw new Error(error);
   }
 
   // Si la première ligne est vide, on l'ignore
@@ -58,6 +65,15 @@ export const parseCSV: ParseCSV_F = text => {
   ) {
     firstLineNumber++;
     firstLine = lines[firstLineNumber]?.split(SEPARATOR);
+  }
+
+  const hasReachLimit = firstLineNumber >= lines.length;
+
+  if (hasReachLimit) {
+    const error = translate(
+      'pages.form.dropzones.csv.messages.error.noHeaders',
+    ).to(lang);
+    throw new Error(error);
   }
 
   // Première ligne = en-têtes
@@ -80,9 +96,15 @@ export const parseCSV: ParseCSV_F = text => {
     const checkLength = values.length === headers.length;
 
     if (!checkLength) {
-      throw new Error(
-        `La ligne ${i + 1} ne correspond pas au nombre d'en-têtes : (${headers.length} en-têtes, ${values.length} valeurs)`,
-      );
+      const error = translate(
+        'pages.form.dropzones.csv.messages.error.columnsRow',
+        {
+          LINE: i + 1,
+          HEADERS: headers.length,
+          COLUMNS: values.length,
+        },
+      ).to(lang);
+      throw new Error(error);
     }
 
     const row: CSVData = {};
@@ -116,36 +138,37 @@ export function compareArrays<T>(...arrays: T[][]): boolean {
   return true;
 }
 
-const verifyConditions = (row: CSVData, headers: string[], index = 0) => {
-  const keys = Object.keys(row);
-  const noKeysMatchLength = keys.length !== headers.length;
-  const _index = index + 1;
-  const headersLen = headers.length;
-  const valuesLen = keys.length;
+// const verifyConditions = (row: CSVData, headers: string[], index = 0) => {
+//   const keys = Object.keys(row);
+//   const noKeysMatchLength = keys.length !== headers.length;
+//   const _index = index + 1;
+//   const headersLen = headers.length;
+//   const valuesLen = keys.length;
 
-  const _headers = `${headersLen} en-tête${headersLen > 1 ? 's' : ''}`;
-  const _values = `${valuesLen} valeur${valuesLen > 1 ? 's' : ''}`;
+//   const _headers = `${headersLen} en-tête${headersLen > 1 ? 's' : ''}`;
+//   const _values = `${valuesLen} valeur${valuesLen > 1 ? 's' : ''}`;
 
-  if (noKeysMatchLength) {
-    throw new Error(
-      `La ligne ${_index} ne correspond pas au nombre d'en-têtes : (${_headers} pour ${_values})`,
-    );
-  }
+//   if (noKeysMatchLength) {
+//     throw new Error(
+//       `La ligne ${_index} ne correspond pas au nombre d'en-têtes : (${_headers} pour ${_values})`,
+//     );
+//   }
 
-  const noKeysMatch = !compareArrays(headers, keys);
+//   const noKeysMatch = !compareArrays(headers, keys);
 
-  if (noKeysMatch) {
-    throw new Error(
-      `La ligne ${_index} ne correspond pas aux en-têtes : (${headers.join(', ')})`,
-    );
-  }
+//   if (noKeysMatch) {
+//     throw new Error(
+//       `La ligne ${_index} ne correspond pas aux en-têtes : (${headers.join(', ')})`,
+//     );
+//   }
 
-  return true;
-};
+//   return true;
+// };
 
 type MergeConditions_F = (
   data: CSVData[],
   headers: string[],
+  lang?: Lang,
 ) => Conditions;
 
 export const logIndex = (index: number, length: number) => {
@@ -158,19 +181,28 @@ export const logIndex = (index: number, length: number) => {
   return `${zeroStr}${index}`; // +1 pour l'indexation humaine
 };
 
-export const mergeConditions: MergeConditions_F = (data, headers) => {
+export const mergeConditions: MergeConditions_F = (
+  data,
+  headers,
+  lang,
+) => {
   const conditions: Conditions = { merged: {}, warnings: [] };
   const lenH = headers.length;
 
   if (lenH === 1) {
     const out: types.ValuesOf<CSVData>[] = [];
     data.forEach((row, index) => {
-      verifyConditions(row, headers, index);
+      // verifyConditions(row, headers, index);
       const value = row[headers[0]];
 
       const isEmpty = value === '';
       if (isEmpty) {
-        conditions.warnings.push(`La ligne ${index + 1} est vide.`);
+        const warning = translate(
+          'pages.form.dropzones.csv.messages.warnings.one',
+          { LINE: logIndex(index + 1, data.length + 1) },
+        ).to(lang);
+
+        conditions.warnings.push(warning);
       }
       out.push(value);
     });
@@ -182,7 +214,7 @@ export const mergeConditions: MergeConditions_F = (data, headers) => {
   const merged: any = {};
 
   data.forEach((row, index) => {
-    verifyConditions(row, headers, index);
+    // verifyConditions(row, headers, index);
 
     // Naviguer à travers la structure en créant les niveaux nécessaires
     let current = merged;
@@ -215,9 +247,14 @@ export const mergeConditions: MergeConditions_F = (data, headers) => {
     if (!current.includes(finalValue)) {
       const isEmpty = finalValue === '';
       if (isEmpty) {
-        conditions.warnings.push(
-          `L'élement "${lastHeader}" de la ligne #${logIndex(index + 1, data.length + 1)} est vide.`,
-        );
+        const warning = translate(
+          'pages.form.dropzones.csv.messages.warnings.many',
+          {
+            ELEMENT: lastHeader,
+            LINE: logIndex(index + 1, data.length + 1),
+          },
+        ).to(lang);
+        conditions.warnings.push(warning);
       }
       current.push(finalValue);
     }

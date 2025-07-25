@@ -7,7 +7,8 @@ import {
   type Component,
   type ComponentProps,
 } from 'solid-js';
-import { context, send } from '~/services/main';
+import { translate } from '~/services/lang';
+import { lang, send } from '~/services/main';
 import CSVDialog from './Dialog';
 import { FieldTypes } from './FieldTypes';
 import { FocusTextArea } from './FocusTextArea';
@@ -18,7 +19,7 @@ type Comp = ComponentProps<typeof CSVDialog>['trigger'];
 
 const Trigger: Comp = () => (
   <span class='px-6 py-3 bg-orange-600 text-white rounded-lg transition-all font-medium shadow-lg active:inset-shadow-sm inset-shadow-orange-800 active:scale-90 active:ring-yellow-900 active:ring-4 select-none'>
-    🚀 Charger mes données CSV
+    {translate('pages.form.dropzones.csv.buttons.load')(lang())}
   </span>
 );
 
@@ -76,7 +77,9 @@ export const CreateField: Component<{
         <FocusTextArea
           class='border p-2 rounded w-full max-w-xl mb-2 outline-none min-h-9 h-12 max-h-48'
           // type="text"
-          placeholder={context(c => c.intl?.question)()}
+          placeholder={translate('pages.form.inputs.question.placeholder')(
+            lang(),
+          )}
           name={nameQ}
           value={label()}
           // autofocus={autofocus(nameQ)}
@@ -106,12 +109,15 @@ export const CreateField: Component<{
               <For each={options()}>
                 {(option, index) => {
                   const name = `${indexC()}->options->${index()}`;
+                  const placeholder = translate(
+                    'pages.form.selects.inputs.placeholder',
+                  )(lang());
                   return (
                     <div class='flex items-center space-x-2'>
                       <FocusTextArea
                         class='border p-2 rounded outline-none min-h-9 h-12 max-h-48 w-full'
                         // type="text"
-                        placeholder={`${context(c => c.intl?.option.placeholder)()} ${index() + 1}`}
+                        placeholder={`${placeholder} ${index() + 1}`}
                         name={name}
                         // tabIndex={index()}
                         value={option}
@@ -216,8 +222,6 @@ export const CreateField: Component<{
           <CSVDialog
             class='mt-4'
             trigger={Trigger}
-            title='Importation de données CSV'
-            description='Glissez-déposez votre fichier CSV ou cliquez pour le sélectionner. Les données seront automatiquement analysées et affichées.'
             onDataLoaded={args => {
               setData({
                 data: args.data,
@@ -245,7 +249,7 @@ export const CreateField: Component<{
             send({ type: 'REMOVE', payload: { index: indexC() } });
           }}
         >
-          {`${context(c => c.intl?.delete)()} -`}
+          {`${translate('pages.form.buttons.deleteField')(lang())} -`}
         </button>
         <button
           onClick={_update}

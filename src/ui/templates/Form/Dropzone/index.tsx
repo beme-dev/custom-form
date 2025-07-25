@@ -9,7 +9,8 @@ import {
   type JSX,
 } from 'solid-js';
 import { Motion, Presence } from 'solid-motionone';
-import { context } from '~/services/main';
+import { translate } from '~/services/lang';
+import { lang } from '~/services/main';
 import {
   COLUMN_WIDTH,
   DEFAULT_PROPS,
@@ -49,18 +50,22 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
 
       // Lecture du fichier
       const text = await file.text();
-      const { data, headers } = parseCSV(text);
+      const { data, headers } = parseCSV(text, lang());
 
       setHeaders(headers);
       setPreviewData(data.slice(0, 3)); // Aperçu des 3 premières lignes
 
       // Callback avec toutes les données
-      const conditions = mergeConditions(data, headers);
+      const conditions = mergeConditions(data, headers, lang());
       setWarnings(conditions.warnings);
       props.onDataLoaded?.({ data, headers, name, conditions });
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : config.errorMessage;
+        err instanceof Error
+          ? err.message
+          : translate('pages.form.dropzones.csv.messages.error.default')(
+              lang(),
+            );
       setError(errorMessage);
       props.onError?.(errorMessage);
     } finally {
@@ -158,6 +163,10 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
     }
   });
 
+  const processMessage = isProcessing()
+    ? translate('pages.form.dropzones.csv.labels.processing')(lang())
+    : translate('pages.form.dropzones.csv.labels.description')(lang());
+
   return (
     <div
       class={cn('w-full max-w-2xl mx-auto overflow-hidden', props.class)}
@@ -197,13 +206,13 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
           </div>
 
           <div class='text-lg font-medium text-gray-700'>
-            {isProcessing()
-              ? 'Traitement en cours...'
-              : config.placeholder}
+            {processMessage}
           </div>
 
           <div class='text-xs text-gray-500'>
-            {config.acceptMessage} (max: {config.maxFileSize}MB)
+            {translate('pages.form.dropzones.csv.labels.accept', {
+              MAX: config.maxFileSize,
+            })(lang())}
           </div>
         </div>
       </Motion>
@@ -306,7 +315,8 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
                         onClick={reset}
                         class='text-red-600 hover:text-red-800 text-sm hover:scale-110 active:scale-none transition-transform duration-200 ease-in-out cursor-pointer'
                       >
-                        ❌ {context(c => c.intl?.delete)()}
+                        ❌{' '}
+                        {translate('pages.form.buttons.addField')(lang())}
                       </button>
                       <button
                         onClick={() => {
@@ -331,7 +341,7 @@ export const CSVDropzone: Component<DropzoneProps> = props => {
                   <Show when={previewData().length > 0}>
                     <div class='mt-3'>
                       <h4 class='text-sm font-medium text-gray-700 mb-2'>
-                        Aperçu des données ({previewData().length}{' '}
+                        Aperçu des données, ({previewData().length}{' '}
                         premières lignes) :
                       </h4>
                       <div class='overflow-x-auto no-scrollbar rounded-md border-2 border-gray-200 bg-white'>
