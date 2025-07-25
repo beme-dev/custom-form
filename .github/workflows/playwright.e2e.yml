@@ -19,8 +19,7 @@ on:
 
 jobs:
   test:
-    # Use a runner with 8 vCPUs
-    runs-on: playwright-16
+    runs-on: playwright-64
 
     container:
       # Last image, so you don't need to update deps for playwrightso often
