@@ -19,7 +19,8 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Use a runner with 8 vCPUs
+    runs-on: ubuntu-latest-8-cores
 
     container:
       # Last image, so you don't need to update deps for playwrightso often
