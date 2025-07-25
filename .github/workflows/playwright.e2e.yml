@@ -20,7 +20,7 @@ on:
 jobs:
   test:
     # Use a runner with 8 vCPUs
-    runs-on: ubuntu-latest
+    runs-on: playwright_e2e
 
     container:
       # Last image, so you don't need to update deps for playwrightso often
