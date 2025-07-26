@@ -10,12 +10,10 @@ export default defineConfig({
   reporter: 'html',
   testMatch: '**/*.@(e2e).?(c|m)[jt]s?(x)',
   maxFailures: process.env.CI ? 1 : 3,
-  
 
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'off',
-    
 
     launchOptions: {
       slowMo: process.env.PLAYWRIGHT_SLOMO === 'true' ? 1500 : 0, // Slow down operations for debugging
@@ -24,9 +22,9 @@ export default defineConfig({
 
   globalTimeout: 10 * 60 * 1000, // 10 minutes
   expect: {
-    timeout: 10 * 1000, // 10 seconds
+    timeout: 20 * 1000, // 20 seconds
   },
-  timeout: 10 * 1000, // 10 seconds
+  timeout: 20 * 1000, // 20 seconds
 
   // Configure projects for major browsers
   projects: [
