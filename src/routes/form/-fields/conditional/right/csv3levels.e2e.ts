@@ -64,7 +64,7 @@ const fixture = (lang: Lang) => {
 
       const fileChooser = await fileChooserPromise;
       await fileChooser.setFiles([file.path]);
-      await page.waitForTimeout(headless ? 100 : 500); // Wait for the file to be processed in headless mode
+      await page.waitForTimeout(headless ? 200 : 500); // Wait for the file to be processed in headless mode
     });
 
     await test.step('#07 => Dismiss importation prompt', () =>

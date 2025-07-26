@@ -30,6 +30,7 @@ export const EN = createRootTanslations(dt => ({
       buttons: {
         addField: 'Add Field',
         deleteField: 'Delete',
+        registerFields: 'Register Fields',
       },
 
       selects: {

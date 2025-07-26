@@ -12,6 +12,8 @@ import {
   type ParentComponent,
 } from 'solid-js';
 import { Motion } from 'solid-motionone';
+import { Blur } from '~/ui/atoms/Blur';
+import { cn } from '~/ui/cn/utils';
 import { Fields } from './Fields';
 import { Inputs } from './Inputs';
 import { PositionSwitcher } from './PositionSwitcher';
@@ -20,6 +22,7 @@ const AddButton: Component = () => (
   <button
     class='bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-sm active:border-2 active:border-blue-800 transition-colors duration-200 box-border'
     onClick={() => send('ADD')}
+    type='submit'
   >
     {translate('pages.form.buttons.addField')(lang())}
   </button>
@@ -102,15 +105,15 @@ export const SwitchPanels: Component = () => {
   const { switcher, rSwicher, toggle } = useSwitcher();
 
   return (
-    <Resizable class='flex w-full shadow rounded mt-8  p-2 min-h-[80vh]'>
+    <Resizable class='flex w-full shadow rounded mt-8 p-2 min-h-[80vh]'>
       <ResizablePanel
-        class={
-          switcher()
-            ? 'min-w-lg px-6 py-2 bg-white relative'
-            : 'w-1/3 relative'
-        }
+        class={cn(
+          'relative',
+          switcher() ? 'min-w-lg px-6 py-2 bg-white' : 'w-1/3',
+        )}
       >
         <SwiperTop switcher={switcher} toggle={toggle} />
+        <Blur />
       </ResizablePanel>
       <ResizableHandle
         as='div'

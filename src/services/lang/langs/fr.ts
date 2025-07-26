@@ -31,6 +31,7 @@ export const FR = createTranslations(dt => ({
       buttons: {
         addField: 'Ajouter un Champ',
         deleteField: 'Supprimer',
+        registerFields: 'Enregistrer les Champs',
       },
 
       selects: {

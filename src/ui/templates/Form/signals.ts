@@ -1,5 +1,4 @@
-import { context, type FieldType } from '#service';
-import { deepEqual } from '@bemedev/app-ts/lib/utils/index.js';
+import { type FieldType } from '#service';
 import { createRoot, createSignal, type JSX } from 'solid-js';
 import type { Field } from './types';
 
@@ -94,13 +93,4 @@ export const onCaret = (name: string) => {
   };
 
   return out;
-};
-
-export const selectFields = () => {
-  return context(
-    c => c.fields,
-    (a, b) => {
-      return deepEqual(a, b);
-    },
-  );
 };

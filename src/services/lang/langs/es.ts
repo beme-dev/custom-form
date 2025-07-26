@@ -31,6 +31,7 @@ export const ES = createTranslations(dt => ({
       buttons: {
         addField: 'Añadir Campo',
         deleteField: 'Eliminar',
+        registerFields: 'Registrar Campos',
       },
 
       selects: {
