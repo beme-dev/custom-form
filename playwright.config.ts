@@ -16,7 +16,7 @@ export default defineConfig({
     trace: 'off',
 
     launchOptions: {
-      slowMo: process.env.PLAYWRIGHT_SLOMO === 'true' ? 2500 : 0, // Slow down operations for debugging
+      slowMo: process.env.PLAYWRIGHT_SLOMO === 'true' ? 1500 : 0, // Slow down operations for debugging
     },
   },
 
@@ -24,7 +24,7 @@ export default defineConfig({
   expect: {
     timeout: 10 * 1000, // 10 seconds
   },
-  timeout: 30 * 1000, // 30 seconds
+  timeout: 10 * 1000, // 10 seconds
 
   // Configure projects for major browsers
   projects: [
