@@ -48,7 +48,7 @@ export const Input: Component<InputProps> = ({
                   'pages.form.inputs.answer.placeholder',
                 )(lang())}
                 name='answer'
-                onInput={e => {}}
+                onInput={() => {}}
                 data-testid={testId()}
               />
             }

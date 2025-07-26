@@ -3,19 +3,21 @@ import {
   ResizableHandle,
   ResizablePanel,
 } from '#cn/components/ui/resizable';
-import { lang, send, translate } from '#service';
+import { lang, reducer, send, translate } from '#service';
 import {
   createSignal,
+  mergeProps,
   Show,
   type Accessor,
   type Component,
   type ParentComponent,
 } from 'solid-js';
 import { Motion } from 'solid-motionone';
-import { Blur } from '~/ui/atoms/Blur';
+import { BlurLock } from '~/ui/atoms/BlurLock';
 import { cn } from '~/ui/cn/utils';
 import { Fields } from './Fields';
 import { Inputs } from './Inputs';
+import { ModifyFields } from './ModifyFields';
 import { PositionSwitcher } from './PositionSwitcher';
 
 const AddButton: Component = () => (
@@ -24,7 +26,7 @@ const AddButton: Component = () => (
     onClick={() => send('ADD')}
     type='submit'
   >
-    {translate('pages.form.buttons.addField')(lang())}
+    {translate('pages.form.buttons.fields.add')(lang())}
   </button>
 );
 
@@ -72,7 +74,7 @@ const _Fields: Component<{ direction?: 'left' | 'right' }> = ({
   </Presencer>
 );
 
-const SwiperTop: Component<{
+const SwiperLeft: Component<{
   switcher: Accessor<boolean>;
   toggle: () => any;
 }> = ({ switcher, toggle }) => (
@@ -86,7 +88,7 @@ const SwiperTop: Component<{
   </>
 );
 
-const SwiperBottom: Component<{
+const SwiperRight: Component<{
   switcher: Accessor<boolean>;
 }> = ({ switcher }) => (
   <Show when={switcher()} fallback={<_Inputs direction='right' />}>
@@ -97,12 +99,16 @@ const SwiperBottom: Component<{
 const useSwitcher = () => {
   const [switcher, setSwitcher] = createSignal(true);
   const toggle = () => setSwitcher(val => !val);
-  const rSwicher = () => !switcher();
-  return { switcher, rSwicher, toggle };
+  const rSwitcher = () => !switcher();
+  const inRegistration = reducer(c => c.context.states?.fields);
+
+  return { switcher, rSwitcher, toggle, inRegistration };
 };
 
 export const SwitchPanels: Component = () => {
-  const { switcher, rSwicher, toggle } = useSwitcher();
+  const { switcher, rSwitcher, toggle, inRegistration } = useSwitcher();
+  const propsL = mergeProps({ switcher, toggle });
+  const power = 3.6;
 
   return (
     <Resizable class='flex w-full shadow rounded mt-8 p-2 min-h-[80vh]'>
@@ -112,17 +118,32 @@ export const SwitchPanels: Component = () => {
           switcher() ? 'min-w-lg px-6 py-2 bg-white' : 'w-1/3',
         )}
       >
-        <SwiperTop switcher={switcher} toggle={toggle} />
-        <Blur />
+        <SwiperLeft {...propsL} />
+
+        <BlurLock
+          show={inRegistration(c => c !== 'idle' && switcher())}
+          power={power}
+        >
+          <ModifyFields />
+        </BlurLock>
       </ResizablePanel>
       <ResizableHandle
         as='div'
-        class='cursor-col-resize w-1 bg-slate-400 hover:bg-orange-700'
+        class='cursor-col-resize w-1 bg-slate-400 hover:bg-orange-700 z-30 shadow-xl shadow-gray-900 active:scale-x-90 transition-all duration-200 ease-in-out'
       />
       <ResizablePanel
-        class={!switcher() ? 'min-w-lg px-6 py-2 bg-white' : 'w-1/3'}
+        class={cn(
+          'relative',
+          rSwitcher() ? 'min-w-lg px-6 py-2 bg-white' : 'w-1/3',
+        )}
       >
-        <SwiperBottom switcher={rSwicher} />
+        <SwiperRight switcher={rSwitcher} />
+        <BlurLock
+          show={inRegistration(c => c !== 'idle' && rSwitcher())}
+          power={power}
+        >
+          <ModifyFields />
+        </BlurLock>
       </ResizablePanel>
     </Resizable>
   );

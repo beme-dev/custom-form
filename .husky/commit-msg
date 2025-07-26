@@ -13,4 +13,5 @@ fi
 
 npm run ci
 npm run p-q
+npm run test:e2e
 echo "✅ Tests réussis 😎"

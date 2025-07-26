@@ -1,18 +1,11 @@
+import { type Field } from '#templates/Form';
 import { interpret } from '@bemedev/app-solid';
 import { createMachine, typings } from '@bemedev/app-ts';
 import type { SingleOrArrayL } from '@bemedev/app-ts/lib/types/index.js';
 import { createMemo, createRoot } from 'solid-js';
-
-import { type Field } from '~/ui/templates/Form';
-
 import { type Lang, LANGS, LANG_STORE_KEY } from './lang';
-export {
-  LANGS,
-  LANG_STORE_KEY,
-  translate,
-  type FieldType,
-  type Lang,
-} from './lang';
+
+type State = 'registration' | 'registered' | 'idle';
 
 export const mainMachine = createMachine(
   {
@@ -35,6 +28,33 @@ export const mainMachine = createMachine(
           UPDATE: {
             actions: 'update',
           },
+          'FIELDS.REGISTER': {
+            actions: ['fields.register', 'fields.register.finish'],
+            target: '/working/register',
+          },
+          'FIELDS.MODIFY': {
+            actions: ['fields.modify'],
+            target: '/working/idle',
+          },
+        },
+
+        states: {
+          idle: {},
+
+          register: {
+            on: {
+              'VALUES.REGISTER': {
+                actions: [
+                  'values.start.register',
+                  'values.register',
+                  'values.register.finish',
+                ],
+              },
+              'VALUES.MODIFY': {
+                actions: ['values.modify'],
+              },
+            },
+          },
         },
       },
     },
@@ -44,6 +64,11 @@ export const mainMachine = createMachine(
       lang: typings.custom<Lang>(),
       fields: [typings.custom<Field>()],
       responses: [typings.custom<SingleOrArrayL<string>>()],
+      states: typings.partial({
+        fields: typings.custom<State>(),
+        values: typings.custom<State>(),
+      }),
+      values: typings.custom<Record<string, string>>(),
     }),
     eventsMap: {
       CHANGE_LANG: { lang: typings.custom<Lang>() },
@@ -53,11 +78,15 @@ export const mainMachine = createMachine(
         index: 'number',
         value: typings.partial(typings.custom<Field>()),
       },
+      'FIELDS.REGISTER': 'primitive',
+      'FIELDS.MODIFY': 'primitive',
+      'VALUES.REGISTER': typings.custom<Record<string, string>>(),
+      'VALUES.MODIFY': 'primitive',
     },
     // promiseesMap: 'primitive',
   }),
-  { '/': 'idle' },
-).provideOptions(({ assign }) => ({
+  { '/': 'idle', '/working': 'idle' },
+).provideOptions(({ assign, debounce }) => ({
   actions: {
     changeLang: assign('context.lang', {
       CHANGE_LANG: ({ payload: { lang } }) => {
@@ -86,6 +115,38 @@ export const mainMachine = createMachine(
       },
     }),
 
+    // #region Fields
+    'fields.register': assign(
+      'context.states.fields',
+      () => 'registration',
+    ),
+
+    'fields.register.finish': debounce(
+      assign('context.states.fields', () => 'registered'),
+      { ms: 500, id: 'register-fields-finish' },
+    ),
+
+    'fields.modify': assign('context.states.fields', () => 'idle'),
+    // #endregion
+
+    // #region Values
+    'values.start.register': assign(
+      'context.states.values',
+      () => 'registration',
+    ),
+
+    'values.register': assign('context.values', {
+      'VALUES.REGISTER': ({ payload }) => payload,
+    }),
+
+    'values.register.finish': debounce(
+      assign('context.states.values', () => 'registered'),
+      { ms: 500, id: 'register-values-finish' },
+    ),
+
+    'values.modify': assign('context.states.values', () => 'idle'),
+    // #endregion
+
     /**
      * Prepare at starting point
      * @returns
@@ -102,14 +163,22 @@ export const mainMachine = createMachine(
       return {
         fields: [structuredClone(current)],
         lang,
+        states: {
+          fields: 'idle',
+          values: 'idle',
+        },
       };
     }),
   },
 }));
 
-export const { context, send, start, dispose, value } =
+export const { context, send, start, dispose, contains, reducer, value } =
   interpret(mainMachine);
 
 export const lang = createRoot(() =>
   createMemo(context(c => c.lang ?? 'en')),
 );
+
+export { LANGS, LANG_STORE_KEY, type Lang };
+
+export { translate, type FieldType } from './lang';

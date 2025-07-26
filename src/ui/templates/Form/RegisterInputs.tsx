@@ -2,9 +2,8 @@ import type { Component } from 'solid-js';
 import { translate } from '~/services/lang';
 import { lang } from '~/services/main';
 
-//On register block the fields ui
 export const RegisterInputs: Component<{ onClick: () => void }> = () => {
-  const text = translate('pages.form.buttons.registerFields')(lang());
+  const text = translate('pages.form.buttons.inputs.register')(lang());
 
   return (
     <button
