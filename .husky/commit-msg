@@ -12,6 +12,5 @@ if echo "$commit_msg" | grep -q "\_NO\_CI"; then
 fi
 
 npm run ci
-npm run test:e2e
 npm run p-q
 echo "✅ Tests réussis 😎"

@@ -10,10 +10,12 @@ export default defineConfig({
   reporter: 'html',
   testMatch: '**/*.@(e2e).?(c|m)[jt]s?(x)',
   maxFailures: process.env.CI ? 1 : 3,
+  
 
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'off',
+    
 
     launchOptions: {
       slowMo: process.env.PLAYWRIGHT_SLOMO === 'true' ? 1500 : 0, // Slow down operations for debugging
