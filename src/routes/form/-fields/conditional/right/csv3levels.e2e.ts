@@ -9,6 +9,7 @@ const fixture = (lang: Lang) => {
     locSelect: select,
     selectLang,
     selectOption,
+    headless,
   }, { project }) => {
     const locSelect = select(
       translate('pages.form.selects.inputs.options.text')(lang),
@@ -28,6 +29,16 @@ const fixture = (lang: Lang) => {
       'pages.form.dropzones.csv.buttons.load',
     )(lang);
 
+    const locInputFile = page
+      .getByLabel(translate('pages.form.dropzones.csv.labels.title')(lang))
+      .locator('div')
+      .filter({
+        hasText: translate('pages.form.dropzones.csv.labels.description')(
+          lang,
+        ),
+      })
+      .nth(2);
+
     await test.step('#01 => Select french', () => selectLang(lang));
 
     await test.step('#02 => Click on the select', async () => {
@@ -45,22 +56,16 @@ const fixture = (lang: Lang) => {
     });
 
     await test.step('#05 => Verify CSV importation prompt', () =>
-      expect(
-        page
-          .getByLabel(
-            translate('pages.form.dropzones.csv.labels.title')(lang),
-          )
-          .locator('div')
-          .filter({
-            hasText: translate(
-              'pages.form.dropzones.csv.labels.description',
-            )(lang),
-          })
-          .nth(2),
-      ).toBeVisible());
+      expect(locInputFile).toBeVisible());
 
-    await test.step('#06 => Upload CSV file', () =>
-      page.locator('input[type="file"]').setInputFiles([file.path]));
+    await test.step('#06 => Upload CSV file', async () => {
+      const fileChooserPromise = page.waitForEvent('filechooser');
+      await locInputFile.click();
+
+      const fileChooser = await fileChooserPromise;
+      await fileChooser.setFiles([file.path]);
+      await page.waitForTimeout(headless ? 200 : 500); // Wait for the file to be processed in headless mode
+    });
 
     await test.step('#07 => Dismiss importation prompt', () =>
       page.getByLabel('Dismiss').click());

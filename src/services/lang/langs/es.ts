@@ -29,8 +29,17 @@ export const ES = createTranslations(dt => ({
       },
 
       buttons: {
-        addField: 'Añadir Campo',
-        deleteField: 'Eliminar',
+        fields: {
+          register: 'Registrar campos',
+          modify: 'Modificar campos',
+          add: 'Añadir campo',
+          delete: 'Eliminar',
+        },
+        inputs: {
+          register: 'Registrar entradas',
+          modify: 'Modificar entradas',
+        },
+        switchPanels: 'Cambiar paneles',
       },
 
       selects: {

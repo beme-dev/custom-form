@@ -28,7 +28,12 @@ const test = baseTest.extend<{
   },
 
   page: async ({ page }, use) => {
-    const locExpand = page.getByTestId(expandId(1));
+    const locExpand = page
+      .getByRole('button')
+      .and(page.getByTestId(expandId(1)));
+
+    // : page.getByTestId(expandId(1));
+    // : page.locator('[data-testid^="field-1"]');
 
     await test.step('#00 => Expand Accordion', () =>
       locExpand.click({ timeout: 10_000 }));

@@ -1,3 +1,4 @@
+import { lang, translate } from '#service';
 import { type Component } from 'solid-js';
 
 export const PositionSwitcher: Component<{ onClick: () => void }> = ({
@@ -5,9 +6,13 @@ export const PositionSwitcher: Component<{ onClick: () => void }> = ({
 }) => {
   return (
     <button
+      type='reset'
       onClick={() => onClick()}
       class='bg-white rounded-full ring-offset-2 ring-2 ring-orange-300  p-1 overflow-hidden shadow-xl shadow-gray-400 active:scale-90 transition-all duration-200 stroke-slate-600 ease-in-out hover:bg-gray-100 hover:rotate-[360deg] hover:stroke-orange-700 active:shadow-md hover:ring-3 hover:ring-slate-700 hover:ring-offset-0 cursor-pointer'
     >
+      <span class='sr-only'>
+        {translate('pages.form.buttons.switchPanels')(lang())}
+      </span>
       <svg
         width='800px'
         height='800px'
