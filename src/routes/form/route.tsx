@@ -1,13 +1,7 @@
 import { LangSwitcher } from '#molecules/lang';
-import {
-  contains,
-  dispose,
-  lang,
-  start,
-  translate,
-  value,
-} from '#service';
+import { dispose, lang, start, translate, value } from '#service';
 import { SwitchPanels } from '#templates/Form/SwitchPanels';
+import { deepEqual } from '@bemedev/app-ts/lib/utils/index.js';
 import { createFileRoute } from '@tanstack/solid-router';
 import {
   createComputed,
@@ -28,11 +22,11 @@ export const Route = createFileRoute('/form')({
     const [canStart, _start] = createSignal(false);
 
     createComputed(() => {
-      const _contains = contains('working');
+      const _contains = deepEqual(value(), { working: 'idle' });
 
-      if (_contains()) {
+      if (_contains) {
         _start(true);
-        untrack(_contains);
+        untrack(value);
       }
       console.log(value());
     });

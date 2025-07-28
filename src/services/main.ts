@@ -172,7 +172,7 @@ export const mainMachine = createMachine(
   },
 }));
 
-export const { context, send, start, dispose, contains, reducer, value } =
+export const { context, send, start, dispose, reducer, value } =
   interpret(mainMachine);
 
 export const lang = createRoot(() =>
