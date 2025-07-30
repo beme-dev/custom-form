@@ -1,7 +1,6 @@
-import { LangSwitcher } from '#molecules/lang';
+import FullPageSpinner from '#atoms/FullPageSpinner';
 import { dispose, lang, start, translate, value } from '#service';
-import { SwitchPanels } from '#templates/Form/SwitchPanels';
-import { deepEqual } from '@bemedev/app-ts/lib/utils/index.js';
+import { deepEqual } from '#utils';
 import { createFileRoute } from '@tanstack/solid-router';
 import {
   createComputed,
@@ -11,8 +10,9 @@ import {
   Show,
   untrack,
 } from 'solid-js';
-import FullPageSpinner from '~/ui/atoms/FullPageSpinner';
-import { RegisterFields } from '~/ui/templates/Form/RegisterFields';
+import { LangSwitcher } from './-components/molecules/lang';
+import { RegisterFields } from './-components/molecules/RegisterFields';
+import { SwitchPanels } from './-components/templates/SwitchPanels';
 
 export const Route = createFileRoute('/form')({
   component: () => {

@@ -3,7 +3,7 @@ import type { Config } from 'tailwindcss';
 
 export default {
   darkMode: ['class', '[data-kb-theme="dark"]'],
-  content: ['src/routes/**/*.{ts,tsx}', 'src/ui/**/*.{ts,tsx}'],
+  content: ['src/routes/**/*.{ts,tsx}', 'src/**/ui/**/*.{ts,tsx}'],
   prefix: '',
   theme: {
     container: {
