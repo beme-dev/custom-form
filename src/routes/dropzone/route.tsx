@@ -1,7 +1,7 @@
 import { lang, translate } from '#service';
 import { createFileRoute } from '@tanstack/solid-router';
 import type { ComponentProps } from 'solid-js';
-import { CSVDialog } from '~/ui/templates/Form/Dialog';
+import { CSVDialog } from '~/features/form/ui/Dialog';
 
 type Comp = ComponentProps<typeof CSVDialog>['trigger'];
 

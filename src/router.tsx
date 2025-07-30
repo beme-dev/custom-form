@@ -1,9 +1,9 @@
-import { createRouter as createTanStackRouter } from '@tanstack/solid-router';
 import {
   DefaultError,
   DefaultNotFound,
   DefaultPending,
-} from '~/ui/atoms/defaults';
+} from '#atoms/defaults';
+import { createRouter as createTanStackRouter } from '@tanstack/solid-router';
 import { routeTree } from './routeTree.gen';
 
 export function createRouter() {
