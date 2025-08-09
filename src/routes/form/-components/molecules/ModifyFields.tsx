@@ -14,7 +14,7 @@ export const ModifyFields: Component<{
         _class,
       )}
       onClick={() => {
-        send('FIELDS.MODIFY');
+        send('FIELDS:MODIFY');
       }}
     >
       {translate('pages.form.buttons.fields.modify')(lang())}
