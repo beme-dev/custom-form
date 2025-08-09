@@ -1,6 +1,6 @@
-import { createMachine, typings } from '@bemedev/app-ts';
-import { transform, types } from '@bemedev/types';
-import { LANG_STORE_KEY, LANGS, type Lang } from '../../lang/service';
+import { createMachine, typings, type ContextFrom } from '@bemedev/app-ts';
+import { types } from '@bemedev/types';
+import { type Lang } from '../../lang/service';
 import type { Field, State } from './types';
 
 export const mainMachine = createMachine(
@@ -8,7 +8,9 @@ export const mainMachine = createMachine(
     states: {
       idle: {
         entry: 'prepare',
-        always: '/working',
+        always: {
+          /* '/working' */
+        },
       },
       working: {
         on: {
@@ -27,13 +29,11 @@ export const mainMachine = createMachine(
           'UPDATE:NOW': {
             actions: 'update:now',
           },
-          'FIELDS.REGISTER': {
+          'FIELDS:REGISTER': {
             actions: ['fields.register', 'fields.register.finish'],
-            target: '/working/register',
           },
-          'FIELDS.MODIFY': {
+          'FIELDS:MODIFY': {
             actions: ['fields.modify'],
-            target: '/working/idle',
           },
         },
 
@@ -42,14 +42,14 @@ export const mainMachine = createMachine(
 
           register: {
             on: {
-              'VALUES.REGISTER': {
+              'VALUES:REGISTER': {
                 actions: [
                   'values.start.register',
                   'values.register',
                   'values.register.finish',
                 ],
               },
-              'VALUES.MODIFY': {
+              'VALUES:MODIFY': {
                 actions: ['values.modify'],
               },
             },
@@ -59,42 +59,47 @@ export const mainMachine = createMachine(
     },
   },
   typings({
-    context: transform.partial({
-      lang: transform.custom<Lang>(),
-      fields: [transform.custom<Field>()],
-      responses: [transform.custom<types.SingleOrArray<string>>()],
-      states: transform.partial({
-        fields: transform.custom<State>(),
-        values: transform.custom<State>(),
+    context: typings.partial({
+      lang: typings.custom<Lang>(),
+      fields: [typings.custom<Field>()],
+      responses: [typings.custom<types.SingleOrArray<string>>()],
+      states: typings.partial({
+        fields: typings.custom<State>(),
+        values: typings.custom<State>(),
       }),
-      values: transform.custom<Record<string, string>>(),
+      values: typings.custom<Record<string, string>>(),
     }),
     eventsMap: {
-      CHANGE_LANG: { lang: transform.custom<Lang>() },
+      CHANGE_LANG: { lang: typings.custom<Lang>() },
       REMOVE: { index: 'number' },
       ADD: 'primitive',
       UPDATE: {
         index: 'number',
-        value: transform.partial(transform.custom<Field>()),
+        value: typings.partial(typings.custom<Field>()),
       },
       'UPDATE:NOW': {
         index: 'number',
-        value: transform.custom<Field>(),
+        value: typings.custom<Field>(),
       },
-      'FIELDS.REGISTER': 'primitive',
-      'FIELDS.MODIFY': 'primitive',
-      'VALUES.REGISTER': transform.custom<Record<string, string>>(),
-      'VALUES.MODIFY': 'primitive',
+      'FIELDS:REGISTER': 'primitive',
+      'FIELDS:MODIFY': 'primitive',
+      'VALUES:REGISTER': typings.custom<Record<string, string>>(),
+      'VALUES:MODIFY': 'primitive',
     },
-    // promiseesMap: 'primitive',
   }),
-  { '/': 'idle', '/working': 'idle' },
+  {
+    initials: { '/': 'idle', '/working': 'idle' },
+    targets: {
+      '/idle.always': '/working',
+      '/working.on.FIELDS:REGISTER': '/working/register',
+      '/working.on.FIELDS:MODIFY': '/working/idle',
+    },
+  },
 ).provideOptions(({ assign, debounce }) => ({
   actions: {
     changeLang: debounce(
       assign('context.lang', {
         CHANGE_LANG: ({ payload: { lang } }) => {
-          localStorage.setItem(LANG_STORE_KEY, lang);
           return lang;
         },
       }),
@@ -156,7 +161,7 @@ export const mainMachine = createMachine(
     ),
 
     'values.register': assign('context.values', {
-      'VALUES.REGISTER': ({ payload }) => payload,
+      'VALUES:REGISTER': ({ payload }) => payload,
     }),
 
     'values.register.finish': debounce(
@@ -172,17 +177,11 @@ export const mainMachine = createMachine(
      * @returns
      */
     prepare: assign('context', () => {
-      let lang = (localStorage.getItem(LANG_STORE_KEY) ||
-        navigator.language.substring(0, 2)) as Lang;
-
-      const check = !lang || !LANGS.includes(lang);
-      if (check) lang = 'en';
-
       const current = { label: '', type: 'text' } as Field;
 
       return {
         fields: [structuredClone(current)],
-        lang,
+        lang: 'en',
         states: {
           fields: 'idle',
           values: 'idle',
@@ -191,3 +190,5 @@ export const mainMachine = createMachine(
     }),
   },
 }));
+
+export type Context = ContextFrom<typeof mainMachine>;

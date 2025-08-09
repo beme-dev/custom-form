@@ -14,7 +14,7 @@ export const RegisterFields: Component<{
         _class,
       )}
       onClick={() => {
-        send('FIELDS.REGISTER');
+        send('FIELDS:REGISTER');
       }}
       disabled={context(c => c.states?.fields !== 'idle')()}
     >

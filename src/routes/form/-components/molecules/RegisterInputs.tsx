@@ -9,7 +9,7 @@ export const RegisterInputs: Component<{ onClick: () => void }> = () => {
       type='submit'
       class='py-2 px-3 bg-orange-500 shadow-lg active:scale-95'
       onClick={() => {
-        send('FIELDS.REGISTER');
+        send('FIELDS:REGISTER');
       }}
     >
       {text}
