@@ -28,7 +28,6 @@ export const Route = createFileRoute('/form')({
         _start(true);
         untrack(value);
       }
-      console.log(value());
     });
 
     return (

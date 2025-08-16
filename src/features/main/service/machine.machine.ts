@@ -1,18 +1,20 @@
 import { createMachine, typings, type ContextFrom } from '@bemedev/app-ts';
 import { types } from '@bemedev/types';
 import { type Lang } from '../../lang/service';
+import { __tsSchemas } from './machine.machine.gen';
 import type { Field, State } from './types';
 
 export const mainMachine = createMachine(
   {
+    __tsSchema: __tsSchemas.mainMachine,
+    initial: 'idle',
     states: {
       idle: {
         entry: 'prepare',
-        always: {
-          /* '/working' */
-        },
+        always: '/working',
       },
       working: {
+        initial: 'idle',
         on: {
           CHANGE_LANG: {
             actions: ['changeLang'],
@@ -31,9 +33,11 @@ export const mainMachine = createMachine(
           },
           'FIELDS:REGISTER': {
             actions: ['fields.register', 'fields.register.finish'],
+            target: '/working/register',
           },
           'FIELDS:MODIFY': {
             actions: ['fields.modify'],
+            target: '/working/idle',
           },
         },
 
@@ -54,6 +58,8 @@ export const mainMachine = createMachine(
               },
             },
           },
+
+          final: {},
         },
       },
     },
@@ -87,14 +93,6 @@ export const mainMachine = createMachine(
       'VALUES:MODIFY': 'primitive',
     },
   }),
-  {
-    initials: { '/': 'idle', '/working': 'idle' },
-    targets: {
-      '/idle.always': '/working',
-      '/working.on.FIELDS:REGISTER': '/working/register',
-      '/working.on.FIELDS:MODIFY': '/working/idle',
-    },
-  },
 ).provideOptions(({ assign, debounce }) => ({
   actions: {
     changeLang: debounce(

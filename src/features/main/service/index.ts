@@ -1,6 +1,6 @@
 import { interpret } from '@bemedev/app-solid';
 import { createMemo, createRoot } from 'solid-js';
-import { mainMachine } from './machine';
+import { mainMachine } from './machine.machine';
 
 export const { context, send, start, dispose, reducer, value } =
   interpret(mainMachine);
