@@ -1,6 +1,6 @@
 {
   "name": "@bemedev/custom-form",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -71,7 +71,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
-    "@bemedev/app-cli": "^0.1.2",
+    "@bemedev/app-cli": "^0.1.3",
     "@bemedev/build-tests": "^0.1.2",
     "@bemedev/fsf": "^0.8.0",
     "@bemedev/sleep": "^0.1.2",
