@@ -1,12 +1,12 @@
 import { createMachine, typings, type ContextFrom } from '@bemedev/app-ts';
 import { types } from '@bemedev/types';
 import { type Lang } from '../../lang/service';
-import { __tsSchemas } from './machine.machine.gen';
+import { SCHEMAS } from './machine.machine.gen';
 import type { Field, State } from './types';
 
 export const mainMachine = createMachine(
   {
-    __tsSchema: __tsSchemas.mainMachine,
+    __tsSchema: SCHEMAS.mainMachine.__tsSchema,
     initial: 'idle',
     states: {
       idle: {
